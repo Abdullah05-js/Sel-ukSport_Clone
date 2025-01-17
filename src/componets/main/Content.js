@@ -81,11 +81,11 @@ const Content = () => {
 
 
     return (
-        <div className="flex sm:flex-row flex-col items-center p-2 w-full h-[560px]">
+        <div className="flex sm:flex-row flex-col items-center gap-1 p-2 w-full sm:h-screen">
 
-            <aside className="flex flex-col gap-1 sm:w-[380px] w-full">
+            <aside className="flex flex-col justify-center  gap-1 sm:w-[380px] w-full">
                 <iframe
-                    className="bg-white"
+                  
                     src="https://giphy.com/embed/DqILdGsqAUkms"
                     width="380"
                     height="140"
@@ -93,6 +93,7 @@ const Content = () => {
                     allowFullScreen
                 ></iframe>
                 <MachesList Data={Data} />
+              
             </aside>
 
 

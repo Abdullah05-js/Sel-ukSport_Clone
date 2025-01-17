@@ -10,6 +10,21 @@ export function Navbar (){
         <Image src={logo} className='object-cover' alt="kura.com" />
         </div>
 
+
+        <div className='flex sm:flex-row flex-col justify-center items-center gap-6'>
+
+        <iframe
+                  
+                  src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExeTBnbXpiejZsMTRhd2xnaTUxMTcwcnZ6NzU4bjhzMjVib3E4cWd0dyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/10hO3rDNqqg2Xe/giphy.gif"
+                height={100}
+                width={500}
+                  frameBorder="0"
+                  allowFullScreen
+              ></iframe>
+            
+          
+        </div>
+
         <div>
             <Link href="g" className='text-green-300 animate-pulse text-xl font-bold'>Ads & Contact & شراء وكيل</Link>
         </div>
