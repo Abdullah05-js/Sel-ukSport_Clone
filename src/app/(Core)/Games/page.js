@@ -16626,7 +16626,7 @@ export default function Page() {
                 </article>
 
                 {data.liveScores.map((liveScore, index) => (
-                    <article key={index} className="mb-4">
+                    <article key={Math.random()} className="mb-4">
                         <GradientText
                             colors={[`#f8fa${index}${index}`, `#4079${index}${index}`,`#${index}${index}efac` ,"#4079ff", "#5eead4"]}
                             animationSpeed={6}
@@ -16638,7 +16638,7 @@ export default function Page() {
 
                         {liveScore.matches.map((match) => (
                             <Link href={"/Watch/1"}>
-                                <article key={match} className="p-4 border-b border-green-400">
+                                <article key={Math.random()} className="p-4 border-b border-green-400">
                                     <div className="flex sm:flex-row flex-col flex-wrap justify-between items-center sm:gap-2">
                                         <div className='flex flex-row gap-1 justify-start items-center flex-1'>
                                             <img
