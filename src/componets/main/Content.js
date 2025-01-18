@@ -79,11 +79,8 @@ const Content = ({ param }) => {
             link: "https://blogadsformoneykura.blogspot.com/2025/01/document_40.html"
         }
     ]
-
+    
     console.log(param === undefined ? Data[0].link : Data[param - 1].link);
-    console.log();
-
-
     return (
         <div className="flex sm:flex-row flex-col items-center gap-1 p-2 w-full sm:h-screen">
 

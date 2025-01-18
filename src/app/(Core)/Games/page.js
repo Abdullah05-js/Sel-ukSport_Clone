@@ -1,7 +1,4 @@
 import React from 'react';
-import logo from "@/Photos/background.jpg"
-import logo1 from "@/Photos/APO.png"
-import Image from 'next/image';
 import { Navbar } from '@/componets/navbar/Navbar';
 export default function Page() {
 
@@ -16612,19 +16609,19 @@ export default function Page() {
                     </h1>
                 </article>
 
-                {data.liveScores.map((liveScore) => (
-                    <article key={liveScore.id} className="mb-4">
+                {data.liveScores.map((liveScore,index) => (
+                    <article key={index} className="mb-4">
                         <h2 className="text-xl text-green-300 font-bold">{liveScore.matches[0].round.name}</h2>
                         {liveScore.matches.map((match) => (
                             <article key={match.id} className="p-4 border-b">
-                                <p className="flex flex-wrap justify-between items-center gap-4">
+                                <p className="flex flex-wrap justify-between items-center gap-2">
                                     <img
                                         className="w-15 h-15"
                                         src={`https://www.goal.com${match.teamA.image.url}`}
                                         alt={match.teamA.name}
                                     />
                                     <span className="text-2xl font-extrabold">{match.teamA.name}</span>
-                                    <span>vs</span>
+                                    <span className='text-2xl font-extrabold'>vs</span>
                                     <span className="text-2xl font-extrabold">{match.teamB.name}</span>
                                     <img
                                         className="w-15 h-15"

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 const Button = ({link,team1,team2,date,index}) => {
   const router = useRouter();
   const handleClick = ( ) => {
-    router.push(`/${index+1}`)
+    router.push(`/Watch/${index+1}`)
   }
 
     return (
