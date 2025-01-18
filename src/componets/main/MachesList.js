@@ -1,10 +1,13 @@
 import React from 'react';
 import Button from '../Button';
 import "./style.css"
-const MachesList = ({Data}) => {
 
-    const ButtonList = Data?.map((e,index) => {
-        return <Button key={index} link={e.link} date={e.date} team1={e.team1} team2={e.team2} />
+
+
+const MachesList = ({ Data }) => {
+
+    const ButtonList = Data?.map((e, index) => {
+        return <Button key={index} index={index} link={e.link} date={e.date} team1={e.team1} team2={e.team2} />
     })
 
     return (

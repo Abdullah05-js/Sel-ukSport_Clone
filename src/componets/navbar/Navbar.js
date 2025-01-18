@@ -26,7 +26,7 @@ export function Navbar (){
         </div>
 
         <div>
-            <Link href="g" className='text-green-300 animate-pulse text-xl font-bold'>Ads & Contact & شراء وكيل</Link>
+            <Link href="mailto:akcamaluminyum@gmail.com" className='text-green-300 animate-pulse text-xl font-bold border-2 border-green-300 p-3 rounded-lg'>Ads & Contact & شراء وكيل</Link>
         </div>
         
         
