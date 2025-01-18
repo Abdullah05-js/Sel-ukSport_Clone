@@ -3,7 +3,11 @@ import React from 'react';
 import logo from "@/Photos/APO.png"
 import Image from 'next/image';
 import GradientText from '../GradientText/GradientText.js';
-export function Navbar() {
+import { headers } from 'next/headers.js';
+export async function Navbar() {
+
+    const Header = await headers().get("referer").split("/")[3]
+    console.log(Header);
     return (
         <header className='p-4 flex sm:flex-row flex-col justify-between items-center gap-6   w-full min-h-16  border-b-2 border-green-300' >
 
@@ -27,14 +31,14 @@ export function Navbar() {
             </div>
 
             <div className='flex flex-row gap-2'>
-                <Link href="/Games" >
+                <Link href={`${Header === "Games" ? "/Watch/1" : "/Games"}`} >
                     <GradientText
                         colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
                         animationSpeed={3}
                         showBorder={true}
                         className="text-xl font-bold p-2  text-center"
                     >
-                        Matches List
+                        {Header === "Games" ? "Live" : "Matches List"}
                     </GradientText>
                 </Link>
                 <Link href="mailto:akcamaluminyum@gmail.com" >
@@ -44,7 +48,7 @@ export function Navbar() {
                         showBorder={true}
                         className="text-xl font-bold p-2  text-center"
                     >
-                        Ads & Contact 
+                        Ads & Contact
                     </GradientText>
                 </Link>
             </div>

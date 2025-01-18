@@ -16605,7 +16605,7 @@ export default function Page() {
 
 
             <section className=" flex flex-col p-2 h-screen">
-                <article className="flex flex-row justify-center items-center">
+                <article key={"main"} className="flex flex-row justify-center items-center">
                     <GradientText
                         colors={["#f8fafc", "#4079ff", "#86efac", "#4079ff", "#5eead4"]}
                         animationSpeed={6}
@@ -16628,7 +16628,7 @@ export default function Page() {
                 {data.liveScores.map((liveScore, index) => (
                     <article key={index} className="mb-4">
                         <GradientText
-                            colors={[`#f8fa${index}${index}`, `#4079${index}${index}`, "#86efac", "#4079ff", "#5eead4"]}
+                            colors={[`#f8fa${index}${index}`, `#4079${index}${index}`,`#${index}${index}efac` ,"#4079ff", "#5eead4"]}
                             animationSpeed={6}
                             showBorder={false}
                             className="text-2xl font-extrabold p-2"
@@ -16638,8 +16638,8 @@ export default function Page() {
 
                         {liveScore.matches.map((match) => (
                             <Link href={"/Watch/1"}>
-                                <article key={match.id + 1} className="p-4 border-b border-green-400">
-                                    <p className="flex sm:flex-row flex-col flex-wrap justify-between items-center sm:gap-2">
+                                <article key={match} className="p-4 border-b border-green-400">
+                                    <div className="flex sm:flex-row flex-col flex-wrap justify-between items-center sm:gap-2">
                                         <div className='flex flex-row gap-1 justify-start items-center flex-1'>
                                             <img
                                                 className="w-15 h-15"
@@ -16658,7 +16658,7 @@ export default function Page() {
                                                 alt={match.teamB.name}
                                             />
                                         </div>
-                                    </p>
+                                    </div>
                                     <p className='flex flex-col justify-center items-center text-xl font-extrabold'>{new Date(match.startDate).toLocaleString("en-SA", {
                                         timeZone: "Asia/Riyadh",
                                         hour: "2-digit",
