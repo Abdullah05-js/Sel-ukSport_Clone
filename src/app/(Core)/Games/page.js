@@ -16605,7 +16605,7 @@ export default function Page() {
             <section className=" flex flex-col p-2 h-screen">
                 <article className="flex flex-row justify-center items-center">
                     <h1 className="font-extrabold animate-gradient-flow text-3xl text-transparent bg-clip-text bg-gradient-to-r from-green-500 from-10% via-sky-500 via-30% to-emerald-300 to-90%">
-                        {new Date(data.serverDate).toLocaleDateString()}
+                        {new Date(data.serverDate).toDateString()}
                     </h1>
                 </article>
 
