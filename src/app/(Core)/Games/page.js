@@ -16604,12 +16604,19 @@ export default function Page() {
 
             <section className=" flex flex-col p-2 h-screen">
                 <article className="flex flex-row justify-center items-center">
-                    <h1 className="font-extrabold animate-gradient-flow text-3xl text-transparent bg-clip-text bg-gradient-to-r from-green-500 from-10% via-sky-500 via-30% to-emerald-300 to-90%">
-                        {new Date(data.serverDate).toDateString()}
+                    <h1 className="font-extrabold animate-gradient-flow text-3xl  text-transparent bg-clip-text bg-gradient-to-r from-green-500 from-10% via-sky-500 via-30% to-emerald-300 to-90%">
+                        {new Date(data.serverDate).toLocaleString('ar-SA', {
+                            weekday: 'long',
+                        })
+                        }
+                        ,
+                        {
+                            new Date(data.serverDate).toLocaleString().split(",")[0]
+                        }
                     </h1>
                 </article>
 
-                {data.liveScores.map((liveScore,index) => (
+                {data.liveScores.map((liveScore, index) => (
                     <article key={index} className="mb-4">
                         <h2 className="text-xl text-green-300 font-bold">{liveScore.matches[0].round.name}</h2>
                         {liveScore.matches.map((match) => (
@@ -16630,7 +16637,12 @@ export default function Page() {
                                         alt={match.teamB.name}
                                     />
                                 </p>
-                                <p className='flex justify-center items-center text-xl font-extrabold'>{new Date(match.startDate).toLocaleString().split(",")[1]}</p>
+                                <p className='flex justify-center items-center text-xl font-extrabold'>{new Date(match.startDate).toLocaleString("en-SA", {
+                                    timeZone: "Asia/Riyadh",  
+                                    hour: "2-digit",         
+                                    minute: "2-digit",           
+                                    hour12: true,         
+                                }).replace("AM", "ص").replace("PM", "م")}</p>
                             </article>
                         ))}
                     </article>
