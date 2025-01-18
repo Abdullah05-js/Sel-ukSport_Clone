@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import logo from "@/Photos/APO.png"
 import Image from 'next/image';
+import GradientText from '../GradientText/GradientText.js';
 export function Navbar() {
     return (
         <header className='p-4 flex sm:flex-row flex-col justify-between items-center gap-6   w-full min-h-16  border-b-2 border-green-300' >
@@ -26,8 +27,26 @@ export function Navbar() {
             </div>
 
             <div className='flex flex-row gap-2'>
-                <Link href="/Games" className='text-green-300 animate-pulse text-xl font-bold border-2 border-green-300 p-2 rounded-lg text-center'>Today Matches</Link>
-                <Link href="mailto:akcamaluminyum@gmail.com" className='text-green-300 animate-pulse text-xl font-bold border-2 border-green-300 p-2 rounded-lg text-center'>Ads & Contact <br className='sm:hidden block' /> & شراء وكيل</Link>
+                <Link href="/Games" >
+                    <GradientText
+                        colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
+                        animationSpeed={3}
+                        showBorder={true}
+                        className="text-xl font-bold p-2  text-center"
+                    >
+                        Matches List
+                    </GradientText>
+                </Link>
+                <Link href="mailto:akcamaluminyum@gmail.com" >
+                    <GradientText
+                        colors={["#f8fafc", "#4079ff", "#86efac", "#4079ff", "#5eead4"]}
+                        animationSpeed={6}
+                        showBorder={true}
+                        className="text-xl font-bold p-2  text-center"
+                    >
+                        Ads & Contact 
+                    </GradientText>
+                </Link>
             </div>
 
 

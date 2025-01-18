@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar } from '@/componets/navbar/Navbar';
 import Link from 'next/link';
+import GradientText from '@/componets/GradientText/GradientText';
 export default function Page() {
 
     const data = {
@@ -16605,7 +16606,12 @@ export default function Page() {
 
             <section className=" flex flex-col p-2 h-screen">
                 <article className="flex flex-row justify-center items-center">
-                    <h1 className="font-extrabold animate-gradient-flow text-3xl  text-transparent bg-clip-text bg-gradient-to-r from-green-500 from-10% via-sky-500 via-30% to-emerald-300 to-90%">
+                    <GradientText
+                        colors={["#f8fafc", "#4079ff", "#86efac", "#4079ff", "#5eead4"]}
+                        animationSpeed={6}
+                        showBorder={false}
+                        className="text-2xl font-extrabold p-2  text-center"
+                    >
                         {new Date(data.serverDate).toLocaleString('ar-SA', {
                             weekday: 'long',
                         })
@@ -16614,32 +16620,46 @@ export default function Page() {
                         {
                             new Date(data.serverDate).toLocaleString().split(",")[0]
                         }
-                    </h1>
+                    </GradientText>
+
+
                 </article>
 
                 {data.liveScores.map((liveScore, index) => (
                     <article key={index} className="mb-4">
-                        <h2 className="text-xl text-green-300 font-bold">{liveScore.matches[0].round.name}</h2>
+                        <GradientText
+                            colors={[`#f8fa${index}${index}`, `#4079${index}${index}`, "#86efac", "#4079ff", "#5eead4"]}
+                            animationSpeed={6}
+                            showBorder={false}
+                            className="text-2xl font-extrabold p-2"
+                        >
+                            {liveScore.matches[0].round.name}
+                        </GradientText>
+
                         {liveScore.matches.map((match) => (
                             <Link href={"/Watch/1"}>
-                                <article key={match.id} className="p-4 border-b border-green-400">
+                                <article key={match.id + 1} className="p-4 border-b border-green-400">
                                     <p className="flex sm:flex-row flex-col flex-wrap justify-between items-center sm:gap-2">
-                                        <img
-                                            className="w-15 h-15"
-                                            src={`https://www.goal.com${match.teamA.image.url}`}
-                                            alt={match.teamA.name}
-                                        />
-                                        <span className="text-2xl font-extrabold">{match.teamA.name}</span>
+                                        <div className='flex flex-row gap-1 justify-start items-center flex-1'>
+                                            <img
+                                                className="w-15 h-15"
+                                                src={`https://www.goal.com${match.teamA.image.url}`}
+                                                alt={match.teamA.name}
+                                            />
+                                            <p className="text-2xl font-extrabold">{match.teamA.name}</p>
+                                        </div>
                                         <span className='text-2xl font-extrabold'>vs</span>
                                         <br className='hidden sm:block' />
-                                        <span className="text-2xl font-extrabold">{match.teamB.name}</span>
-                                        <img
-                                            className="w-15 h-15"
-                                            src={`https://www.goal.com${match.teamB.image.url}`}
-                                            alt={match.teamB.name}
-                                        />
+                                        <div className='flex flex-row gap-1 justify-end items-center flex-1'>
+                                            <p className="text-2xl font-extrabold">{match.teamB.name}</p>
+                                            <img
+                                                className="w-15 h-15"
+                                                src={`https://www.goal.com${match.teamB.image.url}`}
+                                                alt={match.teamB.name}
+                                            />
+                                        </div>
                                     </p>
-                                    <p className='flex justify-center items-center text-xl font-extrabold'>{new Date(match.startDate).toLocaleString("en-SA", {
+                                    <p className='flex flex-col justify-center items-center text-xl font-extrabold'>{new Date(match.startDate).toLocaleString("en-SA", {
                                         timeZone: "Asia/Riyadh",
                                         hour: "2-digit",
                                         minute: "2-digit",
