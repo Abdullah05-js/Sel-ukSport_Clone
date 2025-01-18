@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navbar } from '@/componets/navbar/Navbar';
+import Link from 'next/link';
 export default function Page() {
 
     const data = {
@@ -16620,30 +16621,32 @@ export default function Page() {
                     <article key={index} className="mb-4">
                         <h2 className="text-xl text-green-300 font-bold">{liveScore.matches[0].round.name}</h2>
                         {liveScore.matches.map((match) => (
-                            <article key={match.id} className="p-4 border-b border-green-400">
-                                <p className="flex sm:flex-row flex-col flex-wrap justify-between items-center sm:gap-2">
-                                    <img
-                                        className="w-15 h-15"
-                                        src={`https://www.goal.com${match.teamA.image.url}`}
-                                        alt={match.teamA.name}
-                                    />
-                                    <span className="text-2xl font-extrabold">{match.teamA.name}</span>
-                                    <span className='text-2xl font-extrabold'>vs</span>
-                                    <br className='hidden sm:block' />
-                                    <span className="text-2xl font-extrabold">{match.teamB.name}</span>
-                                    <img
-                                        className="w-15 h-15"
-                                        src={`https://www.goal.com${match.teamB.image.url}`}
-                                        alt={match.teamB.name}
-                                    />
-                                </p>
-                                <p className='flex justify-center items-center text-xl font-extrabold'>{new Date(match.startDate).toLocaleString("en-SA", {
-                                    timeZone: "Asia/Riyadh",  
-                                    hour: "2-digit",         
-                                    minute: "2-digit",           
-                                    hour12: true,         
-                                }).replace("AM", "ص").replace("PM", "م")}</p>
-                            </article>
+                            <Link href={"/Watch/1"}>
+                                <article key={match.id} className="p-4 border-b border-green-400">
+                                    <p className="flex sm:flex-row flex-col flex-wrap justify-between items-center sm:gap-2">
+                                        <img
+                                            className="w-15 h-15"
+                                            src={`https://www.goal.com${match.teamA.image.url}`}
+                                            alt={match.teamA.name}
+                                        />
+                                        <span className="text-2xl font-extrabold">{match.teamA.name}</span>
+                                        <span className='text-2xl font-extrabold'>vs</span>
+                                        <br className='hidden sm:block' />
+                                        <span className="text-2xl font-extrabold">{match.teamB.name}</span>
+                                        <img
+                                            className="w-15 h-15"
+                                            src={`https://www.goal.com${match.teamB.image.url}`}
+                                            alt={match.teamB.name}
+                                        />
+                                    </p>
+                                    <p className='flex justify-center items-center text-xl font-extrabold'>{new Date(match.startDate).toLocaleString("en-SA", {
+                                        timeZone: "Asia/Riyadh",
+                                        hour: "2-digit",
+                                        minute: "2-digit",
+                                        hour12: true,
+                                    }).replace("AM", "ص").replace("PM", "م")}</p>
+                                </article>
+                            </Link>
                         ))}
                     </article>
                 ))}

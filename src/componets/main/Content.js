@@ -6,6 +6,8 @@ import Video from './Video';
 
 const Content = ({ param }) => {
 
+    const index = typeof param === 'number' ? param : 1;
+
     const Data = [
         {
             team1: "real mad5555irid",
@@ -79,8 +81,7 @@ const Content = ({ param }) => {
             link: "https://blogadsformoneykura.blogspot.com/2025/01/document_40.html"
         }
     ]
-    
-    console.log(param === undefined ? Data[0].link : Data[param - 1].link);
+    console.log(param === undefined ? Data[0].link : Data[index - 1].link);
     return (
         <div className="flex sm:flex-row flex-col items-center gap-1 p-2 w-full sm:h-screen">
 
@@ -102,11 +103,11 @@ const Content = ({ param }) => {
 
             <section className="flex flex-col justify-center items-center gap-6 flex-1 h-full">
                 <Suspense fallback={<div className="text-white">loaidng</div>}>
-                    <Video link={param === undefined ? Data[0].link : Data[param - 1].link} />
+                    <Video link={param  === undefined ? Data[0].link : Data[index - 1].link} />
                 </Suspense>
                 <h1 className="font-extrabold flex flex-row gap-4 justify-center items-center w-full">
                     <span className="font-bold text-xl">
-                        {`${param === undefined ? 0 : Data[param - 1]?.team1} VS ${param === undefined ? 0 : Data[param - 1]?.team2}`}
+                        {`${param  === undefined ? 0 : Data[index - 1]?.team1} VS ${param  === undefined ? 0 : Data[index - 1]?.team2}`}
                     </span>
                     <span className="font-bold  text-white text-xl shadow-md bg-red-600 shadow-red-700 animate-pulse rounded-2xl p-3">
                         LİVE
