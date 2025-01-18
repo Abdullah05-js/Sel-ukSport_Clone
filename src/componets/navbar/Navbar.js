@@ -26,8 +26,8 @@ export function Navbar() {
             </div>
 
             <div className='flex flex-row gap-2'>
-                <Link href="/Games" className='text-green-300 animate-pulse text-xl font-bold border-2 border-green-300 p-3 rounded-lg'>Today Matches</Link>
-                <Link href="mailto:akcamaluminyum@gmail.com" className='text-green-300 animate-pulse text-xl font-bold border-2 border-green-300 p-3 rounded-lg'>Ads & Contact & شراء وكيل</Link>
+                <Link href="/Games" className='text-green-300 animate-pulse text-xl font-bold border-2 border-green-300 p-2 rounded-lg text-center'>Today Matches</Link>
+                <Link href="mailto:akcamaluminyum@gmail.com" className='text-green-300 animate-pulse text-xl font-bold border-2 border-green-300 p-2 rounded-lg text-center'>Ads & Contact <br className='sm:hidden block' /> & شراء وكيل</Link>
             </div>
 
 

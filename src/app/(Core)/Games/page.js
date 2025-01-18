@@ -16613,8 +16613,8 @@ export default function Page() {
                     <article key={index} className="mb-4">
                         <h2 className="text-xl text-green-300 font-bold">{liveScore.matches[0].round.name}</h2>
                         {liveScore.matches.map((match) => (
-                            <article key={match.id} className="p-4 border-b">
-                                <p className="flex flex-wrap justify-between items-center gap-2">
+                            <article key={match.id} className="p-4 border-b border-green-400">
+                                <p className="flex sm:flex-row flex-col flex-wrap justify-between items-center sm:gap-2">
                                     <img
                                         className="w-15 h-15"
                                         src={`https://www.goal.com${match.teamA.image.url}`}
@@ -16622,6 +16622,7 @@ export default function Page() {
                                     />
                                     <span className="text-2xl font-extrabold">{match.teamA.name}</span>
                                     <span className='text-2xl font-extrabold'>vs</span>
+                                    <br className='hidden sm:block' />
                                     <span className="text-2xl font-extrabold">{match.teamB.name}</span>
                                     <img
                                         className="w-15 h-15"
