@@ -6,7 +6,7 @@ import Video from './Video';
 
 const Content = ({ param }) => {
 
-    const index = typeof param === 'number' ? param : 1;
+    const index = typeof Number(param) === 'number' ? param : 1;
 
     const Data = [
         {
