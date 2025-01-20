@@ -2,6 +2,7 @@ import { Navbar } from "@/componets/navbar/Navbar";
 import TopAds from "@/componets/Ads/TopAds";
 import Content from "@/componets/main/Content";
 
+
 export default async function Home({ params }) {
   const { id } = await params;
   return (

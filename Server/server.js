@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import connect from "./db/dbConnect.js";
 import bodyParser from "body-parser";
-import { LimitUserLogin } from "./RateLimit.js";
+import { LimitUserLogin , LimitCreateLiveStream , LimitActiveStreams , LimitBan} from "./RateLimit.js";
 import mainRoute from "./Routers/index.js"
 import UseFetchMatches from "./Hooks/useFetchMatches.js";
 dotenv.config({ path: "../.env" });
@@ -24,6 +24,8 @@ const Cors = {
   maxAge: 600,
 };
 
+export const loggedIPs = new Set();
+export const BannedIps = new Set();
 // app.use((req, res, next) => {
 //   const requestOrigin = req.headers.origin;
 
@@ -35,12 +37,30 @@ const Cors = {
 
 // });
 
+// app.use((req,res,next) => {
+//   if(BannedIps.has(req.ip))
+//   {
+//     res.status(403).json({ message: 'Your Banned' });
+//   }else{
+//     next();
+//   }
+// })
+
+app.use((req, res, next) => {
+  const ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+  loggedIPs.add(ip);
+  next();
+});
+
 
 app.use(cors(Cors));
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
-app.use("/api/Admin_dfvkmdfv", LimitUserLogin);
+// app.use("/api/Admin", LimitUserLogin);
+// app.use("/api/CreateLiveStream",LimitCreateLiveStream);
+// app.use("/api/ActiveStreams",LimitActiveStreams);
+// app.use("/api/BanUser",LimitActiveStreams);
 app.use("/api", mainRoute);
 
 app.get("/test", (req, res) => {

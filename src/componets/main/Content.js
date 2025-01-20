@@ -1,12 +1,13 @@
 import React, { Suspense } from 'react';
 import MachesList from './MachesList';
 import Video from './Video';
+import { redirect } from 'next/navigation';
 
 
 
 const Content = ({ param }) => {
 
-    const index = typeof Number(param) === 'number' ? param : 1;
+    const index = typeof Number(param) !== "number" ? redirect("/") : param > 0 ? param : 1;
 
     const Data = [
         {

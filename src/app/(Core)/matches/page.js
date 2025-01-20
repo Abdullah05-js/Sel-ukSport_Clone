@@ -2,7 +2,10 @@ import React from 'react';
 import { Navbar } from '@/componets/navbar/Navbar';
 import Link from 'next/link';
 import GradientText from '@/componets/GradientText/GradientText';
-export default function Page() {
+export default async function Page() {
+
+    // const response = await fetch("");
+    // const data1 = await response.json();
 
     const data = {
         "__typename": "LiveScoresPage",

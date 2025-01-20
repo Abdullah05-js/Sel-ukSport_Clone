@@ -1,18 +1,16 @@
-import Link from 'next/link';
 import React from 'react';
 import logo from "@/Photos/APO.png"
 import Image from 'next/image';
-import GradientText from '../GradientText/GradientText.js';
-import { headers } from 'next/headers.js';
+import ButtonLinks from './ButtonLinks';
 export async function Navbar() {
+    // const PathName = usePathname();
 
-    const Header = await headers().get("referer").split("/")[3]
-    console.log(Header);
+    //    console.log(PathName);
     return (
         <header className='p-4 flex sm:flex-row flex-col justify-between items-center gap-6   w-full min-h-16  border-b-2 border-green-300' >
 
             <div className='flex sm:flex-row flex-col justify-center items-center gap-6'>
-                <Image src={logo} className='object-cover' alt="kura.com" />
+                <Image src={logo} className='object-cover rounded-lg' alt="kura.com" />
             </div>
 
 
@@ -30,28 +28,7 @@ export async function Navbar() {
 
             </div>
 
-            <div className='flex flex-row gap-2'>
-                <Link href={`${Header === "Games" ? "/Watch/1" : "/Games"}`} >
-                    <GradientText
-                        colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
-                        animationSpeed={3}
-                        showBorder={true}
-                        className="text-xl font-bold p-2  text-center"
-                    >
-                        {Header === "Games" ? "Live" : "Matches List"}
-                    </GradientText>
-                </Link>
-                <Link href="mailto:akcamaluminyum@gmail.com" >
-                    <GradientText
-                        colors={["#f8fafc", "#4079ff", "#86efac", "#4079ff", "#5eead4"]}
-                        animationSpeed={6}
-                        showBorder={true}
-                        className="text-xl font-bold p-2  text-center"
-                    >
-                        Ads & Contact
-                    </GradientText>
-                </Link>
-            </div>
+            <ButtonLinks/>
 
 
         </header>

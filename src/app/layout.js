@@ -1,5 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
+import { Providers } from "./providers";
+import axios from "axios"
 import "./globals.css";
+import { redirect } from "next/navigation";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -16,13 +19,19 @@ export const metadata = {
   description: "Watch football games live",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+
+
+
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Providers>
+          {children}
+        </Providers>
       </body>
     </html>
   );
