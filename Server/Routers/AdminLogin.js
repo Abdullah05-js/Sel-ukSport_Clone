@@ -2,6 +2,9 @@ import speakeasy from "speakeasy";
 import express from "express"
 const router = express.Router();
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
+
 
 router.post("/validOTP", async (req, res) => {
     const {UserToken} = req.body
@@ -11,10 +14,10 @@ router.post("/validOTP", async (req, res) => {
         token: UserToken,
         window:1 // bu 30 saniye geçikme için
     })
-    
+    console.log(process.env.JWT_KEY);
 
     if (verify) {
-        const token = jwt.sign({id:"admin"},process.env.JWT_KEY, {
+        const token = jwt.sign({id:req.ip},process.env.JWT_KEY, {
             expiresIn:60*30,
           })
         return res.status(200).json({
@@ -31,8 +34,9 @@ router.post("/validOTP", async (req, res) => {
 router.post("/login", async (req, res) => {
     const {password,userName} = req.body;
     console.log("loged in");
+    const status = process.env.pass === password && userName === process.env.user
   res.status(200).json({
-    status:password === process.env.pass && userName === process.env.user
+    status
   })
 })
 

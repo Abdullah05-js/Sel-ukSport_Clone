@@ -17,7 +17,7 @@ function ButtonLinks() {
                     {PathName === "/matches" ? "Live" : "Matches List"}
                 </GradientText>
             </Link>
-            <Link href="mailto:akcamaluminyum@gmail.com" >
+            <Link href="mailto:thodex.live@proton.me" >
                 <GradientText
                     colors={["#f8fafc", "#4079ff", "#86efac", "#4079ff", "#5eead4"]}
                     animationSpeed={6}

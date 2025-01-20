@@ -10,7 +10,7 @@ export async function middleware(NextRequest) {
         const isBan = response.data.status
         console.log(isBan,NextRequest.nextUrl.pathname,!isBan && NextRequest.nextUrl.pathname === "/Ban");
         if (!isBan && NextRequest.nextUrl.pathname === "/Ban") {
-            return middleware2(NextRequest, isBan);
+             return middleware2(NextRequest, isBan);
         }
         else if(isBan && NextRequest.nextUrl.pathname !== "/Ban")
         {

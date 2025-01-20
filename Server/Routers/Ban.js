@@ -23,7 +23,8 @@ router.post("/Ban", async (req, res) => {
      BannedIps.add(ip);
      console.log(BannedIps);
      res.status(200).json({  
-         status:`${ip} got banned`
+         status:`${ip} got banned`,
+         ip
      })
     } catch (error) {
      res.status(400).json({

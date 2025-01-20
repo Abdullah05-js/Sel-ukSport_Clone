@@ -3,7 +3,7 @@ import { InputOtp } from "@heroui/input-otp";
 import { Input } from "@heroui/input";
 import GradientText from "@/componets/GradientText/GradientText";
 import Image from "next/image";
-import logo from "@/Photos/APO.png"
+import logo from "@/Photos/APO_Big.png"
 import axios from "axios"
 import React, { useState } from "react";
 import BanForm from "@/componets/Admin/BanForm";
@@ -25,13 +25,22 @@ export default function page() {
       if (Form.password !== "" && Form.userName !== "") {
         const response = await axios.post(process.env.URL ? process.env.URL : "http://localhost:5000/api/Admin/login", Form);
         console.log(response);
-        setStatus({ ...Status, isLoged: response.data.status })
+
+        if(response.data.status)
+        {
+          setStatus({ ...Status, isLoged: response.data.status })
+        }
+        else
+        {
+          alert("password or ID wrong ip saved");
+        }
       }
       else {
         alert("");
       }
     } catch (error) {
       console.log(error);
+      alert("password or ID wrong ip saved");
     }
   }
 
@@ -42,14 +51,23 @@ export default function page() {
         const response = await axios.post(process.env.URL ? process.env.URL : "http://localhost:5000/api/Admin/validOTP", {
           UserToken: e
         });
-        setStatus({ ...Status, isOtp: response.data.status });
-        localStorage.setItem("token", JSON.stringify(response.data.token));
+
+        if(response.data.status)
+          {
+            setStatus({ ...Status, isOtp: response.data.status });
+            localStorage.setItem("token", JSON.stringify(response.data.token));
+          }
+          else
+          {
+            alert("password or ID wrong ip saved");
+          }
       }
       else {
         alert("");
       }
     } catch (error) {
       console.log(error);
+      alert("password or ID wrong ip saved");
     }
   }
 
@@ -105,7 +123,7 @@ export default function page() {
         animationSpeed={2}
         className="text-xl font-bold p-2  text-center"
       >
-        <h1 className="text-2xl">Powered By THODEX.live</h1>
+        <h1 className="text-2xl">Admin Panel</h1>
       </GradientText>
       <GradientText
         colors={["#f8fafc", "#fde68a", "#40ffaa", "#f8fafc", "#fde68a"]}

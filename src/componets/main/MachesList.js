@@ -7,7 +7,7 @@ import "./style.css"
 const MachesList = ({ Data }) => {
 
     const ButtonList = Data?.map((e, index) => {
-        return <Button key={index} index={index} link={e.link} date={e.date} team1={e.team1} team2={e.team2} />
+        return <Button key={index} index={index} link={e.url} date={e.date} team1={e.teamA} team2={e.teamB} />
     })
 
     return (

@@ -5,8 +5,9 @@ import Matches from "../db/Schemas/Matches.js";
 router.get("/", async (req, res) => {
 
 
-    const AllMatches = Matches.find();
-
+    const AllMatches =await Matches.find({});
+    
+    
     res.status(200).json(AllMatches[0]);
 })
 
