@@ -68,6 +68,6 @@ export const LimitMatches = rateLimit({
     console.log(req.ip);
     useMail(req.get('User-Agent'), `${req.ip} \n is you master?` );
     res.status(429).json({ status: "ip saved.", ip: req.ip })
-  }
+  },
 });
 

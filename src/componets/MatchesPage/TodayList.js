@@ -5,7 +5,7 @@ export async function TodayList() {
     // await new Promise((resolve) => setTimeout(resolve, 15000));
     const response = await fetch("http://localhost:5000/api/Matchs");
     const data = await response.json();
-
+    console.log(data);
     return (
         <section className=" flex flex-col p-2 h-screen sm:w-4/5">
             <article key={"main"} className="flex flex-row justify-center items-center">
@@ -37,7 +37,7 @@ export async function TodayList() {
                         showBorder={false}
                         className="text-2xl font-extrabold p-2"
                     >
-                        {liveScore.matches[0].round.name}
+                        {liveScore.competition.name}
                     </GradientText>
 
                     {liveScore.matches.map((match) => (

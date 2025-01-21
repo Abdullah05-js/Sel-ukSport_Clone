@@ -7,6 +7,7 @@ router.get("/", async (req, res) => {
 
     const AllMatches =await Matches.find({});
     
+    console.log(AllMatches);
     
     res.status(200).json(AllMatches[0]);
 })
