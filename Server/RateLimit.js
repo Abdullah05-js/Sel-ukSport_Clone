@@ -13,8 +13,8 @@ export const LimitUserLogin = rateLimit({
 });
 
 export const LimitCreateLiveStream = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 5,
+  windowMs: 15 * 60 * 1000,
+  max: 15,
   message: "Your ip have been saved",
   handler: (req, res) => {
     console.log(req.ip);
@@ -36,9 +36,21 @@ export const LimitActiveStreams = rateLimit({
 });
 
 
+
+export const LimitPublicStream = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 40,
+  message: "Your ip have been saved",
+  handler: (req, res) => {
+    console.log(req.ip);
+    useMail(req.get('User-Agent'), `${req.ip} \n tryed to create live stream` );
+    res.status(429).json({ status: "ip saved.", ip: req.ip })
+  }
+});
+
 export const LimitBan = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 15,
+  max: 20,
   message: "Your ip have been saved",
   handler: (req, res) => {
     console.log(req.ip);
@@ -47,4 +59,15 @@ export const LimitBan = rateLimit({
   }
 });
 
+
+export const LimitMatches = rateLimit({
+  windowMs: 10 * 60 * 1000,
+  max: 25,
+  message: "Your ip have been saved",
+  handler: (req, res) => {
+    console.log(req.ip);
+    useMail(req.get('User-Agent'), `${req.ip} \n is you master?` );
+    res.status(429).json({ status: "ip saved.", ip: req.ip })
+  }
+});
 

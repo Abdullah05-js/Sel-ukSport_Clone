@@ -6,7 +6,6 @@ export async function TodayList() {
     const response = await fetch("http://localhost:5000/api/Matchs");
     const data = await response.json();
 
-
     return (
         <section className=" flex flex-col p-2 h-screen sm:w-4/5">
             <article key={"main"} className="flex flex-row justify-center items-center">

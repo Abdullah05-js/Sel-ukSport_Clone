@@ -20,7 +20,7 @@ export const fetchStreamsList = async () => {
         const response = await axios.post(process.env.URL ? process.env.URL : "http://localhost:5000/api/ActiveStreams/admin/read", {
             token: JSON.parse(localStorage.getItem("token")),
         });
-        return response.data.list;
+        return response.data;
     } catch (error) {
         console.log(error);
         return []
@@ -35,6 +35,12 @@ const CreateLiveModel = () => {
         url: "",
         name: ""
     })
+    const [FormEdit, setFormEdit] = useState({
+        url: "",
+        name: "",
+        liveID:""
+    })
+    const [loggedIPs, setLoggedIPs] = useState([])
 
 
 
@@ -55,13 +61,45 @@ const CreateLiveModel = () => {
         }
     }
 
+    const handelEditStream = async () => {
+        try {
+            const response = await axios.put(process.env.URL ? process.env.URL : "http://localhost:5000/api/ActiveStreams/admin/edit", {
+                token: JSON.parse(localStorage.getItem("token")),
+                url: FormEdit.url,
+                name: FormEdit.name,
+                liveID:FormEdit.liveID
+            });
+            setFormEdit({
+                url: "",
+                name: ""
+            })
+
+            if(response.data.status)
+            {
+                alert("stream edited successfully")
+            }
+            else
+            {
+                alert("stream not edited")
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
         const fetchData = async () => {
-            const data = await fetchStreamsList();
-            setLiveStreams(data);
+            const { list, loggedIPs } = await fetchStreamsList();
+            setLiveStreams(list);
+            setLoggedIPs(loggedIPs);
         };
 
+        const fetchInterval = setInterval(fetchData, 1000 * 5);
         fetchData();
+
+        return () => {
+            clearInterval(fetchInterval);
+        }
     }, []);
 
     return (
@@ -70,7 +108,7 @@ const CreateLiveModel = () => {
 
             <div className="flex flex-row justify-center gap-4">
                 <Button color="success" onPress={onOpen}>
-                    Create Live Stream
+                    Create Live Stream && Edit
                 </Button>
             </div>
 
@@ -81,7 +119,18 @@ const CreateLiveModel = () => {
                     <h1 className="text-2xl text-white font-bold text-center">Streams</h1>
                     {
                         LiveStreams.map((e) => {
-                            return <p key={e._id} className="border-2 border-red-600 p-2 rounded-xl text-green-300" disabled>{e.teamA} VS {e.teamB} -- {e.date} -- {e.url}</p>
+                            return <p key={e._id}  onClick={() =>  navigator.clipboard.writeText(e._id)} className="border-2 border-red-600 cursor-pointer p-2 rounded-xl text-green-300" disabled>{e.teamA} VS {e.teamB} -- {e.date} -- {e.url}</p>
+                        })
+                    }
+                </div>
+
+
+
+                <div className="flex flex-col gap-2 overflow-auto p-2 ">
+                    <h1 className="text-2xl text-white font-bold text-center">Logged IPs</h1>
+                    {
+                        loggedIPs.map((e) => {
+                            return <p key={e} className="border-2 border-red-600 p-2 rounded-xl text-green-300" disabled>{e}</p>
                         })
                     }
                 </div>
@@ -114,10 +163,46 @@ const CreateLiveModel = () => {
                                     onChange={(e) => setForm({ ...Form, name: e.target.value })}
                                 />
 
+
+                                <h2>------------------------Edit Live Stream--------------------------</h2>
+                                <Input
+                                    label="ID"
+                                    placeholder="Enter the ID"
+                                    variant="bordered"
+                                    color="success"
+                                    type="text"
+                                    value={FormEdit.liveID}
+                                    onChange={(e) => setFormEdit({ ...FormEdit, liveID: e.target.value })}
+                                />
+
+                                <Input
+                                    label="edit link"
+                                    placeholder="Enter the link"
+                                    variant="bordered"
+                                    color="success"
+                                    type="text"
+                                    value={FormEdit.url}
+                                    onChange={(e) => setFormEdit({ ...FormEdit, url: e.target.value })}
+                                />
+
+                                <Input
+                                    label="edit name"
+                                    placeholder="Enter the name"
+                                    variant="bordered"
+                                    color="success"
+                                    type="text"
+                                    value={FormEdit.name}
+                                    onChange={(e) => setFormEdit({ ...FormEdit, name: e.target.value })}
+                                />
+
+
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="success" variant="bordered" onPress={handelCreateStream}>
                                     Create
+                                </Button>
+                                <Button color="danger" variant="bordered" onPress={handelEditStream}>
+                                    Edit
                                 </Button>
                             </ModalFooter>
                         </>

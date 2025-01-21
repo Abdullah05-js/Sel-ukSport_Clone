@@ -2,6 +2,7 @@ import express from "express"
 const router = express.Router();
 import jwt from "jsonwebtoken"
 import playlists from "../db/Schemas/playlists.js";
+import { loggedIPs } from "../server.js";
 router.post("/admin/rtmpStatus", async (req, res) => {
     try {
         const { token } = req.body;
@@ -21,8 +22,6 @@ router.post("/admin/rtmpStatus", async (req, res) => {
         })
     }
 });
-
-
 
 router.post("/admin/create", async (req, res) => {
     try {
@@ -46,19 +45,29 @@ router.post("/admin/create", async (req, res) => {
 
 router.put("/admin/edit", async (req, res) => {
     try {
-        const { token, url , liveID } = req.body;
+        const { token, url, name, liveID } = req.body;
         const { id } = jwt.verify(token, process.env.JWT_KEY);
         if (id) {
-          await  playlists.findOneAndUpdate({
-                _id:liveID
-            },{
-                url
+
+            const teamA = name.split("/")[0];
+            const teamB = name.split("/")[1];
+            const date = name.split("/")[2];
+
+         const editStream =    await playlists.findOneAndUpdate({
+                _id: liveID
+            }, {
+                url,
+                teamA,
+                teamB,
+                date
             })
+
+            console.log(editStream);
             return res.status(200).json({
                 status: true
             })
         }
-       return res.status(40).json({ status: false });
+        return res.status(400).json({ status: false });
     } catch (error) {
         console.log(error);
         return res.status(403).json({ status: false })
@@ -69,17 +78,17 @@ router.put("/admin/edit", async (req, res) => {
 
 router.post("/admin/read", async (req, res) => {
     try {
-        const { token} = req.body;
+        const { token } = req.body;
         const { id } = jwt.verify(token, process.env.JWT_KEY);
         if (id) {
-            const data = await  playlists.find()
-            console.log(data);
-            
+            const data = await playlists.find()
+
             return res.status(200).json({
-                list:data,
+                list: data,
+                loggedIPs: Array.from(loggedIPs).map(ip => ip)
             })
         }
-       return res.status(40).json({ status: false });
+        return res.status(40).json({ status: false });
     } catch (error) {
         console.log(error);
         return res.status(403).json({ status: false })
@@ -89,10 +98,10 @@ router.post("/admin/read", async (req, res) => {
 
 router.post("/public", async (req, res) => {
     try {
-            const data = await  playlists.find()
-            return res.status(200).json({
-                list:data,
-            })
+        const data = await playlists.find()
+        return res.status(200).json({
+            list: data,
+        })
     } catch (error) {
         console.log(error);
         return res.status(403).json({ list: [] })

@@ -1,14 +1,16 @@
 import express from "express"
 const router = express.Router();
-import { BannedIps, loggedIPs } from "../server.js";
+
+import BanIP from "../db/Schemas/banIP.js";
 router.post("/", async (req, res) => {
     try {
+        const banned = await BanIP.findOne({ ip: req.ip });
         res.status(200).json({
-            status: BannedIps.has(req.ip)
+            status: banned ? true : false
         })
     } catch (error) {
         res.status(400).json({
-            status: error.message
+            status: false
         })
     }
 })

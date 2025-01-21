@@ -41,6 +41,7 @@ const BanUser = () => {
                 ip
             });
             setip("");
+            console.log(response.data);
             setBanList([...BanList,response.data.ip])
             alert(response.data.status)
         } catch (error) {
@@ -70,7 +71,7 @@ const BanUser = () => {
                     <h1 className="text-2xl text-white font-bold">Ban List</h1>
                     {
                         BanList.map((e) => {
-                            return <Button color="danger" variant="bordered" disabled>{e}</Button>
+                            return <p className="border-2 border-red-600 p-2 text-start text-wrap rounded-xl text-green-300">{e.ip}-- <span className="text-green-300">{e.date}</span></p>
                         })
                     }
                 </div>

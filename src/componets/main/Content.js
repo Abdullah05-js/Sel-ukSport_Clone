@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import MachesList from './MachesList';
 import Video from './Video';
 import { redirect } from 'next/navigation';
@@ -36,17 +36,14 @@ import axios from 'axios';
                     frameBorder="0"
                     allowFullScreen
                 ></iframe>
-                <Suspense fallback={<div className="text-white">loaidng</div>}>
                     <MachesList Data={Data} />
-                </Suspense>
-
             </aside>
 
 
             <section className="flex flex-col justify-center items-center gap-6 flex-1 h-full">
-                <Suspense fallback={<div className="text-white">loaidng</div>}>
+               
                     <Video link={param  === undefined ? Data[0].url : Data[index - 1].url} />
-                </Suspense>
+            
                 <h1 className="font-extrabold flex flex-row gap-4 justify-center items-center w-full">
                     <span className="font-bold text-xl">
                         {`${param  === undefined ? Data[0].teamA : Data[index - 1].teamA} VS ${param  === undefined ? Data[0].teamA : Data[index - 1]?.teamB}`}
