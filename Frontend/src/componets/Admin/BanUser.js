@@ -17,7 +17,7 @@ import { useState } from "react";
 
 export const fetchBanList = async () => {
     try {
-        const response = await axios.post(process.env.URL ? process.env.URL : "http://localhost:5000/api/BanUser/BanList", {
+        const response = await axios.post(`${process.env.URL}/api/BanUser/BanList`, {
             token: JSON.parse(localStorage.getItem("token")),
         });
         return response.data.loggedIPs;
@@ -36,7 +36,7 @@ const BanUser = () => {
 
     const handelBan = async () => {
         try {
-            const response = await axios.post(process.env.URL ? process.env.URL : "http://localhost:5000/api/BanUser/Ban", {
+            const response = await axios.post(`${process.env.URL}/api/BanUser/Ban`, {
                 token: JSON.parse(localStorage.getItem("token")),
                 ip
             });

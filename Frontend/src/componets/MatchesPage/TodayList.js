@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 export async function TodayList() {
     // await new Promise((resolve) => setTimeout(resolve, 15000));
-    const response = await fetch("http://localhost:5000/api/Matchs");
+    const response = await fetch(`${process.env.URL}/api/Matchs`);
     const data = await response.json();
     console.log(data);
     return (

@@ -5,7 +5,7 @@ import { middleware1 } from "./middleware/BanMiddleware";
 
 export async function middleware(NextRequest) {
     try {
-        const response = await axios.post(process.env.URL ? process.env.URL : "http://localhost:5000/api/CheckBan");
+        const response = await axios.post(`${process.env.URL}/api/CheckBan`);
         const isBan = response.data.status
         if (!isBan && NextRequest.nextUrl.pathname === "/Ban") {
              return middleware2(NextRequest, isBan);

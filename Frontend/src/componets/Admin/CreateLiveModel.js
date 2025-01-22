@@ -17,7 +17,7 @@ import { useState } from "react";
 
 export const fetchStreamsList = async () => {
     try {
-        const response = await axios.post(process.env.URL ? process.env.URL : "http://localhost:5000/api/ActiveStreams/admin/read", {
+        const response = await axios.post(`${process.env.URL}/api/ActiveStreams/admin/read`, {
             token: JSON.parse(localStorage.getItem("token")),
         });
         return response.data;
@@ -46,7 +46,7 @@ const CreateLiveModel = () => {
 
     const handelCreateStream = async () => {
         try {
-            const response = await axios.post(process.env.URL ? process.env.URL : "http://localhost:5000/api/ActiveStreams/admin/create", {
+            const response = await axios.post(`${process.env.URL}/api/ActiveStreams/admin/create`, {
                 token: JSON.parse(localStorage.getItem("token")),
                 url: Form.url,
                 name: Form.name
@@ -63,7 +63,7 @@ const CreateLiveModel = () => {
 
     const handelEditStream = async () => {
         try {
-            const response = await axios.put(process.env.URL ? process.env.URL : "http://localhost:5000/api/ActiveStreams/admin/edit", {
+            const response = await axios.put(`${process.env.URL}/api/ActiveStreams/admin/edit`, {
                 token: JSON.parse(localStorage.getItem("token")),
                 url: FormEdit.url,
                 name: FormEdit.name,
