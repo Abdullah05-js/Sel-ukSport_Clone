@@ -1,44 +1,67 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
+# Backend
 /backend/node_modules
+/backend/.env
+/backend/.pnp
+/backend.pnp.*
+/backend/yarn.lock
+/backend/package-lock.json
+/backend/.DS_Store
+/backend/npm-debug.log*
+/backend/yarn-debug.log*
+/backend/yarn-error.log*
+/backend.pnpm-debug.log*
+/backend/coverage
+/backend/logs/*
+!/backend/logs/.keep
+
+# Frontend
 /frontend/node_modules
 /frontend/.env
-/backend/.env
-/.pnp
-.pnp.*
+/frontend/.pnp
+/frontend.pnp.*
+/frontend/yarn.lock
+/frontend/package-lock.json
+/frontend/.DS_Store
+/frontend/npm-debug.log*
+/frontend/yarn-debug.log*
+/frontend/yarn-error.log*
+/frontend.pnpm-debug.log*
+/frontend/.next/
+/frontend/out/
+# Production build files
+/frontend/build
+# Vercel
+/frontend/.vercel
+
+# Common
+.DS_Store
+*.pem
+.env*
+*.tsbuildinfo
+next-env.d.ts
+
+# Yarn
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
 
-# testing
-/coverage
-
-# next.js
-/frontend/.next/
-/frontend/out/
-
-# production
-/frontend/build
-
-# misc
-.DS_Store
-*.pem
-
-# debug
+# Logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-.pnpm-debug.log*
+pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# Testing
+/coverage
+/tests/*.log
 
-# vercel
-/frontend/.vercel
+# Ignore compiled files
+*.log
+*.log.*
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# Misc
+*.swp
