@@ -2,7 +2,7 @@
 
 # Backend
 /backend/node_modules
-/backend/.env
+
 /backend/.pnp
 /backend.pnp.*
 /backend/yarn.lock
@@ -18,7 +18,7 @@
 
 # Frontend
 /frontend/node_modules
-/frontend/.env
+
 /frontend/.pnp
 /frontend.pnp.*
 /frontend/yarn.lock
