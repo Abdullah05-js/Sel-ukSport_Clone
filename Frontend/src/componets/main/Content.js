@@ -12,7 +12,7 @@ import axios from 'axios';
     // const response = await fetch("https://jsonplaceholder.typicode.com/posts");
     // const data = await response.json();
       
-            const response = await axios.post(process.env.URL ? process.env.URL : "http://localhost:5000/api/ActiveStreams/public");
+            const response = await axios.get(process.env.URL ? process.env.URL : "http://localhost:5000/api/ActiveStreams/public");
             const Data = response.data.list
             
             const index = Filtredindex > Data ? Filtredindex : 1; 

@@ -96,7 +96,7 @@ router.post("/admin/read", async (req, res) => {
 });
 
 
-router.post("/public", async (req, res) => {
+router.get("/public", async (req, res) => {
     try {
         const data = await playlists.find()
         return res.status(200).json({

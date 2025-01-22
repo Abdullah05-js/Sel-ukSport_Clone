@@ -6,23 +6,17 @@ import bodyParser from "body-parser";
 import { LimitUserLogin, LimitCreateLiveStream, LimitActiveStreams, LimitPublicStream, LimitBan, LimitMatches } from "./RateLimit.js";
 import BanIP from "./db/Schemas/banIP.js";
 import mainRoute from "./Routers/index.js"
+import helmet from "helmet";
 import UseFetchMatches from "./Hooks/useFetchMatches.js";
-dotenv.config({ path: "../.env" });
+dotenv.config();
 const app = express();
+app.use(helmet())
 
-const allowedOrigin = 'http://localhost:3000';
+const allowedOrigin = ['http://localhost:3000'];
 const Cors = {
-  origin: (origin, callback) => {
-    if (origin === allowedOrigin || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: allowedOrigin,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type"],
-  credentials: true,
-  maxAge: 600,
 };
 
 app.use(async (req, res, next) => {
@@ -61,6 +55,11 @@ app.use(cors(Cors));
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
+app.use((req, res, next) => {
+  const origin = req.get('Referer')  || req.get('Origin');
+  console.log('Headers:',req.url);
+  next();
+});
 
 app.use("/api/Admin", LimitUserLogin);
 app.use("/api/CreateLiveStream/validateStreamKey", LimitCreateLiveStream);
