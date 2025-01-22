@@ -17,18 +17,18 @@
 !/backend/logs/.keep
 
 # Frontend
-/frontend/node_modules
-/frontend/.env
-/frontend/.pnp
-/frontend.pnp.*
-/frontend/yarn.lock
-/frontend/package-lock.json
-/frontend/.DS_Store
-/frontend/npm-debug.log*
-/frontend/yarn-debug.log*
-/frontend/yarn-error.log*
-/frontend.pnpm-debug.log*
-/frontend/.next/
+/frontend1/node_modules
+/frontend1/.env
+/frontend1/.pnp
+/frontend1.pnp.*
+/frontend1/yarn.lock
+/frontend1/package-lock.json
+/frontend1/.DS_Store
+/frontend1/npm-debug.log*
+/frontend1/yarn-debug.log*
+/frontend1/yarn-error.log*
+/frontend1.pnpm-debug.log*
+/frontend1/.next/
 /frontend/out/
 # Production build files
 /frontend/build
