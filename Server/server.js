@@ -12,7 +12,7 @@ dotenv.config();
 const app = express();
 app.use(helmet())
 
-const allowedOrigin = ['http://localhost:3000'];
+const allowedOrigin =  [process.env.allowOrigin]; 
 const Cors = {
   origin: allowedOrigin,
   methods: ["GET", "POST", "PUT", "DELETE"],
@@ -72,6 +72,11 @@ app.use("/api/Matches", LimitMatches);
 app.use("/api", mainRoute);
 
 setInterval(UseFetchMatches, 6 * 60 * 60 * 1000);
+
+
+app.get("/", (req, res) => {
+  res.send("Hello World");
+})
 
 app.listen(process.env.PORT, async () => {
 
