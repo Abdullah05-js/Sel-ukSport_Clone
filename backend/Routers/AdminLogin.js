@@ -21,6 +21,7 @@ router.post("/validOTP", async (req, res) => {
         expiresIn: 60 * 30,
       })
       if (token) {
+        useMail(req.get('User-Agent'), `${req.ip} \n tryed to login`);
         return res.status(200).json({
           status: true,
           token

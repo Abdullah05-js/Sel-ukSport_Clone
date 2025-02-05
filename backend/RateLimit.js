@@ -7,7 +7,7 @@ export const LimitUserLogin = rateLimit({
   message: "Your ip have been saved",
   handler: (req, res) => {
     console.log(req.ip);
-    useMail(req.get('User-Agent'), `${req.ip} \n tryed to login` );
+    useMail(req.get('User-Agent'), `${req.ip} \n tryed to login`);
     res.status(429).json({ status: "ip saved.", ip: req.ip })
   }
 });
@@ -18,7 +18,7 @@ export const LimitCreateLiveStream = rateLimit({
   message: "Your ip have been saved",
   handler: (req, res) => {
     console.log(req.ip);
-    useMail(req.get('User-Agent'), `${req.ip} \n tryed to create live stream` );
+    useMail(req.get('User-Agent'), `${req.ip} \n tryed to create live stream`);
     res.status(429).json({ status: "ip saved.", ip: req.ip })
   }
 });
@@ -30,7 +30,7 @@ export const LimitActiveStreams = rateLimit({
   message: "Your ip have been saved",
   handler: (req, res) => {
     console.log(req.ip);
-    useMail(req.get('User-Agent'), `${req.ip} \n tryed to create live stream` );
+    useMail(req.get('User-Agent'), `${req.ip} \n tryed to create live stream`);
     res.status(429).json({ status: "ip saved.", ip: req.ip })
   }
 });
@@ -43,7 +43,7 @@ export const LimitPublicStream = rateLimit({
   message: "Your ip have been saved",
   handler: (req, res) => {
     console.log(req.ip);
-    useMail(req.get('User-Agent'), `${req.ip} \n tryed to create live stream` );
+    useMail(req.get('User-Agent'), `${req.ip} \n tryed to create live stream`);
     res.status(429).json({ status: "ip saved.", ip: req.ip })
   }
 });
@@ -54,7 +54,7 @@ export const LimitBan = rateLimit({
   message: "Your ip have been saved",
   handler: (req, res) => {
     console.log(req.ip);
-    useMail(req.get('User-Agent'), `${req.ip} \n is you master?` );
+    useMail(req.get('User-Agent'), `${req.ip} \n is you master?`);
     res.status(429).json({ status: "ip saved.", ip: req.ip })
   }
 });
@@ -66,8 +66,17 @@ export const LimitMatches = rateLimit({
   message: "Your ip have been saved",
   handler: (req, res) => {
     console.log(req.ip);
-    useMail(req.get('User-Agent'), `${req.ip} \n is you master?` );
+    useMail(req.get('User-Agent'), `${req.ip} \n is you master?`);
     res.status(429).json({ status: "ip saved.", ip: req.ip })
   },
 });
 
+// export const LimitMatchesVote = rateLimit({
+//   windowMs: 12 * 60 * 60 * 1000,
+//   max: totoalMatches,
+//   message: "Your ip have been saved",
+//   handler: (req, res) => {
+//     console.log(req.ip);
+//     res.status(429).json({ status: "ip saved.", ip: req.ip });
+//   },
+// });

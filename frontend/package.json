@@ -13,6 +13,7 @@
     "@heroui/input": "^2.4.10",
     "@heroui/input-otp": "^2.1.9",
     "@heroui/modal": "^2.2.8",
+    "@heroui/progress": "^2.2.7",
     "@heroui/react": "^2.6.14",
     "@heroui/spinner": "^2.2.7",
     "@heroui/system": "^2.4.7",

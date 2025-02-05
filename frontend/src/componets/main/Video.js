@@ -1,10 +1,39 @@
 "use client"
 import React from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
 import Image from 'next/image';
 import logo from "@/Photos/APO_Big.png";
+import { useRouter } from 'next/navigation';
 const Video = ({link}) => {
     const [isOpen, setIsOpen] = useState(false);
+    const router =useRouter()
+
+    useEffect(() => {
+        // document.addEventListener("keydown", function (event) {
+        //     if (
+        //       event.key === "F12" ||
+        //       (event.ctrlKey && event.shiftKey && ["I", "J", "C"].includes(event.key)) ||
+        //       (event.ctrlKey && event.key === "U")
+        //     ) {
+        //       event.preventDefault();
+        //     }
+        //   })
+
+        //   document.addEventListener("contextmenu", function (event) {
+        //     event.preventDefault();
+        //   });
+
+
+        // if(window.innerWidth >= 800)
+        // {
+        //     window.addEventListener("resize", function () {
+        //         router.push("/")
+        //     });
+        // }
+
+    },[])
+
     return (
        <article className="bg-black border-1 border-green-300 flex justify-center items-center flex-1 w-screen rounded-lg p-2  sm:w-full">
         {isOpen ? (
@@ -14,6 +43,7 @@ const Video = ({link}) => {
                 height="100%"
                 frameBorder="0"
                 allowFullScreen
+                allow="clipboard-write"
             ></iframe>
         ) : (
             <div onClick={() => setIsOpen(true)} className="flex flex-col justify-center items-center h-96">

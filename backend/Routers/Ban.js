@@ -5,7 +5,11 @@ import BanIP from "../db/Schemas/banIP.js";
 router.post("/BanList", async (req, res) => {
     try {
         const { token } = req.body;
-        jwt.verify(token, process.env.JWT_KEY)
+        const isverfiy = jwt.verify(token, process.env.JWT_KEY)
+        if(!isverfiy)
+        {
+            res.status(403)
+        }
         const BannedIps = await BanIP.find();
         res.status(200).json({
             loggedIPs: BannedIps
@@ -20,7 +24,11 @@ router.post("/BanList", async (req, res) => {
 router.post("/Ban", async (req, res) => {
     try {
         const { token, ip } = req.body;
-        jwt.verify(token, process.env.JWT_KEY)
+        const isverfiy = jwt.verify(token, process.env.JWT_KEY)
+        if(!isverfiy)
+        {
+            res.status(403)
+        }
         const newBan = new BanIP({
             ip,
             date: new Date().toISOString()

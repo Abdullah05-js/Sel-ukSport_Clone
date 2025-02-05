@@ -17,7 +17,7 @@ import { useState } from "react";
 
 export const fetchStreamsList = async () => {
     try {
-        const response = await axios.post(`${process.env.URL}/api/ActiveStreams/admin/read`, {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/admin/read`, {
             token: JSON.parse(localStorage.getItem("token")),
         });
         return response.data;
@@ -40,13 +40,14 @@ const CreateLiveModel = () => {
         name: "",
         liveID:""
     })
+    const [formDelete,setFormDelete] = useState("");
     const [loggedIPs, setLoggedIPs] = useState([])
 
 
 
     const handelCreateStream = async () => {
         try {
-            const response = await axios.post(`${process.env.URL}/api/ActiveStreams/admin/create`, {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/admin/create`, {
                 token: JSON.parse(localStorage.getItem("token")),
                 url: Form.url,
                 name: Form.name
@@ -57,13 +58,13 @@ const CreateLiveModel = () => {
             })
             setLiveStreams([...LiveStreams, response.data]);
         } catch (error) {
-            console.log(error);
+            alert("stream not created")
         }
     }
 
     const handelEditStream = async () => {
         try {
-            const response = await axios.put(`${process.env.URL}/api/ActiveStreams/admin/edit`, {
+            const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/admin/edit`, {
                 token: JSON.parse(localStorage.getItem("token")),
                 url: FormEdit.url,
                 name: FormEdit.name,
@@ -83,7 +84,30 @@ const CreateLiveModel = () => {
                 alert("stream not edited")
             }
         } catch (error) {
+            alert("stream not edited")
+        }
+    }
+
+    const handelDeleteStream = async () => {
+        try {
+            const token = JSON.parse(localStorage.getItem("token"))
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/admin/delete`,{
+                token,
+                objectID:formDelete
+            })
+            setFormDelete("");
+            console.log(response.data);
+            if(response.data.status)
+                {
+                    alert("stream edited successfully")
+                }
+                else
+                {
+                    alert("stream not edited")
+                }
+        } catch (error) {
             console.log(error);
+            alert("stream not deleted")
         }
     }
 
@@ -194,6 +218,16 @@ const CreateLiveModel = () => {
                                     value={FormEdit.name}
                                     onChange={(e) => setFormEdit({ ...FormEdit, name: e.target.value })}
                                 />
+                                <h2>------------------------Delete Live Stream--------------------------</h2>
+                                <Input
+                                    label="ID"
+                                    placeholder="Enter the ID"
+                                    variant="bordered"
+                                    color="success"
+                                    type="text"
+                                    value={formDelete}
+                                    onChange={(e) => setFormDelete(e.target.value)}
+                                />
 
 
                             </ModalBody>
@@ -201,8 +235,11 @@ const CreateLiveModel = () => {
                                 <Button color="success" variant="bordered" onPress={handelCreateStream}>
                                     Create
                                 </Button>
-                                <Button color="danger" variant="bordered" onPress={handelEditStream}>
+                                <Button color="warning" variant="bordered" onPress={handelEditStream}>
                                     Edit
+                                </Button>
+                                <Button color="danger" variant="bordered" onPress={handelDeleteStream}>
+                                    Delete
                                 </Button>
                             </ModalFooter>
                         </>

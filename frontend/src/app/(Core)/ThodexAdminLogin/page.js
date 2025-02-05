@@ -23,7 +23,7 @@ export default function page() {
     e.preventDefault();
     try {
       if (Form.password !== "" && Form.userName !== "") {
-        const response = await axios.post(process.env.URL ? process.env.URL : "http://localhost:5000/api/Admin/login", Form);
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}api/Admin/login`, Form);
         console.log(response);
 
         if(response.data.status)
@@ -48,7 +48,7 @@ export default function page() {
 
     try {
       if (e) {
-        const response = await axios.post(process.env.URL ? process.env.URL : "http://localhost:5000/api/Admin/validOTP", {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}api/Admin/validOTP`, {
           UserToken: e
         });
 

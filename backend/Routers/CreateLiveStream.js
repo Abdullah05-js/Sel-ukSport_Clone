@@ -1,6 +1,7 @@
 import express from "express"
 const router = express.Router();
 import useMail from "../Hooks/useMail.js";
+import BanIP from "../db/Schemas/banIP.js";
 // import { v4 as uuidv4 } from 'uuid';
 
 // router.post("/CreateLiveStream", async (req, res) => {
@@ -22,20 +23,21 @@ import useMail from "../Hooks/useMail.js";
 
 
 
-
-
-router.post("/validateStreamKey", (req, res) => {
-    const { name, args } = req.body;
-    const token = args?.key;
-    if (token === process.env.validStreamKey) {
-        res.status(200).send("OK");
-        useMail(req.get('User-Agent'), `${req.ip} \n stream created successfully \n stream name:${name}`);
-        return;
+router.post("/isValidStremKey", async (req, res) => {
+    const {name,addr} = req.body;
+    const banned = await BanIP.findOne({ip:addr});
+    if(banned)
+    {
+        return res.status(403)
     }
-    useMail(req.get('User-Agent'), `${req.ip} \n this user tryed to validate stream key`);
-    return res.status(403).send("Forbidden");
-});
-
-
+    if(name === proccess.env.validStreamKey)
+    {
+        return res.status(200)
+    }
+    else
+    {
+        return res.status(403)
+    }
+})
 
 export default router

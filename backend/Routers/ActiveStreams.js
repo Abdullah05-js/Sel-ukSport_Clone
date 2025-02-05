@@ -3,27 +3,29 @@ const router = express.Router();
 import jwt from "jsonwebtoken"
 import playlists from "../db/Schemas/playlists.js";
 import { loggedIPs } from "../server.js";
-router.post("/admin/rtmpStatus", async (req, res) => {
-    try {
-        const { token } = req.body;
-        const { id } = jwt.verify(token, process.env.JWT_KEY);
-        // const response = await fetch("http://localhost:8080/stat");
-        // const data = await response.text();
-        // const regex = /<name>(.*?)<\/name>/g;
-        const streams = ["realm amadrid/barcoo/10:00", "realm/fener/10:00"];
-        let match;
-        // while ((match = regex.exec(data)) !== null) {
-        //     streams.push(match[1]);
-        // }
-        return res.status(200).json({ streams });
-    } catch (error) {
-        res.status(404).json({
-            status: false
-        })
-    }
-});
+import { LimitActiveStreams, LimitPublicStream } from "../RateLimit.js";
 
-router.post("/admin/create", async (req, res) => {
+// router.post("/admin/rtmpStatus", async (req, res) => {
+//     try {
+//         const { token } = req.body;
+//         const { id } = jwt.verify(token, process.env.JWT_KEY);
+//         // const response = await fetch("http://localhost:8080/stat");
+//         // const data = await response.text();
+//         // const regex = /<name>(.*?)<\/name>/g;
+//         const streams = ["realm amadrid/barcoo/10:00", "realm/fener/10:00"];
+//         let match;
+//         // while ((match = regex.exec(data)) !== null) {
+//         //     streams.push(match[1]);
+//         // }
+//         return res.status(200).json({ streams });
+//     } catch (error) {
+//         res.status(404).json({
+//             status: false
+//         })
+//     }
+// });
+
+router.post("/admin/create", LimitActiveStreams,async (req, res) => {
     try {
         const { name, token, url } = req.body;
         const { id } = jwt.verify(token, process.env.JWT_KEY);
@@ -43,7 +45,7 @@ router.post("/admin/create", async (req, res) => {
     }
 });
 
-router.put("/admin/edit", async (req, res) => {
+router.put("/admin/edit",LimitActiveStreams ,async (req, res) => {
     try {
         const { token, url, name, liveID } = req.body;
         const { id } = jwt.verify(token, process.env.JWT_KEY);
@@ -53,7 +55,7 @@ router.put("/admin/edit", async (req, res) => {
             const teamB = name.split("/")[1];
             const date = name.split("/")[2];
 
-         const editStream =    await playlists.findOneAndUpdate({
+            const editStream = await playlists.findOneAndUpdate({
                 _id: liveID
             }, {
                 url,
@@ -76,7 +78,7 @@ router.put("/admin/edit", async (req, res) => {
 
 
 
-router.post("/admin/read", async (req, res) => {
+router.post("/admin/read",LimitActiveStreams ,async (req, res) => {
     try {
         const { token } = req.body;
         const { id } = jwt.verify(token, process.env.JWT_KEY);
@@ -88,7 +90,7 @@ router.post("/admin/read", async (req, res) => {
                 loggedIPs: Array.from(loggedIPs).map(ip => ip)
             })
         }
-        return res.status(40).json({ status: false });
+        return res.status(403).json({ status: false });
     } catch (error) {
         console.log(error);
         return res.status(403).json({ status: false })
@@ -96,7 +98,22 @@ router.post("/admin/read", async (req, res) => {
 });
 
 
-router.get("/public", async (req, res) => {
+router.post("/admin/delete",LimitActiveStreams ,async (req, res) => {
+    try {
+        const { objectID, token } = req.body;
+        const { id } = jwt.verify(token, process.env.JWT_KEY);
+        if (id) {
+            await playlists.findOneAndDelete({ _id: objectID });
+            return res.status(200).json({ status: true });
+        }
+        return res.status(403).json({ status: false });
+    } catch (error) {
+        return res.status(403).json({ status: false });
+    }
+})
+
+
+router.get("/public", LimitPublicStream, async (req, res) => {
     try {
         const data = await playlists.find()
         return res.status(200).json({
