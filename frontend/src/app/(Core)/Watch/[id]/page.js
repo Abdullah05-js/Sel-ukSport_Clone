@@ -4,6 +4,23 @@ import Content from "@/componets/main/Content";
 import { Suspense } from "react";
 import Loading from "@/app/loading";
 import Footer from "@/componets/Footer/Footer";
+
+
+export const metadata = {
+  title:"بث مباشر",
+  description:
+    "مشاهدة مباريات كرة القدم بث مباشر مجانا بجودة عالية، تابع مباراة ريال مدريد اليوم مباشرة بدون تقطيع، بث مباشر لدوري أبطال أوروبا والدوري الإسباني على أفضل السيرفرات السريعة.",
+  keywords: [
+    "بث مباشر مباريات كرة القدم مجانا",
+    "مشاهدة مباريات ريال مدريد بث مباشر",
+    "بث مباشر ريال مدريد اليوم",
+    "روابط بث مباشر مباريات ريال مدريد",
+    "بث مباشر الدوري الإسباني مجانا",
+    "بث مباشر مباريات دوري أبطال أوروبا",
+  ],
+};
+
+
 export default async function Home({ params }) {
   const { id } = await params;
   return (

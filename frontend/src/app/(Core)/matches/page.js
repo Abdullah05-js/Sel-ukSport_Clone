@@ -5,11 +5,26 @@ import { TodayList } from '@/componets/MatchesPage/TodayList';
 import Image from 'next/image';
 import Link from 'next/link';
 
+  export const metadata = {
+    title:"قائمة المباريات",
+    description:
+      "مشاهدة مباريات كرة القدم بث مباشر مجانا بجودة عالية، تابع مباراة ريال مدريد اليوم مباشرة بدون تقطيع، بث مباشر لدوري أبطال أوروبا والدوري الإسباني على أفضل السيرفرات السريعة.",
+    keywords: [
+      "بث مباشر مباريات كرة القدم مجانا",
+      "مشاهدة مباريات ريال مدريد بث مباشر",
+      "بث مباشر ريال مدريد اليوم",
+      "روابط بث مباشر مباريات ريال مدريد",
+      "بث مباشر الدوري الإسباني مجانا",
+      "بث مباشر مباريات دوري أبطال أوروبا",
+    ],
+  };
+  
+
 export default async function Page() {
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/1xbet`);
     let data = await response.json();
-    console.log(data);
+
     return (
         <div className="h-screen w-screen overflow-x-hidden flex flex-col justify-start items-center gap-2">
 

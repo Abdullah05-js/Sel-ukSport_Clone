@@ -8,13 +8,20 @@ const Votes = ({ diraction, id, total, value, index, diraction1, value1, name, n
     const [isClick, setisClick] = useState(false)
     const [isClick1, setisClick1] = useState(false)
     const handleClick = async () => {
-        
+
+
+        let votes = JSON.parse(localStorage.getItem("votes")) || [];
+
+        if (votes.length > 0 && votes[0]) {
+            votes[0] = new Date(votes[0]);
+        }
+    
         if (JSON.parse(localStorage.getItem("votes"))?.includes(index)) {
             alert("try to vote after 12 hours")
             return;
         }
-        else if ((new Date()).toISOString().split("T")[0] !== serverDate.split("T")[0]) {
-            localStorage.setItem("votes", JSON.stringify([]))
+        else if (votes[0]?.toISOString().split("T")[0] !== serverDate.split("T")[0]) {
+            localStorage.setItem("votes", JSON.stringify([new Date()]))
         }
         try {
             const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}api/Matchs/vote`, {
@@ -26,7 +33,7 @@ const Votes = ({ diraction, id, total, value, index, diraction1, value1, name, n
             setTimeout(() => {
                 setisClick((e) => !e)
             }, 1500)
-            const votes = JSON.parse(localStorage.getItem("votes")) || [];
+            const votes = JSON.parse(localStorage.getItem("votes")) || [new Date()];
             localStorage.setItem("votes", JSON.stringify([...votes, index]));
             location.reload();
         } catch (error) {
@@ -36,12 +43,19 @@ const Votes = ({ diraction, id, total, value, index, diraction1, value1, name, n
 
 
     const handleClick1 = async () => {
+        
+        let votes = JSON.parse(localStorage.getItem("votes")) || [];
+
+        if (votes.length > 0 && votes[0]) {
+            votes[0] = new Date(votes[0]);
+        }
         if (JSON.parse(localStorage.getItem("votes"))?.includes(index)) {
             alert("try to vote after 12 hours")
             return;
         }
-        else if ((new Date()).toISOString().split("T")[0] !== serverDate.split("T")[0]) {
-            localStorage.setItem("votes", JSON.stringify([]))
+        else if (votes[0]?.toISOString().split("T")[0] !== serverDate.split("T")[0]) {
+            
+            localStorage.setItem("votes", JSON.stringify([new Date()]))
         }
         try {
             const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}api/Matchs/vote`, {
@@ -53,7 +67,7 @@ const Votes = ({ diraction, id, total, value, index, diraction1, value1, name, n
             setTimeout(() => {
                 setisClick1((e) => !e)
             }, 1500)
-            const votes = JSON.parse(localStorage.getItem("votes")) || [];
+            const votes = JSON.parse(localStorage.getItem("votes")) || [new Date()];
             localStorage.setItem("votes", JSON.stringify([...votes, index]));
             location.reload();
         } catch (error) {
@@ -68,6 +82,7 @@ const Votes = ({ diraction, id, total, value, index, diraction1, value1, name, n
                 {isClick && <Gol vote={"Gooool...."} />}
                 <Gol vote={value} />
                 <Progress
+                    aria-label='vote'
                     className={`sm:w-96 w-36  ${diraction ? "" : 'rotate-180'}`}
                     color={diraction ? "success" : 'warning'}
                     radius="md"
@@ -81,6 +96,7 @@ const Votes = ({ diraction, id, total, value, index, diraction1, value1, name, n
                 {isClick1 && <Gol vote={"Gooool...."} />}
                 <Gol vote={value1} />
                 <Progress
+                    aria-label='vote'
                     className={`sm:w-96 w-36 ${diraction1 ? "" : 'rotate-180'}`}
                     color={diraction1 ? "success" : 'warning'}
                     radius="md"

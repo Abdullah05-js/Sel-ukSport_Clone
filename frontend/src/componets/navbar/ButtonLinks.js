@@ -14,7 +14,7 @@ function ButtonLinks() {
                     showBorder={true}
                     className="text-xl font-bold p-2  text-center"
                 >
-                    {PathName === "/matches" ? "Live" : "Matches List"}
+                    {PathName === "/matches" ? "Live" : "قائمة المباريات"}
                 </GradientText>
             </Link>
             <Link href="mailto:thodex.live@proton.me" >
@@ -24,7 +24,7 @@ function ButtonLinks() {
                     showBorder={true}
                     className="text-xl font-bold p-2  text-center"
                 >
-                    Ads & Contact
+                    للإعلانات                    & لشراء النظام
                 </GradientText>
             </Link>
         </div>
