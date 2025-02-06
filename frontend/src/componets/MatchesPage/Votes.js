@@ -30,7 +30,7 @@ const Votes = ({ diraction, id, total, value, index, diraction1, value1, name, n
             localStorage.setItem("votes", JSON.stringify([...votes, index]));
             location.reload();
         } catch (error) {
-            alert("try to vote after 12 hours")
+            throw Error("dfv")
         }
     }
 
@@ -57,7 +57,7 @@ const Votes = ({ diraction, id, total, value, index, diraction1, value1, name, n
             localStorage.setItem("votes", JSON.stringify([...votes, index]));
             location.reload();
         } catch (error) {
-            alert("try to vote after 12 hours")
+            throw Error("dfv")
         }
     }
 

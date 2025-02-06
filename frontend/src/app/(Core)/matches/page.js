@@ -7,9 +7,9 @@ import Link from 'next/link';
 
 export default async function Page() {
 
-    const response = await fetch("https://1xbet.com/LineFeed/GetTopGamesStatZip?lng=ar&country=190&fcountry=190&gr=70&limit=10")
-    const data = await response.json();
-
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/1xbet`);
+    let data = await response.json();
+    console.log(data);
     return (
         <div className="h-screen w-screen overflow-x-hidden flex flex-col justify-start items-center gap-2">
 
@@ -18,8 +18,7 @@ export default async function Page() {
             </div>
 
             <nav className=" gap-1  flex sm:flex-row flex-col justify-center sm:w-screen  items-center border-b-2 border-green-300">
-                <iframe src="https://giphy.com/embed/DqILdGsqAUkms" width="300" height="200" frameBorder="0" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/star-wars-gif-DqILdGsqAUkms"></a></p>
-
+            <iframe scrolling='no' frameBorder='0' className='p-0 m-0 border-0' width='300' height='225' src="https://refbanners.com/I?tag=d_4088877m_37433c_&site=4088877&ad=37433" ></iframe>
                 <div className='flex flex-col  gap-3 rounded-xl sm:w-11/12 w-screen h-40 overflow-auto p-2 '>
                     <div className='flex flex-row sm:justify-between justify-around items-center'>
                         <Image src={"https://1xbet.com/genfiles/cms/pg/70/images/09ef1ad2e0b8613684c2d1cd91f4d3a6.svg"} height={60} width={60} />
@@ -27,7 +26,7 @@ export default async function Page() {
                     </div>
                     {data.Value.map((e,index) => {
                         return (
-                            <Link href={"/"}>
+                            <a href={"https://refpa4219945.top/L?tag=d_4088877m_1599c_&site=4088877&ad=1599"} target='_blank'>
                                 <div className="flex sm:flex-row flex-col flex-wrap justify-between p-1 items-center gap-2 border-b-1 border-green-400">
                                     <div className='flex flex-row gap-2 justify-start items-center flex-1 '>
                                         <img
@@ -48,14 +47,13 @@ export default async function Page() {
                                         />
                                     </div>
                                 </div>
-                            </Link>
+                            </a>
                         )
                     })}
                 </div>
 
 
-                <iframe src="https://giphy.com/embed/DqILdGsqAUkms" width="300" height="200" frameBorder="0" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/star-wars-gif-DqILdGsqAUkms"></a></p>
-
+                <iframe scrolling='no' frameBorder='0' className='p-0 m-0 border-0' width='300' height='200' src="https://refbanners.com/I?tag=d_4088877m_54181c_&site=4088877&ad=54181" ></iframe>
             </nav>
 
 

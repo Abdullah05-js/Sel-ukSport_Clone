@@ -1,6 +1,5 @@
 import GradientText from "../GradientText/GradientText";
 import Link from "next/link";
-import Image from "next/image";
 import Votes from "./Votes";
 export async function TodayList() {
     // await new Promise((resolve) => setTimeout(resolve, 15000));

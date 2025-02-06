@@ -19,8 +19,7 @@ export async function Navbar() {
 
 
 
-            {/* <a href="https://moy.auraodin.com/redirect.aspx?pid=121792&bid=1644"><img alt="" src="https://moy.auraodin.com/renderimage.aspx?pid=121792&bid=1644"></img></a> */}
-            
+            <iframe scrolling='no' frameBorder='0' className='p-0 m-0 border-0' width='850' height='225' src="https://refbanners.com/I?tag=d_4088877m_37447c_&site=4088877&ad=37447" ></iframe>            
             
             
             

@@ -11,25 +11,18 @@ import { Spinner } from '@heroui/spinner';
 export default async function Content({ param }) {
     //await new Promise((resolve) => setTimeout(resolve, 15000))
     const Filtredindex = typeof Number(param) !== "number" ? redirect("/") : param > 0 ? param : 1;
-    
+
     const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/public`);
     const Data = response.data.list
 
     const index = Filtredindex <= Data.length ? Filtredindex : 1;
 
-   
+
     return (
         <div className="flex sm:flex-row flex-col items-center gap-1 p-2 w-full sm:h-screen">
 
             <aside className="flex flex-col justify-center  gap-1 sm:w-[380px] w-full">
-                <iframe
-
-                    src="https://giphy.com/embed/DqILdGsqAUkms"
-                    width="380"
-                    height="140"
-                    frameBorder="0"
-                    allowFullScreen
-                ></iframe>
+                <iframe scrolling='no' frameBorder='0' className='p-0 m-0 border-0' width='300' height='250' src="https://refbanners.com/I?tag=d_4088877m_37435c_&site=4088877&ad=37435" ></iframe>
                 <MachesList Data={Data} />
             </aside>
 

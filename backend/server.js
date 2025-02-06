@@ -69,28 +69,6 @@ app.use("/api", mainRoute);
 
 setInterval(UseFetchMatches, 6 * 60 * 60 * 1000);
 
-app.get("/proxy", async (req, res) => {
-  try {
-      let url = req.query.url;
-      if (!url) {
-          return res.status(400).send("Missing 'url' parameter");
-      }
-
-      const response = await fetch(url, {
-          headers: { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)" }
-      });
-
-      const contentType = response.headers.get("content-type");
-      res.set("Content-Type", contentType);
-
-      const body = await response.text(); // Use `.json()` for JSON responses
-      res.send(body);
-  } catch (error) {
-      console.error("Proxy error:", error);
-      res.status(500).send("Error fetching the requested URL.");
-  }
-});
-
 app.listen(process.env.PORT, async () => {
 
   await connect();

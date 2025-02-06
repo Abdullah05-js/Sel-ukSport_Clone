@@ -125,4 +125,16 @@ router.get("/public", LimitPublicStream, async (req, res) => {
     }
 });
 
+router.get("/1xbet", LimitPublicStream, async (req, res) => {
+    try {
+        const response = await fetch("https://1xbet.com/LineFeed/GetTopGamesStatZip?lng=ar&country=190&fcountry=190&gr=70&limit=10")
+        const data = await response.json();
+        return res.status(200).json( data )
+    } catch (error) {
+        console.log(error);
+        return res.status(403).json({ list: [] })
+    }
+});
+
+
 export default router
