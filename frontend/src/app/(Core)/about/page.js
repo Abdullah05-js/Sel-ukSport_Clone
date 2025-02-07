@@ -37,12 +37,13 @@ export default async function Page() {
                     <p className="font-bold text-2xl">🔹 <b>إذا راهنت بـ 100$ على التعادل (3x):</b> ✅ إذا انتهت المباراة بالتعادل، تربح: <b>100 × 3 = 300$</b></p>
                     <p className="font-bold text-2xl">🔹 <b>إذا راهنت بـ 100$ على فوز برشلونة (2x):</b> ✅ إذا فاز برشلونة، تربح: <b>100 × 2 = 200$</b></p>
                     {/* <p className="font-bold text-2xl">⚠️ لكن إذا لم يتحقق توقعك، تخسر المبلغ الذي راهنت به.</p> */}
-                    <p className="font-bold text-2xl">🔥⚽ الآن أنت تعرف كيف تعمل الاحتمالات في المراهنات!</p>
+                    <p className="font-bold text-2xl">🔥⚽ استخدم THODEX كرمز واحصل على مكافأة قدرها 200%
+                    </p>
                 </div>
             </div>
 
 
-            <a href={"https://refpa4219945.top/L?tag=d_4088877m_1599c_&site=4088877&ad=1599"} target="_blank"  className='text-xl font-bold text-green-400 border-3 border-green-400 rounded-xl p-2' >جرب الان</a>
+            <a href={"https://refpa.top/L?tag=d_4088877m_1599c_&site=4088877&ad=1599&r=registration"} target="_blank"  className='text-xl font-bold text-green-400 border-3 border-green-400 rounded-xl p-2' >جرب الان</a>
 
         </div>
 
