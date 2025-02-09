@@ -49,15 +49,13 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <head>
-        <Ads/>
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Providers>
           {children}
         </Providers>
+        <Ads/>
       </body>
     </html>
   );
