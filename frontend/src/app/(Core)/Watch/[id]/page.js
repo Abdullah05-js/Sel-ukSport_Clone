@@ -19,6 +19,22 @@ export const metadata = {
     "بث مباشر الدوري الإسباني مجانا",
     "بث مباشر مباريات دوري أبطال أوروبا",
   ],
+  openGraph: {
+    title: "THODEX.live - أهم مباريات اليوم بث مباشر",
+    description: "مشاهدة مباريات كرة القدم بث مباشر مجانا بجودة عالية...",
+    url: "https://thodex.live",
+    siteName: "THODEX.live",
+    images: [
+      {
+        url: "https://thodex.live/opengraph-image.png", 
+        width: 1200,
+        height: 630,
+        alt: "THODEX.live - بث مباشر"
+      }
+    ],
+    locale: "ar",
+    type: "website"
+  }
 };
 
 

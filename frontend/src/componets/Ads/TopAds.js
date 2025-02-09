@@ -2,14 +2,12 @@ import React from 'react';
 
 const TopAds = () => {
     return (
-        <footer className='flex sm:flex-row flex-col justify-center sm:items-center items-start gap-2 flex-wrap p-2 w-full  '>
-
-            <iframe scrolling='no' frameBorder='0' className='p-0 m-0 border-0' width='850' height='225' src="https://refbanners.com/I?tag=d_4088877m_25851c_&site=4088877&ad=25851" ></iframe>
-            <iframe scrolling='no' frameBorder='0' className='p-0 m-0 border-0' width='600' height='500' src="https://refbanners.com/I?tag=d_4088877m_10599c_&site=4088877&ad=10599" ></iframe>
-            <iframe scrolling='no' frameBorder='0' className='p-0 m-0 border-0' width='270' height='270' src="https://refbanners.com/I?tag=d_4088877m_4505c_&site=4088877&ad=4505" ></iframe>
-            <iframe scrolling='no' frameBorder='0' className='p-0 m-0 border-0' width='300' height='300' src="https://refbanners.com/I?tag=d_4088877m_25841c_&site=4088877&ad=25841" ></iframe>
-            <iframe scrolling='no' frameBorder='0' className='p-0 m-0 border-0' width='192' height='192' src="https://refbanners.com/I?tag=d_4088877m_15809c_&site=4088877&ad=15809" ></iframe>
-            <iframe scrolling='no' frameBorder='0' className='p-0 m-0 border-0' width='250' height='250' src="https://refbanners.com/I?tag=d_4088877m_22387c_&site=4088877&ad=22387" ></iframe>
+        <footer className='flex sm:flex-row flex-col justify-center sm:items-center items-start gap-2 flex-wrap p-2 w-screen  '>
+            <iframe scrolling='no' frameBorder='0' className='p-0 m-0 border-0' width='750' height='200' src="https://refbanners.com/I?tag=d_4088877m_10809c_&site=4088877&ad=10809" ></iframe>
+            <div>
+            <iframe scrolling='no' frameBorder='0' className='p-0 m-0 border-0'  src="https://refbanners.com/I?tag=d_4088877m_37421c_&site=4088877&ad=37421" ></iframe>
+            <iframe scrolling='no' frameBorder='0' className='p-0 m-0 border-0'  src="https://refbanners.com/I?tag=d_4088877m_10793c_&site=4088877&ad=10793" ></iframe>
+            </div>
         </footer>
     );
 }

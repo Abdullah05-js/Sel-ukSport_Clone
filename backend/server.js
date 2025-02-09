@@ -20,17 +20,17 @@ const Cors = {
   allowedHeaders: ["Content-Type"],
 };
 
-app.use(async (req, res, next) => {
-  if (req.path === "/api/CheckBan") {
-    return next();
-  }
-  const ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-  const banned = await BanIP.findOne({ ip });
-  if (banned) {
-    return res.status(403).json({ message: "Access forbidden" });
-  }
-  next();
-})
+// app.use(async (req, res, next) => {
+//   if (req.path === "/api/CheckBan") {
+//     return next();
+//   }
+//   const ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+//   const banned = await BanIP.findOne({ ip });
+//   if (banned) {
+//     return res.status(403).json({ message: "Access forbidden,YOU ARE BANNED :)" });
+//   }
+//   next();
+// })
 
 
 // app.use((req, res, next) => {
@@ -73,6 +73,6 @@ setInterval(UseFetchMatches, 6 * 60 * 60 * 1000);
 app.listen(process.env.PORT, async () => {
 
   await connect();
-  UseFetchMatches(); //trun this in production
+  //UseFetchMatches(); //trun this in production
   console.log(`server working on ${process.env.PORT} port `)
 });

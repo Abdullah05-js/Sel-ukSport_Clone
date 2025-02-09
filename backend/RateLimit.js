@@ -62,7 +62,7 @@ export const LimitBan = rateLimit({
 
 export const LimitMatches = rateLimit({
   windowMs: 10 * 60 * 1000,
-  max: 25,
+  max: 40,
   message: "Your ip have been saved",
   handler: (req, res) => {
     console.log(req.ip);
