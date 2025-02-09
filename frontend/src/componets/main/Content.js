@@ -15,6 +15,7 @@ export default async function Content({ param }) {
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/public`);
     const Data = await response.json();
+    console.log(Data);
     const index = Filtredindex <= Data.list.length ? Filtredindex : 1;
 
 
