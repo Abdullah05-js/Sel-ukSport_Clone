@@ -10,12 +10,11 @@ import { Spinner } from '@heroui/spinner';
 export const dynamic = "force-dynamic";
 
 export default async function Content({ param }) {
-    //await new Promise((resolve) => setTimeout(resolve, 15000))
+  
     const Filtredindex = typeof Number(param) !== "number" ? redirect("/") : param > 0 ? param : 1;
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/public`);
     const Data = await response.json();
-
     const index = Filtredindex <= Data.list.length ? Filtredindex : 1;
 
 
