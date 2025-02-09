@@ -13,7 +13,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-
 export const metadata = {
   metadataBase: new URL("https://thodex.live"),
   title: {
@@ -42,7 +41,6 @@ export const metadata = {
     type: "website"
   }
 };
-
 
 
 export default async function RootLayout({ children }) {
