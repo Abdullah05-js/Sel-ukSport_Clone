@@ -13,14 +13,9 @@ export async function Navbar() {
             </Link>
 
 
-            <div className='flex sm:flex-row flex-col justify-center items-center gap-6'>
-
             <iframe scrolling='no' frameBorder='0' className='border-0 p-0 m-0' width='500' height='120' src="https://refbanners.com/I?tag=d_4088877m_37443c_&site=4088877&ad=37443" ></iframe>            
                     
-            </div>
-
             <ButtonLinks />
-
 
         </header>
     );

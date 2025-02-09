@@ -23,7 +23,7 @@ export default async function Content({ param }) {
 
             <aside className="flex flex-col justify-center items-cetner  gap-1 sm:w-[380px] w-full">
                 <div>
-                <iframe scrolling='no' frameBorder='0' className='p-1 rounded-lg m-0' width={300} height={250} src="https://refbanners.com/I?tag=d_4088877m_4595c_&site=4088877&ad=4595" ></iframe>
+                <iframe scrolling='no' frameBorder='0' className='p-1 rounded-lg m-0' width={300} height={200} src="https://refbanners.com/I?tag=d_4088877m_4595c_&site=4088877&ad=4595" ></iframe>
                 </div>
                 <MachesList Data={Data} />
             </aside>
