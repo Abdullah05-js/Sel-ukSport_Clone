@@ -1,8 +1,8 @@
 
 import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "./providers";
-import Head from "next/head";
 import "./globals.css";
+import Ads from "@/componets/Ads/Ads.js";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -49,6 +49,9 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en">
+      <head>
+        <Ads/>
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
