@@ -7,6 +7,7 @@ import Footer from "@/componets/Footer/Footer";
 
 
 export const metadata = {
+  metadataBase: new URL("https://thodex.live"),
   title:"بث مباشر",
   description:
     "مشاهدة مباريات كرة القدم بث مباشر مجانا بجودة عالية، تابع مباراة ريال مدريد اليوم مباشرة بدون تقطيع، بث مباشر لدوري أبطال أوروبا والدوري الإسباني على أفضل السيرفرات السريعة.",

@@ -4,9 +4,7 @@ import Image from 'next/image';
 import ButtonLinks from './ButtonLinks';
 import Link from 'next/link';
 export async function Navbar() {
-    // const PathName = usePathname();
 
-    //    console.log(PathName);
     return (
         <header className='p-4 flex sm:flex-row flex-col justify-between items-center gap-6   w-full min-h-16  border-b-2 border-green-300' >
 

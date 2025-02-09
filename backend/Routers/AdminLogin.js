@@ -3,6 +3,7 @@ import express from "express"
 const router = express.Router();
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import useMail from "../Hooks/useMail.js";
 dotenv.config();
 
 
@@ -13,7 +14,7 @@ router.post("/validOTP", async (req, res) => {
       secret: process.env.validLoginKey,
       encoding: 'base32',
       token: UserToken,
-      window: 1 // bu 30 saniye geçikme için
+      window: 2 // bu 30 saniye geçikme için
     })
 
     if (verify) {
@@ -30,11 +31,11 @@ router.post("/validOTP", async (req, res) => {
     }
       
      return res.status(403).json({
-        status: false
+        status: verify
       })
     } catch (error) {
       res.status(403).json({
-        status: false
+        status: false,
       })
     }
   })

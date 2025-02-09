@@ -26,7 +26,7 @@ export const LimitCreateLiveStream = rateLimit({
 
 export const LimitActiveStreams = rateLimit({
   windowMs: 5 * 60 * 1000,
-  max: 65,
+  max: 165,
   message: "Your ip have been saved",
   handler: (req, res) => {
     console.log(req.ip);

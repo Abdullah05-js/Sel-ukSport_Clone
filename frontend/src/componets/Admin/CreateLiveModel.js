@@ -22,7 +22,7 @@ export const fetchStreamsList = async () => {
         });
         return response.data;
     } catch (error) {
-        console.log(error);
+       
         return []
     }
 }
@@ -96,7 +96,7 @@ const CreateLiveModel = () => {
                 objectID:formDelete
             })
             setFormDelete("");
-            console.log(response.data);
+            
             if(response.data.status)
                 {
                     alert("stream edited successfully")
@@ -106,7 +106,7 @@ const CreateLiveModel = () => {
                     alert("stream not edited")
                 }
         } catch (error) {
-            console.log(error);
+          
             alert("stream not deleted")
         }
     }

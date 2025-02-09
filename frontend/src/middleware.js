@@ -7,6 +7,7 @@ export async function middleware(NextRequest) {
     try {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}api/CheckBan`);
         const isBan = response.data.status
+        console.log("controling isBan");
         if (!isBan && NextRequest.nextUrl.pathname === "/Ban") {
              return middleware2(NextRequest, isBan);
         }
@@ -16,7 +17,7 @@ export async function middleware(NextRequest) {
         }
         return NextResponse.next();
     } catch (error) {
-        console.log(error);
+        
         return NextResponse.next();
     }
 }

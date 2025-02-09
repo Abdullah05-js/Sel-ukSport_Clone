@@ -5,7 +5,9 @@ import { TodayList } from '@/componets/MatchesPage/TodayList';
 import Image from 'next/image';
 import Link from 'next/link';
 
+export const dynamic = "force-dynamic";
 export const metadata = {
+    metadataBase: new URL("https://thodex.live"),
     title: "قائمة المباريات",
     description:
         "مشاهدة مباريات كرة القدم بث مباشر مجانا بجودة عالية، تابع مباراة ريال مدريد اليوم مباشرة بدون تقطيع، بث مباشر لدوري أبطال أوروبا والدوري الإسباني على أفضل السيرفرات السريعة.",

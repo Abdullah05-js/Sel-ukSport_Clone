@@ -8,6 +8,7 @@ const nextConfig = {
           pathname: '/api/image/**'
         }]
       },
+      
 };
 
 export default nextConfig;

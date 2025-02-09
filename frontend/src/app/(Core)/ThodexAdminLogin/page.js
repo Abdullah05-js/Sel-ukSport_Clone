@@ -24,7 +24,6 @@ export default function page() {
     try {
       if (Form.password !== "" && Form.userName !== "") {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}api/Admin/login`, Form);
-        console.log(response);
 
         if(response.data.status)
         {
@@ -39,7 +38,6 @@ export default function page() {
         alert("");
       }
     } catch (error) {
-      console.log(error);
       alert("password or ID wrong ip saved");
     }
   }
@@ -66,7 +64,6 @@ export default function page() {
         alert("");
       }
     } catch (error) {
-      console.log(error);
       alert("password or ID wrong ip saved");
     }
   }

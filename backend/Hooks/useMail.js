@@ -1,11 +1,12 @@
-import nodemailer from "nodemailer";
-import dotenv from "dotenv";
-
+import dotenv from "dotenv"
 dotenv.config();
-
+import nodemailer from "nodemailer";
 
 const useMail = async (name, ip) => {
-
+  console.log( {
+    user: process.env.APP_USER,
+    pass: process.env.APP_PASS,
+  });
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -32,16 +33,21 @@ const useMail = async (name, ip) => {
     </div>
   </div>
 `
-  await transporter.sendMail({
-    from: "APORSPORT.COM <kurasporthd@gmail.com>",
-    to: "abdallhameed2005@gmail.com",
-    subject: "Önemli",
-    html: html,
-
-  })
+  try {
+    await transporter.sendMail({
+      from: "thodex.live <kurasporthd@gmail.com>",
+      to: "abdallhameed2005@gmail.com",
+      subject: "Önemli",
+      html: html,
+  
+    })
+  } catch (error) {
+    console.log(error);
+  }
 
   console.log("mail send successfully");
 
 }
+
 
 export default useMail;

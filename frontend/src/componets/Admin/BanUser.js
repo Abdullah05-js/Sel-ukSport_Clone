@@ -22,7 +22,7 @@ export const fetchBanList = async () => {
         });
         return response.data.loggedIPs;
     } catch (error) {
-        console.log(error);
+       
         return []
     }
 }
@@ -41,11 +41,11 @@ const BanUser = () => {
                 ip
             });
             setip("");
-            console.log(response.data);
+            
             setBanList([...BanList,response.data.ip])
             alert(response.data.status)
         } catch (error) {
-            console.log(error);
+            
         } 
     }
 

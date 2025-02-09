@@ -16,13 +16,17 @@ const Votes = ({ diraction, id, total, value, index, diraction1, value1, name, n
             votes[0] = new Date(votes[0]);
         }
     
+        if (votes[0]?.toISOString().split("T")[0] !== serverDate.split("T")[0]) {
+            localStorage.setItem("votes", JSON.stringify([new Date()]))
+        }
+
+
         if (JSON.parse(localStorage.getItem("votes"))?.includes(index)) {
             alert("try to vote after 12 hours")
             return;
         }
-        else if (votes[0]?.toISOString().split("T")[0] !== serverDate.split("T")[0]) {
-            localStorage.setItem("votes", JSON.stringify([new Date()]))
-        }
+
+         
         try {
             const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}api/Matchs/vote`, {
                 index,
@@ -49,13 +53,13 @@ const Votes = ({ diraction, id, total, value, index, diraction1, value1, name, n
         if (votes.length > 0 && votes[0]) {
             votes[0] = new Date(votes[0]);
         }
+        if (votes[0]?.toISOString().split("T")[0] !== serverDate.split("T")[0]) {
+            
+            localStorage.setItem("votes", JSON.stringify([new Date()]))
+        }
         if (JSON.parse(localStorage.getItem("votes"))?.includes(index)) {
             alert("try to vote after 12 hours")
             return;
-        }
-        else if (votes[0]?.toISOString().split("T")[0] !== serverDate.split("T")[0]) {
-            
-            localStorage.setItem("votes", JSON.stringify([new Date()]))
         }
         try {
             const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}api/Matchs/vote`, {

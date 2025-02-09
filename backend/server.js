@@ -11,6 +11,7 @@ import helmet from "helmet";
 import UseFetchMatches from "./Hooks/useFetchMatches.js";
 dotenv.config();
 const app = express();
+app.set('trust proxy', 1);
 app.use(helmet())
 const allowedOrigin =  [process.env.allowOrigin]; 
 const Cors = {
@@ -72,6 +73,6 @@ setInterval(UseFetchMatches, 6 * 60 * 60 * 1000);
 app.listen(process.env.PORT, async () => {
 
   await connect();
- //UseFetchMatches(); //trun this in production
+  UseFetchMatches(); //trun this in production
   console.log(`server working on ${process.env.PORT} port `)
 });
