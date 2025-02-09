@@ -1,7 +1,6 @@
 import React from 'react';
 import { Navbar } from '@/componets/navbar/Navbar';
 
-export const dynamic = "force-dynamic";
 export const metadata = {
     metadataBase: new URL("https://thodex.live"),
     title: "DMCA",
