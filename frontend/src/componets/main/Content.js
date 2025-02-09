@@ -12,7 +12,7 @@ export default async function Content({ param }) {
     //await new Promise((resolve) => setTimeout(resolve, 15000))
     const Filtredindex = typeof Number(param) !== "number" ? redirect("/") : param > 0 ? param : 1;
 
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/public`);
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/public`,{ cache: 'no-store'});
     const Data = response.data.list
 
     const index = Filtredindex <= Data.length ? Filtredindex : 1;
