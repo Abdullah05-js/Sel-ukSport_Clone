@@ -13,7 +13,12 @@ export default async function Content({ param }) {
   
     const Filtredindex = typeof Number(param) !== "number" ? redirect("/") : param > 0 ? param : 1;
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/public`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/public`, {
+        method: 'GET',
+        headers: {
+            'Cache-Control': 'no-cache', 
+        }
+    });
     const Data = await response.json();
     console.log(Data);
     const index = Filtredindex <= Data.list.length ? Filtredindex : 1;

@@ -9,39 +9,39 @@ const Video = ({link}) => {
     const [isOpen, setIsOpen] = useState(false);
     const router =useRouter()
 
-    useEffect(() => {
-        document.addEventListener("keydown", function (event) {
-            if (
-              event.key === "F12" ||
-              (event.ctrlKey && event.shiftKey && ["I", "J", "C"].includes(event.key)) ||
-              (event.ctrlKey && event.key === "U")
-            ) {
-              event.preventDefault();
-            }
-          })
+    // useEffect(() => {
+    //     document.addEventListener("keydown", function (event) {
+    //         if (
+    //           event.key === "F12" ||
+    //           (event.ctrlKey && event.shiftKey && ["I", "J", "C"].includes(event.key)) ||
+    //           (event.ctrlKey && event.key === "U")
+    //         ) {
+    //           event.preventDefault();
+    //         }
+    //       })
 
-          document.addEventListener("contextmenu", function (event) {
-            event.preventDefault();
-          });
+    //       document.addEventListener("contextmenu", function (event) {
+    //         event.preventDefault();
+    //       });
           
           
               
-    setInterval(() => {
-        (function () {
-          if (window.console && (console.profile || console.clear)) {
-            console.profile();
-            console.clear();
+    // setInterval(() => {
+    //     (function () {
+    //       if (window.console && (console.profile || console.clear)) {
+    //         console.profile();
+    //         console.clear();
             
-          }
-          try {
-            debugger;
-          } catch (e) {
-          window.location.href = "https://google.com";
-          }
-        })();
-      }, 100);
+    //       }
+    //       try {
+    //         debugger;
+    //       } catch (e) {
+    //       window.location.href = "https://google.com";
+    //       }
+    //     })();
+    //   }, 100);
 
-    },[])
+    // },[])
 
     return (
        <article className="bg-black border-1 border-green-300 flex justify-center items-center flex-1 w-screen rounded-lg p-2  sm:w-full ">

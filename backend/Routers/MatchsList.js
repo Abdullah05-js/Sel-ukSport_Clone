@@ -6,9 +6,9 @@ import rateLimit from "express-rate-limit";
 
 router.get("/get", LimitMatches, async (req, res) => {
     try {
-
-        const AllMatches = await Matches.find({});
-
+        
+        const AllMatches = await Matches.find();
+        res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
         res.status(200).json(AllMatches[0]);
     } catch (error) {
         res.status(404)

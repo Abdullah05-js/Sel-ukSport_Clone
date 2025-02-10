@@ -84,7 +84,7 @@ router.post("/admin/read",LimitActiveStreams ,async (req, res) => {
         const { id } = jwt.verify(token, process.env.JWT_KEY);
         if (id) {
             const data = await playlists.find()
-
+            res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
             return res.status(200).json({
                 list: data,
                 loggedIPs: Array.from(loggedIPs).map(ip => ip)
@@ -116,6 +116,7 @@ router.post("/admin/delete",LimitActiveStreams ,async (req, res) => {
 router.get("/public", LimitPublicStream, async (req, res) => {
     try {
         const data = await playlists.find()
+        res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
         return res.status(200).json({
             list: data,
         })
