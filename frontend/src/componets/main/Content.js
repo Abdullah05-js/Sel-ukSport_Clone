@@ -6,6 +6,7 @@ import tiktok from "@/Photos/tiktok.png"
 import Xicon from "@/Photos/xicon.png"
 import Image from 'next/image';
 import { Spinner } from '@heroui/spinner';
+import Ads from '../Ads/Ads';
 
 export const dynamic = "force-dynamic";
 
@@ -27,16 +28,8 @@ export default async function Content({ param }) {
     return (
         <div className="flex sm:flex-row flex-col-reverse items-center gap-1 p-2 w-full sm:h-screen">
 
-            <aside className="flex flex-col justify-center items-center gap-1 sm:w-[380px] w-full">
-                <iframe
-                    scrolling="no"
-                    frameBorder="0"
-                    className="p-1 rounded-lg m-0 mx-auto"
-                    width={300}
-                    height={200}
-                    src="https://refbanners.com/I?tag=d_4088877m_4595c_&site=4088877&ad=4595">
-                </iframe>
-
+            <aside className="flex flex-col justify-center items-center gap-1 sm:w-[380px] w-full m-auto">
+                <Ads/>
                 <MachesList Data={Data.list} />
             </aside>
 

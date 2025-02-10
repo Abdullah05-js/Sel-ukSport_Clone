@@ -3,6 +3,8 @@ import logo from "@/Photos/APO.png"
 import Image from 'next/image';
 import ButtonLinks from './ButtonLinks';
 import Link from 'next/link';
+import Ads from '../Ads/Ads2';
+
 export async function Navbar() {
 
     return (
@@ -12,9 +14,8 @@ export async function Navbar() {
                 <Image src={logo} className='object-cover rounded-lg' alt="thodex.live" />
             </Link>
 
+           <Ads/>
 
-            <iframe scrolling='no' frameBorder='0' className='border-0 p-0 m-0' width='560' height='120' src="https://refbanners.com/I?tag=d_4088877m_37443c_&site=4088877&ad=37443" ></iframe>            
-                    
             <ButtonLinks />
 
         </header>

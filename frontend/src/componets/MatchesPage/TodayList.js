@@ -3,7 +3,7 @@ import Link from "next/link";
 import Votes from "./Votes";
 export async function TodayList() {
     // await new Promise((resolve) => setTimeout(resolve, 15000));
-    const response = await fetch(`https://thodex.live/api/Matchs/get`, {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/Matchs/get`, {
         method: 'GET',
         headers: {
             'Cache-Control': 'no-cache', 
