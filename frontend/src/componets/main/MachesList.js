@@ -11,7 +11,7 @@ const MachesList = ({ Data }) => {
     })
 
     return (
-        <aside className='h-[600px] border-green-300 border-2 rounded-lg flex flex-col gap-2 p-4 overflow-auto'>
+        <aside className='h-[600px] w-full border-green-300 border-2 rounded-lg flex flex-col gap-2 p-4 overflow-auto'>
             {ButtonList}
         </aside>
     );

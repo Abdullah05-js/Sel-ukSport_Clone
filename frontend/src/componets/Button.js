@@ -11,9 +11,9 @@ const Button = ({ link, team1, team2, date, index }) => {
   }
 
   return (
-    <div onClick={handleClick} variant='underliend' className='border-b-2 cursor-pointer border-green-300  '>
+    <div onClick={handleClick} variant='underliend' className='border-b-2 cursor-pointer border-green-300  w-full'>
 
-      <div className='font-extrabold flex flex-row gap-2 justify-between items-center '>
+      <div className='font-extrabold flex flex-row gap-2 justify-between items-center'>
 
         <p className='flex-1 text-start'>{team1.toUpperCase()}</p>
 
