@@ -4,7 +4,7 @@ import "@/componets/main/style.css"
 export default function Error() {
     return (
         <div className="main_wrapper">
-            <Link href={"/matches"} className=" flex justify-center items-center p-2 rounded-xl bg-yellow-400">
+            <Link href={"/"} className=" flex justify-center items-center p-2 rounded-xl bg-yellow-400">
                 Go Back
             </Link>
             <div className="main">

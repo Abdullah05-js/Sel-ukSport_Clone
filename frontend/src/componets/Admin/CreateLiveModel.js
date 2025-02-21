@@ -23,7 +23,7 @@ export const fetchStreamsList = async () => {
         return response.data;
     } catch (error) {
        
-        return []
+        return {list:[] , loggedIPs}
     }
 }
 
@@ -41,7 +41,6 @@ const CreateLiveModel = () => {
         liveID:""
     })
     const [formDelete,setFormDelete] = useState("");
-    const [loggedIPs, setLoggedIPs] = useState([])
 
 
 
@@ -115,10 +114,9 @@ const CreateLiveModel = () => {
         const fetchData = async () => {
             const { list, loggedIPs } = await fetchStreamsList();
             setLiveStreams(list);
-            setLoggedIPs(loggedIPs);
         };
 
-        const fetchInterval = setInterval(fetchData, 1000 * 5);
+        const fetchInterval = setInterval(fetchData, 1000 * 60);
         fetchData();
 
         return () => {
@@ -127,7 +125,7 @@ const CreateLiveModel = () => {
     }, []);
 
     return (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 overflow-x-hidden">
 
 
             <div className="flex flex-row justify-center gap-4">
@@ -150,14 +148,7 @@ const CreateLiveModel = () => {
 
 
 
-                <div className="flex flex-col gap-2 overflow-auto p-2 ">
-                    <h1 className="text-2xl text-white font-bold text-center">Logged IPs</h1>
-                    {
-                        loggedIPs.map((e) => {
-                            return <p key={e} className="border-2 border-red-600 p-2 rounded-xl text-green-300" disabled>{e}</p>
-                        })
-                    }
-                </div>
+                
             </div>
 
 

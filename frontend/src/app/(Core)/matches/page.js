@@ -4,7 +4,8 @@ import Loading from '@/app/loading';
 import { TodayList } from '@/componets/MatchesPage/TodayList';
 import Image from 'next/image';
 import Link from 'next/link';
-
+import ad1 from "@/Photos/200x200_1x_THODEXLIVE_AR.gif"
+import ad2 from "@/Photos/200x200__THODEXLIVE_arabic.png"
 export const dynamic = "force-dynamic";
 export const metadata = {
     metadataBase: new URL("https://thodex.live"),
@@ -25,16 +26,16 @@ export const metadata = {
         url: "https://thodex.live",
         siteName: "THODEX.live",
         images: [
-          {
-            url: "https://thodex.live/opengraph-image.png", 
-            width: 1200,
-            height: 630,
-            alt: "THODEX.live - بث مباشر"
-          }
+            {
+                url: "https://thodex.live/opengraph-image.png",
+                width: 1200,
+                height: 630,
+                alt: "THODEX.live - بث مباشر"
+            }
         ],
         locale: "ar",
         type: "website"
-      }
+    }
 };
 
 
@@ -50,27 +51,26 @@ export default async function Page() {
 
     return (
         <div className="h-screen w-screen overflow-x-hidden flex flex-col justify-start items-center gap-2">
-
-            <div className="flex sm:flex-row flex-col justify-between items-center w-screen p-2">
-                <Navbar />
-            </div>
-
+           <Navbar />
             <nav className=" gap-1  flex sm:flex-row flex-col justify-center sm:w-screen  items-center border-b-2 border-green-300">
-                <iframe scrolling='no' frameBorder='0' className='p-0 m-0 border-0' width='300' height='225' src="https://refbanners.com/I?tag=d_4088877m_37433c_&site=4088877&ad=37433" ></iframe>
-                <div className='flex flex-col  gap-3 rounded-xl sm:w-11/12 w-screen sm:h-40 h-80 overflow-auto p-2 '>
+                <a href="https://refpa.top/L?tag=d_4088877m_1599c_&site=4088877&ad=1599&r=registration">
+                    <Image width={300} height={200} src={ad1} alt='THODEX.LİVE ad' />
+                </a>
+                <div className='flex flex-col  gap-1 rounded-xl sm:w-11/12 w-screen sm:h-48 h-80 overflow-auto p-2'>
                     <div className='flex flex-row sm:justify-between justify-around items-center'>
                         <a href={"https://refpa.top/L?tag=d_4088877m_1599c_&site=4088877&ad=1599&r=registration"} target='_blank'>
-                            <Image src={"https://1xbet.com/genfiles/cms/pg/70/images/09ef1ad2e0b8613684c2d1cd91f4d3a6.svg"} height={60} width={60} />
+                            <Image src={"https://1xbet.com/genfiles/cms/pg/70/images/09ef1ad2e0b8613684c2d1cd91f4d3a6.svg"} alt='1xbet' height={60} width={60} />
                         </a>
                         <Link href={"/about"} className='text-xl font-bold text-green-400 border-3 border-green-400 rounded-xl p-2' >ما هذا ؟ </Link>
                     </div>
-                    {Data.map((e, index) => {
+                    {Data?.map((e, index) => {
                         return (
-                            <a href={"https://refpa.top/L?tag=d_4088877m_1599c_&site=4088877&ad=1599&r=registration"} target='_blank'>
+                            <a key={index} href={"https://refpa.top/L?tag=d_4088877m_1599c_&site=4088877&ad=1599&r=registration"} target='_blank'>
                                 <div className="flex sm:flex-row flex-col flex-wrap justify-between p-1 items-center gap-2 border-b-1 border-green-400">
                                     <div className='flex flex-row gap-2 justify-start items-center flex-1 '>
-                                        <img
-                                            className=" h-6"
+                                        <Image
+                                            width={30}
+                                            height={30}
                                             src={`https://1xbet.com/sfiles/logo_teams/${e.O1IMG}`}
                                             alt={"hi" + index}
                                         />
@@ -80,8 +80,9 @@ export default async function Page() {
 
                                     <div className='flex flex-row gap-2 justify-end items-center flex-1'>
                                         <p className="text-xl text-right font-extrabold text-wrap">{e.E[2].C}x-{e.O2E}</p>
-                                        <img
-                                            className="h-6"
+                                        <Image
+                                            width={30}
+                                            height={30}
                                             src={`https://1xbet.com/sfiles/logo_teams/${e.O2IMG}`}
                                             alt={"match.teamB.name" + index}
                                         />
@@ -91,9 +92,9 @@ export default async function Page() {
                         )
                     })}
                 </div>
-
-
-                <iframe scrolling='no' frameBorder='0' className='p-0 m-0 border-0' width='300' height='200' src="https://refbanners.com/I?tag=d_4088877m_54181c_&site=4088877&ad=54181" ></iframe>
+                <a href="https://refpa.top/L?tag=d_4088877m_1599c_&site=4088877&ad=1599&r=registration">
+                    <Image width={300} height={200} src={ad2} alt='THODEX.LİVE ad' />
+                </a>
             </nav>
 
 

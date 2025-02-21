@@ -1,11 +1,12 @@
-export default async function useRestartStream(hls, token) {
+
+export default async function useRestartStream(target, token) {
     try {
       const response = await fetch("http://localhost:5000/api/ActiveStreams/start", {
         method: "POST",
         headers: {
           "Content-Type": "application/json", 
         },
-        body: JSON.stringify({ hls, token }), 
+        body: JSON.stringify({ target, token }), 
       });
   
      

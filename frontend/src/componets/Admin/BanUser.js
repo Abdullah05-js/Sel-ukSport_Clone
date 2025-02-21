@@ -15,12 +15,12 @@ import {
 import { useState } from "react";
 
 
-export const fetchBanList = async () => {
+export const fetchStreamsList = async () => {
     try {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}api/BanUser/BanList`, {
-            token: JSON.parse(localStorage.getItem("token")),
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/StreamsList`, {
+           params:{token: JSON.parse(localStorage.getItem("token")),}
         });
-        return response.data.loggedIPs;
+        return response.data
     } catch (error) {
        
         return []
@@ -29,30 +29,53 @@ export const fetchBanList = async () => {
 
 const BanUser = () => {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
-    const [BanList, setBanList] = useState([12, 121, 42.2132]);
-    const [ip, setip] = useState("")
+    const [HlsList, setHlsList] = useState([]);
+    const [hls, setHls] = useState("")
+    const [id, setid] = useState("")
 
 
-
-    const handelBan = async () => {
+    const handelStart = async () => {
         try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}api/BanUser/Ban`, {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/start`, {
                 token: JSON.parse(localStorage.getItem("token")),
-                ip
+                target:hls
             });
-            setip("");
-            
-            setBanList([...BanList,response.data.ip])
-            alert(response.data.status)
+           const newHlsLİst = HlsList.map((e) => {
+            if(e.id == hls.split("|")[0])
+            {
+                return response.data
+            }
+            return e
+           }) 
+            setHlsList(newHlsLİst)
+            setHls("");
+            alert("stream created")
         } catch (error) {
-            
+            alert("stream didnt create")
         } 
+    }
+    const handleStop = async () => {
+        try {
+            if(!id)
+            {                 
+                alert("please enter the id")
+                return 
+            }
+            await axios.post(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/stop`, {
+                token: JSON.parse(localStorage.getItem("token")),
+                id
+            });
+            setid("");
+            alert("stream stoped")
+        } catch (error) {
+            alert("stream didint stop")
+        }
     }
 
     useEffect(() => {
         const fetchData = async () => {
-            const data = await fetchBanList();
-            setBanList(data);
+            const data = await fetchStreamsList();
+            setHlsList(data.Streams);
         };
 
         fetchData();
@@ -60,18 +83,18 @@ const BanUser = () => {
 
 
     return (
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-6 overflow-x-hidden">
 
             <Button color="success" onPress={onOpen}>
-                Ban a User
+                Start Live Stream
             </Button>
 
             <div className="flex flex-row flex-1 gap-4">
                 <div className="flex flex-col gap-2 overflow-auto p-2 ">
-                    <h1 className="text-2xl text-white font-bold">Ban List</h1>
+                    <h1 className="text-2xl text-white font-bold">Streams List</h1>
                     {
-                        BanList.map((e) => {
-                            return <p className="border-2 border-red-600 p-2 text-start text-wrap rounded-xl text-green-300">{e.ip}-- <span className="text-green-300">{e.date}</span></p>
+                        HlsList.map((e,index) => {
+                            return <p key={index} className="border-2 border-red-600 p-2 text-start text-wrap rounded-xl text-green-300">{e.pid}-{e.name}-{e.id}</p>
                         })
                     }
                 </div>
@@ -84,22 +107,34 @@ const BanUser = () => {
                 <ModalContent className="bg-black">
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">Ban User</ModalHeader>
+                            <ModalHeader className="flex flex-col gap-1">stream events</ModalHeader>
                             <ModalBody>
                                 <Input
-                                    label="ip"
-                                    placeholder="Enter ip"
+                                    label="hls"
+                                    placeholder="Enter hls"
                                     variant="bordered"
                                     color="success"
                                     type="text"
-                                    value={ip}
-                                    onChange={(e) => setip(e.target.value)}
+                                    value={hls}
+                                    onChange={(e) => setHls(e.target.value)}
                                 />
-
-                            </ModalBody>
+                                <h2>------------------------Stop Live Stream--------------------------</h2>
+                                <Input
+                                    label="id"
+                                    placeholder="Enter id"
+                                    variant="bordered"
+                                    color="success"
+                                    type="text"
+                                    value={id}
+                                    onChange={(e) => setid(e.target.value)}
+                                />
+                                </ModalBody>
                             <ModalFooter>
-                                <Button color="success" variant="bordered" onPress={handelBan}>
-                                    Ban
+                                <Button color="success" variant="bordered" onPress={handelStart}>
+                                    Start
+                                </Button>
+                                <Button color="success" variant="bordered" onPress={handleStop}>
+                                    Stop
                                 </Button>
                             </ModalFooter>
                         </>

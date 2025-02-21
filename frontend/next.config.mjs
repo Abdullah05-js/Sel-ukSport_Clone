@@ -7,6 +7,11 @@ const nextConfig = {
           hostname: 'www.goal.com',
           port: '',
           pathname: '/api/image/**'
+        },
+        {
+          protocol: 'https',
+          hostname: '1xbet.com',
+          port: '',
         }]
       },
       

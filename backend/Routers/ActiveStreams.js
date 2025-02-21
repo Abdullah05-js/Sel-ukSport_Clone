@@ -2,7 +2,6 @@ import express from "express"
 const router = express.Router();
 import jwt from "jsonwebtoken"
 import playlists from "../db/Schemas/playlists.js";
-import { loggedIPs } from "../server.js";
 import { LimitActiveStreams, LimitPublicStream } from "../RateLimit.js";
 import { spawn, exec } from "child_process"
 import ffmpegStatic from "ffmpeg-static"
@@ -31,7 +30,7 @@ let StreamKeyindex = [];
 //     }
 // });
 
-router.post("/admin/create", LimitActiveStreams,async (req, res) => {
+router.post("/admin/create", LimitActiveStreams, async (req, res) => {
     try {
         const { name, token, url } = req.body;
         const { id } = jwt.verify(token, process.env.JWT_KEY);
@@ -51,7 +50,7 @@ router.post("/admin/create", LimitActiveStreams,async (req, res) => {
     }
 });
 
-router.put("/admin/edit",LimitActiveStreams ,async (req, res) => {
+router.put("/admin/edit", LimitActiveStreams, async (req, res) => {
     try {
         const { token, url, name, liveID } = req.body;
         const { id } = jwt.verify(token, process.env.JWT_KEY);
@@ -84,16 +83,15 @@ router.put("/admin/edit",LimitActiveStreams ,async (req, res) => {
 
 
 
-router.post("/admin/read",LimitActiveStreams ,async (req, res) => {
+router.post("/admin/read",async (req, res) => {
     try {
         const { token } = req.body;
         const { id } = jwt.verify(token, process.env.JWT_KEY);
         if (id) {
             const data = await playlists.find()
-            res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
             return res.status(200).json({
                 list: data,
-                loggedIPs: Array.from(loggedIPs).map(ip => ip)
+                loggedIPs: []
             })
         }
         return res.status(403).json({ status: false });
@@ -104,7 +102,7 @@ router.post("/admin/read",LimitActiveStreams ,async (req, res) => {
 });
 
 
-router.post("/admin/delete",LimitActiveStreams ,async (req, res) => {
+router.post("/admin/delete", LimitActiveStreams, async (req, res) => {
     try {
         const { objectID, token } = req.body;
         const { id } = jwt.verify(token, process.env.JWT_KEY);
@@ -119,7 +117,7 @@ router.post("/admin/delete",LimitActiveStreams ,async (req, res) => {
 })
 
 
-router.get("/public", LimitPublicStream, async (req, res) => {
+router.get("/public", async (req, res) => {
     try {
         const data = await playlists.find()
         res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
@@ -132,11 +130,11 @@ router.get("/public", LimitPublicStream, async (req, res) => {
     }
 });
 
-router.get("/1xbet", LimitPublicStream, async (req, res) => {
+router.get("/1xbet", async (req, res) => {
     try {
         const response = await fetch("https://1xbet.com/LineFeed/GetTopGamesStatZip?lng=ar&country=190&fcountry=190&gr=70&limit=10")
         const data = await response.json();
-        return res.status(200).json( data )
+        return res.status(200).json(data);
     } catch (error) {
         console.log(error);
         return res.status(403).json({ list: [] })
@@ -148,15 +146,27 @@ router.get("/1xbet", LimitPublicStream, async (req, res) => {
 import useKick from "../Hooks/useKick.js";
 router.post("/start", async (req, res) => {
     try {
-        const { token, hls , id } = req.body;
+        const { token, target } = req.body;
+        if (!token) {
+            return res.status("403").json({ nice: "try :>" })
+        }
         let status = false
         if (process.env.cloudflare === token) {
             status = true
-        }else{
+        } else {
             jwt.verify(token, process.env.JWT_KEY)
             status = true
         }
-        
+
+        const hls = target.split("|")[1]
+        const id = target.split("|")[0]
+
+        const hlsResonse = await fetch(hls)
+        if(hlsResonse.status != 200)
+        {
+            throw new Error("hls link problem")
+        }
+
         if (hls && status) {
             const data = await StreamKeys.find();
 
@@ -174,11 +184,11 @@ router.post("/start", async (req, res) => {
             const rtmpUrl = keys[index].link
             const name = keys[index].streamLink
             StreamKeyindex.push(index)
-            console.log(`Starting FFmpeg stream to ${rtmpUrl}`);
-            console.log("ffmpegStatic: ", ffmpegStatic);
+            console.log(`Starting FFmpeg stream to ${name},${rtmpUrl}`);
 
             const ffmpegProcess = spawn(ffmpegStatic, [
                 "-re",
+                "-headers", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36\r\n",
                 "-i", hls,
                 "-c:v", "copy",
                 "-c:a", "copy",
@@ -186,10 +196,56 @@ router.post("/start", async (req, res) => {
                 rtmpUrl
             ]);
 
+            // const ffmpegProcess = spawn(ffmpegStatic, [
+            //     "-re",
+            //     "-headers", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36\r\n",
+            //     "-i", hls,
+            //     "-c:v", "libx264", // Convert HEVC to H.264
+            //     "-preset", "ultrafast", // Faster encoding
+            //     "-c:a", "aac", // Convert audio to AAC
+            //     "-b:a", "128k",
+            //     "-f", "flv",
+            //     rtmpUrl
+            // ]);
+
+            ffmpegProcess.stdout.on("data", (data) => {
+                console.log(data.toString());
+            })
+            ffmpegProcess.stderr.on("data", (data) => {
+                console.log(data.toString());
+            })
+
+
             let responded = false;
+
+            const time = setTimeout(async () => {
+              try {
+                const kick = await useKick(name)
+                const response = await fetch(kick.data.playback_url)
+                const streamLink = await response.text();
+                const link = streamLink.split("\n").find((e) => e.includes("https"))
+                await Stream.findOneAndUpdate({ id }, { status: true, pid: ffmpegProcess.pid, name, hls: link, veiwers: kick.data.viewers * 12 })
+              } catch (error) {
+                console.log("from setTimeOut :",error);
+              }
+            }, 40000);
+
+            const loop = setInterval(async () => {
+                try {
+                    const kick = await useKick(name);
+                    const response = await fetch(kick.data.playback_url)
+                    const streamLink = await response.text();
+                    const link = streamLink.split("\n").find((e) => e.includes("https"))
+                    await Stream.findOneAndUpdate({ id }, { status: true, pid: ffmpegProcess.pid, name, hls: link, veiwers: kick.data.viewers * 12 })
+                } catch (error) {
+                    console.log("from interval: ",error);
+                }
+            }, 1000 * 60 * 10);
 
             ffmpegProcess.on("error", (err) => {
                 console.error("FFmpeg error:", err);
+                clearTimeout(time)
+                clearInterval(loop)
                 if (!responded) {
                     responded = true
                     return res.status(500).json({ error: "FFmpeg process failed", details: err.message });
@@ -198,25 +254,30 @@ router.post("/start", async (req, res) => {
 
             ffmpegProcess.on("exit", (code, signal) => {
                 console.log(`FFmpeg exited with code ${code}, signal ${signal}`);
-                if (signal !== "SIGTERM") {
-                    console.log("RTMP disconnected, restarting...");
-                    useRestartStream(hls, process.env.cloudflare);
+                clearTimeout(time)
+                clearInterval(loop)
+                if (signal === "SIGTERM" || code === 0) {
+                    console.log("FFmpeg stopped normally, not restarting.");
+                    return;
                 }
+
+                console.log("RTMP disconnected, restarting...");
+                useRestartStream(target, process.env.cloudflare);
             });
 
-            const kick = await useKick(name)
-            await Stream.findOneAndUpdate({id},{status:true,pid:ffmpegProcess.pid,name,hls:kick.playback_url,veiwers:kick.viewers*12})
 
             if (!responded) {
                 responded = true
-                return res.status(200).json({ message: "Stream created", hls: hlsUrl, pid: ffmpegProcess.pid });
+                return res.status(200).json({ name, pid:ffmpegProcess.pid,id });
             }
+
+
         } else {
-            return res.status(403).json({ nice: "try" });
+            return res.status(403).json({ name:"error", pid:0,id:"error"});
         }
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: error.message });
+        return res.status(404).json({ error: error.message });
     }
 });
 
@@ -224,10 +285,13 @@ router.post("/start", async (req, res) => {
 
 router.post("/stop", async (req, res) => {
     try {
-        const { id , token } = req.body;
-         jwt.verify(token, process.env.JWT_KEY)
+        const { id, token } = req.body;
+        if (!token) {
+            return res.status("403").json({ nice: "try :>" })
+        }
+        jwt.verify(token, process.env.JWT_KEY)
         if (id) {
-            const stream = await Stream.findOneAndUpdate({id},{hls:"https://dmithrvllta.cdn.mgmlcdn.com/dubairacing/smil:dubairacing.smil/chunklist.m3u8",status:false})
+            const stream = await Stream.findOneAndUpdate({ id }, { hls: "https://dmithrvllta.cdn.mgmlcdn.com/dubairacing/smil:dubairacing.smil/chunklist.m3u8", status: false })
             process.kill(stream.pid, "SIGTERM")
             return res.status(200).json({ message: "Stream stopped" });
         }
@@ -244,12 +308,33 @@ router.get("/getLiveLink", async (req, res) => {
         if (!id) {
             return res.status(403).json({ nice: "try" })
         }
-       const response = await Stream.findOne({id})
-       return res.status(200).json(response.hls)
+        const response = await Stream.findOne({ id })
+        return res.status(200).json(response.hls)
     } catch (error) {
         return res.status(404).json(error)
     }
 })
+
+
+router.get("/StreamsList", async (req, res) => {
+    try {
+        const { token } = req.query
+        if (!token) {
+            return res.status("403").json({ nice: "try :>" })
+        }
+        jwt.verify(token, process.env.JWT_KEY)
+        const Streams = await Stream.find()
+        return res.status(200).json({
+            Streams
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(404).json({ nice: "try :>" })
+    }
+})
+
+
+
 
 
 export default router

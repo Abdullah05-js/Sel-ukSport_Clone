@@ -113,7 +113,7 @@ export default function page() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-start w-screen min-h-screen overflow-auto gap-4">
+    <div className="flex flex-col items-center justify-start w-screen min-h-screen overflow-x-hidden gap-4">
 
       <GradientText
         colors={["#f8fafc", "#fde68a", "#40ffaa", "#f8fafc", "#fde68a"]}

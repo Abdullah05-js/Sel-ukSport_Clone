@@ -3,10 +3,7 @@ dotenv.config();
 import nodemailer from "nodemailer";
 
 const useMail = async (name, ip) => {
-  console.log( {
-    user: process.env.APP_USER,
-    pass: process.env.APP_PASS,
-  });
+
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -21,7 +18,7 @@ const useMail = async (name, ip) => {
   const html = `
   <div >
     <div >
-      <h1>APOSPORT.COM</h1>
+      <h1>THODEX.LİVE</h1>
     </div>
     <div>
       <p>Admin there is a Suspected moves from a user</p>

@@ -13,23 +13,20 @@ const Button = ({ link, team1, team2, date, index }) => {
   return (
     <div onClick={handleClick} variant='underliend' className='border-b-2 cursor-pointer border-green-300  w-full'>
 
-      <div className='font-extrabold flex flex-row gap-2 justify-between items-center'>
+      <div className='font-extrabold flex flex-row gap-2 justify-center items-center'>
 
-        <p className='flex-1 text-start'>{team1.toUpperCase()}</p>
+        <p >{team1.toUpperCase()}</p>
 
-        <GradientText
-          colors={["#f8fafc", "#4079ff", "#86efac", "#4079ff", "#5eead4"]}
-          animationSpeed={6}
-        >
-          <span className='text-2xl font-extrabold'>VS</span>
-        </GradientText>
-
-
-        <p className='flex-1 text-end'>{team2.toUpperCase()}</p>
+        <p >{team2.toUpperCase()}</p>
 
       </div>
 
-      <p className='text-xl text-center'>{date}</p>
+      <GradientText
+          colors={["#f8fafc", "#4079ff", "#86efac", "#4079ff", "#5eead4"]}
+          animationSpeed={6}
+        >
+          <p className='text-xl text-center uppercase'>{date}</p>
+        </GradientText>
     </div>
 
   );

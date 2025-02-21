@@ -1,14 +1,9 @@
 import GradientText from "../GradientText/GradientText";
 import Link from "next/link";
 import Votes from "./Votes";
+import Image from "next/image";
 export async function TodayList() {
-    // await new Promise((resolve) => setTimeout(resolve, 15000));
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/Matchs/get`, {
-        method: 'GET',
-        headers: {
-            'Cache-Control': 'no-cache', 
-        }
-    });
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/Matchs/get`);
     let data = await response.json();
     
     return (
@@ -60,8 +55,9 @@ export async function TodayList() {
                                     <div className='flex flex-col gap-1 justify-center items-start flex-1'>
                                         <Link href={"/Watch/1"}>
                                             <div className="flex flex-row gap-2 justify-start items-center ">
-                                                <img
-                                                    className="w-15 h-15"
+                                                <Image
+                                                    height={70}
+                                                    width={70}
                                                     src={`https://www.goal.com${match.teamA.image.url}`}
                                                     alt={match.teamA.name}
                                                 />
@@ -76,8 +72,9 @@ export async function TodayList() {
                                         <Link href={"/Watch/1"}>
                                             <div className="flex flex-row gap-2 justify-start items-center ">
                                                 <p className="text-2xl font-extrabold text-[#F5A524]">{match.teamB.name} </p>
-                                                <img
-                                                    className="w-15 h-15"
+                                                <Image
+                                                    height={70}
+                                                    width={70}
                                                     src={`https://www.goal.com${match.teamB.image.url}`}
                                                     alt={match.teamB.name}
                                                 />

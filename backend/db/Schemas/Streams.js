@@ -7,7 +7,7 @@ const StreamsSchema = mongoose.Schema({
     name:String,
     status:Boolean,
     hls:String,
-    veiwers:Number,
+    veiwers:{type:Number,default:0},
 })
 
 

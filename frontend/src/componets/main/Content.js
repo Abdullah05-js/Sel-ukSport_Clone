@@ -14,12 +14,7 @@ export default async function Content({ param }) {
   
     const Filtredindex = typeof Number(param) !== "number" ? redirect("/") : param > 0 ? param : 1;
 
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/public`, {
-        method: 'GET',
-        headers: {
-            'Cache-Control': 'no-cache', 
-        }
-    });
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/public`);
     const Data = await response.json();
     console.log(Data);
     const index = Filtredindex <= Data.list.length ? Filtredindex : 1;
@@ -43,7 +38,7 @@ export default async function Content({ param }) {
 
                 <div className="font-extrabold flex flex-row gap-4 justify-center items-center w-full">
                     <a target='_blank' href={"https://www.tiktok.com/@thodex.live"} className='font-bold text-xl'>
-                        <Image className='bg-white rounded-lg border-green-300 border-2 w-16' src={tiktok} />
+                        <Image className='bg-white rounded-lg border-green-300 border-2 w-16' alt='1xbet' src={tiktok} />
                     </a>
                     <span className="font-bold text-xl">
                         {`${param === undefined ? Data.list[0].teamA : Data.list[index - 1].teamA}`} <br className='sm:hidden block' />VS <br className='sm:hidden block' />{`${param === undefined ? Data.list[0].teamA : Data.list[index - 1]?.teamB}`}
@@ -52,7 +47,7 @@ export default async function Content({ param }) {
                         {Data.list[index - 1].date}
                     </span>
                     <a target='_blank' href={"https://x.com/Thodex_Live"} className='font-bold text-xl'>
-                        <Image className='rounded-lg border-green-300 border-2 w-16' src={Xicon} />
+                        <Image className='rounded-lg border-green-300 border-2 w-16' alt='1xbet' src={Xicon} />
                     </a>
                 </div>
             </section>

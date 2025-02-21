@@ -5,7 +5,7 @@ import CreateLiveModel from "./CreateLiveModel";
 
 const BanForm = () => {
     return (
-        <div className="flex flex-row gap-6">
+        <div className="flex flex-row gap-6 overflow-x-hidden ">
 
             <BanUser />
             <CreateLiveModel />

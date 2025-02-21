@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Providers } from "./providers";
 import "./globals.css";
 import AdComponent from "@/componets/Ads/AdComponent";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -30,7 +31,7 @@ export const metadata = {
     siteName: "THODEX.live",
     images: [
       {
-        url: "https://thodex.live/opengraph-image.png", 
+        url: "https://thodex.live/opengraph-image.png",
         width: 1200,
         height: 630,
         alt: "THODEX.live - بث مباشر"
@@ -47,7 +48,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
         <Providers>
           {children}

@@ -30,7 +30,7 @@ export const LimitActiveStreams = rateLimit({
   message: "Your ip have been saved",
   handler: (req, res) => {
     console.log(req.ip);
-    useMail(req.get('User-Agent'), `${req.ip} \n tryed to create live stream`);
+    useMail(req.get('User-Agent'), `${req.ip} \n tryed to LimitActiveStreams`);
     res.status(429).json({ status: "ip saved.", ip: req.ip })
   }
 });
@@ -43,7 +43,7 @@ export const LimitPublicStream = rateLimit({
   message: "Your ip have been saved",
   handler: (req, res) => {
     console.log(req.ip);
-    useMail(req.get('User-Agent'), `${req.ip} \n tryed to create live stream`);
+    useMail(req.get('User-Agent'), `${req.ip} \n tryed to LimitPublicStream`);
     res.status(429).json({ status: "ip saved.", ip: req.ip })
   }
 });
