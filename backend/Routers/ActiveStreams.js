@@ -186,7 +186,7 @@ router.post("/start", async (req, res) => {
             StreamKeyindex.push(index)
             console.log(`Starting FFmpeg stream to ${name},${rtmpUrl}`);
 
-            const ffmpegProcess = spawn(ffmpegStatic, [
+            const ffmpegProcess = spawn('ffmpeg', [
                 "-re",
                 "-headers", "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36\r\n",
                 "-i", hls,
