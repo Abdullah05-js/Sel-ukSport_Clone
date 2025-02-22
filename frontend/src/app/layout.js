@@ -16,10 +16,10 @@ const geistMono = Geist_Mono({
 export const metadata = {
   metadataBase: new URL("https://thodex.live"),
   title: {
-    default: "THODEX.live - أهم مباريات اليوم بث مباشر",
+    default: "Yalla Shoot | يلا شوت | أهم مباريات اليوم بث مباشر | yallashoot live tv",
     template: "%s - THODEX.live"
   },
-  description: "مشاهدة مباريات كرة القدم بث مباشر مجانا بجودة عالية، تابع مباراة ريال مدريد اليوم مباشرة بدون تقطيع، بث مباشر لدوري أبطال أوروبا والدوري الإسباني على أفضل السيرفرات السريعة",
+  description: "يلا شوت _ yalla shoot أهم مباريات اليوم بث مباشر بدون تقطيع يلا شووت _ يلا شوت لايف _ yalla shoot tv _ يلا شووت مباشر _ yalla shoot live tv",
   twitter: {
     card: "summary_large_image"
   },

@@ -18,11 +18,11 @@ import { useState } from "react";
 export const fetchStreamsList = async () => {
     try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/StreamsList`, {
-           params:{token: JSON.parse(localStorage.getItem("token")),}
+            params: { token: JSON.parse(localStorage.getItem("token")), }
         });
         return response.data
     } catch (error) {
-       
+
         return []
     }
 }
@@ -38,28 +38,26 @@ const BanUser = () => {
         try {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/start`, {
                 token: JSON.parse(localStorage.getItem("token")),
-                target:hls
+                target: hls
             });
-           const newHlsLİst = HlsList.map((e) => {
-            if(e.id == hls.split("|")[0])
-            {
-                return response.data
-            }
-            return e
-           }) 
+            const newHlsLİst = HlsList.map((e) => {
+                if (e.id == hls.split("|")[0]) {
+                    return response.data
+                }
+                return e
+            })
             setHlsList(newHlsLİst)
             setHls("");
             alert("stream created")
         } catch (error) {
             alert("stream didnt create")
-        } 
+        }
     }
     const handleStop = async () => {
         try {
-            if(!id)
-            {                 
+            if (!id) {
                 alert("please enter the id")
-                return 
+                return
             }
             await axios.post(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/stop`, {
                 token: JSON.parse(localStorage.getItem("token")),
@@ -93,7 +91,7 @@ const BanUser = () => {
                 <div className="flex flex-col gap-2 overflow-auto p-2 ">
                     <h1 className="text-2xl text-white font-bold">Streams List</h1>
                     {
-                        HlsList.map((e,index) => {
+                        HlsList.map((e, index) => {
                             return <p key={index} className="border-2 border-red-600 p-2 text-start text-wrap rounded-xl text-green-300">{e.pid}-{e.name}-{e.id}</p>
                         })
                     }
@@ -128,7 +126,7 @@ const BanUser = () => {
                                     value={id}
                                     onChange={(e) => setid(e.target.value)}
                                 />
-                                </ModalBody>
+                            </ModalBody>
                             <ModalFooter>
                                 <Button color="success" variant="bordered" onPress={handelStart}>
                                     Start
