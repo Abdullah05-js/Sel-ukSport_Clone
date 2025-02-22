@@ -291,7 +291,7 @@ router.post("/stop", async (req, res) => {
         }
         jwt.verify(token, process.env.JWT_KEY)
         if (id) {
-            const stream = await Stream.findOneAndUpdate({ id }, { hls: "https://dmithrvllta.cdn.mgmlcdn.com/dubairacing/smil:dubairacing.smil/chunklist.m3u8", status: false })
+            const stream = await Stream.findOneAndUpdate({ id }, { hls: "https://dmithrvllta.cdn.mgmlcdn.com/dubairacing/smil:dubairacing.smil/chunklist.m3u8", status: false,name:"",pid:""})
             process.kill(stream.pid, "SIGTERM")
             return res.status(200).json({ message: "Stream stopped" });
         }
