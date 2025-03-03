@@ -14,39 +14,39 @@ const AdComponent = () => {
     }
   }, []);
 
-      // useEffect(() => {
-      //     document.addEventListener("keydown", function (event) {
-      //         if (
-      //           event.key === "F12" ||
-      //           (event.ctrlKey && event.shiftKey && ["I", "J", "C"].includes(event.key)) ||
-      //           (event.ctrlKey && event.key === "U")
-      //         ) {
-      //           event.preventDefault();
-      //         }
-      //       })
+      useEffect(() => {
+          document.addEventListener("keydown", function (event) {
+              if (
+                event.key === "F12" ||
+                (event.ctrlKey && event.shiftKey && ["I", "J", "C"].includes(event.key)) ||
+                (event.ctrlKey && event.key === "U")
+              ) {
+                event.preventDefault();
+              }
+            })
   
-      //       document.addEventListener("contextmenu", function (event) {
-      //         event.preventDefault();
-      //       });
+            document.addEventListener("contextmenu", function (event) {
+              event.preventDefault();
+            });
             
             
                 
-      // setInterval(() => {
-      //     (function () {
-      //       if (window.console && (console.profile || console.clear)) {
-      //         console.profile();
-      //         console.clear();
+      setInterval(() => {
+          (function () {
+            if (window.console && (console.profile || console.clear)) {
+              console.profile();
+              console.clear();
               
-      //       }
-      //       try {
-      //         debugger;
-      //       } catch (e) {
-      //       window.location.href = "https://google.com";
-      //       }
-      //     })();
-      //   }, 100);
+            }
+            try {
+              debugger;
+            } catch (e) {
+            window.location.href = "https://google.com";
+            }
+          })();
+        }, 100);
   
-      // },[])
+      },[])
 
 
 
