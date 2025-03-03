@@ -256,7 +256,7 @@ router.post("/start", async (req, res) => {
                 console.log(`FFmpeg exited with code ${code}, signal ${signal}`);
                 clearTimeout(time)
                 clearInterval(loop)
-                if (signal === "SIGTERM" || code === 0) {
+                if (signal === "SIGTERM" || code === 0 || code === 255) {
                     console.log("FFmpeg stopped normally, not restarting.");
                     return;
                 }

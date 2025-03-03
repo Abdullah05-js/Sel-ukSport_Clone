@@ -3,12 +3,18 @@ import Link from "next/link";
 import Votes from "./Votes";
 import Image from "next/image";
 export async function TodayList() {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/Matchs/get`);
-    let data = await response.json();
+    // let Data = []
+    // try {
+    //     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/Matchs/get`);
+    //     let data = await response.json();
+    //     Data = data.Value || []
+    // } catch (error) {
+    //     Data = []
+    // }
     
     return (
         <section className=" flex flex-col p-2 h-screen sm:w-4/5">
-            <article key={"main"} className="flex flex-row justify-center items-center">
+            {/* <article key={"main"} className="flex flex-row justify-center items-center">
                 <GradientText
                     colors={["#f8fafc", "#4079ff", "#86efac", "#4079ff", "#5eead4"]}
                     animationSpeed={6}
@@ -26,9 +32,9 @@ export async function TodayList() {
                 </GradientText>
 
 
-            </article>
+            </article> */}
 
-            {data.liveScores.map((liveScore, index) => {
+            {/* {Data.length === 0 ? "No matches Found" : ( Data.liveScores.map((liveScore, index) => {
                 let index1 = index
                 return (
                     <article key={Math.random()} className="mb-4">
@@ -89,7 +95,7 @@ export async function TodayList() {
                         ))}
                     </article>
                 )
-            })}
+            }))} */}
         </section>
     );
 }

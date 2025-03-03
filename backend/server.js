@@ -27,11 +27,11 @@ app.use(express.json());
 
 app.use("/api", mainRoute);
 
-setInterval(UseFetchMatches, 6 * 60 * 60 * 1000);
+//setInterval(UseFetchMatches, 6 * 60 * 60 * 1000);
 
 app.listen(process.env.PORT, async () => {
 
   await connect();
-  UseFetchMatches(); //trun this in production
+  //UseFetchMatches(); //trun this in production
   console.log(`server working on ${process.env.PORT} port `)
 });
