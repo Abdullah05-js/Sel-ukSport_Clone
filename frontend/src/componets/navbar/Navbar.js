@@ -8,7 +8,7 @@ import Ads from '../Ads/Ads2';
 export async function Navbar() {
 
     return (
-        <header className='flex sm:flex-row flex-col justify-between items-center overflow-hidden w-full sm:min-h-52 min-h-40 p-2 border-b-2 border-green-300' >
+        <header className='flex z-50 sm:flex-row flex-col justify-between items-center overflow-hidden w-full sm:min-h-52 min-h-40 p-2 border-b-2 border-green-300' >
 
             <Link href={"/matches"} className='flex sm:flex-row flex-col justify-center items-center gap-6'>
                 <Image src={logo} className='object-cover rounded-lg' alt="thodex.live" />

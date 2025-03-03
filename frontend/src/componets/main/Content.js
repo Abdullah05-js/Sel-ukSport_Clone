@@ -21,7 +21,7 @@ export default async function Content({ param }) {
 
 
     return (
-        <div className="flex sm:flex-row flex-col-reverse items-center gap-1 p-2 w-full sm:h-screen">
+        <div className="flex z-50 sm:flex-row flex-col-reverse items-center gap-1 p-2 w-full sm:h-screen">
 
             <aside className="flex flex-col justify-center items-center gap-1 sm:w-[380px] w-full m-auto">
                 <Ads/>

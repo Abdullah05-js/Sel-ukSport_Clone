@@ -7,7 +7,7 @@ const Video = ({link}) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-       <article className="bg-black border-1 border-green-300 flex justify-center items-center flex-1 w-screen rounded-lg p-2  sm:w-full ">
+       <article className="bg-black border-1 bg-opacity-50  border-green-300 flex justify-center items-center flex-1 w-screen rounded-lg p-2  sm:w-full ">
         {isOpen ? (
             <iframe
                 src={link}
@@ -17,9 +17,9 @@ const Video = ({link}) => {
                 allow="clipboard-write"
             ></iframe>
         ) : (
-            <a onClick={() => setIsOpen((e) => !e)} href='https://www.effectiveratecpm.com/gv7n4nr0?key=08b8b34905cafd15f840d3b7a021f0b5' target='_blank' className="flex flex-col justify-center items-center h-96 gap-4">
+            <a onClick={() => setIsOpen((e) => !e)} href='https://www.effectiveratecpm.com/gv7n4nr0?key=08b8b34905cafd15f840d3b7a021f0b5' target='_blank' className="flex flex-col p-2 rounded-xl  justify-center items-center h-96 gap-4">
                 <Image src={logo} alt="logo" className='rounded-lg'  />
-                <p className="text-red-400 text-3xl font-bold">انقر على الشعار لبدء المشاهدة</p>
+                <p className="text-red-400 text-3xl font-extrabold bg-white p-2 rounded-xl">انقر على الشعار لبدء المشاهدة</p>
             </a>
         )}
        </article>

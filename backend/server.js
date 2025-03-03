@@ -27,7 +27,7 @@ app.use(express.json());
 
 app.use("/api", mainRoute);
 
-//setInterval(UseFetchMatches, 6 * 60 * 60 * 1000);
+setInterval(UseFetchMatches, 6 * 60 * 60 * 1000);
 
 app.listen(process.env.PORT, async () => {
 

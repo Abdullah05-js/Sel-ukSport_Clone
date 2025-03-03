@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import ad1 from "@/Photos/200x200_1x_THODEXLIVE_AR.gif"
 import ad2 from "@/Photos/200x200__THODEXLIVE_arabic.png"
+import Footer from '@/componets/Footer/Footer';
 export const dynamic = "force-dynamic";
 export const metadata = {
     metadataBase: new URL("https://thodex.live"),
@@ -56,7 +57,7 @@ export default async function Page() {
                 <a href="https://refpa.top/L?tag=d_4088877m_1599c_&site=4088877&ad=1599&r=registration">
                     <Image width={300} height={200} src={ad1} alt='THODEX.LİVE ad' />
                 </a>
-                <div className='flex flex-col  gap-1 rounded-xl sm:w-11/12 w-screen sm:h-48 h-80 overflow-auto p-2'>
+                <div className=' flex-col  gap-1 rounded-xl sm:w-11/12 w-screen sm:h-48 h-80 overflow-auto p-2 sm:flex hidden'>
                     <div className='flex flex-row sm:justify-between justify-around items-center'>
                         <a href={"https://refpa.top/L?tag=d_4088877m_1599c_&site=4088877&ad=1599&r=registration"} target='_blank'>
                             <Image src={"https://1xbet.com/genfiles/cms/pg/70/images/09ef1ad2e0b8613684c2d1cd91f4d3a6.svg"} alt='1xbet' height={60} width={60} />
@@ -101,6 +102,7 @@ export default async function Page() {
             <Suspense fallback={<Loading />}>
                 <TodayList />
             </Suspense>
+            <Footer />
         </div>
 
     );

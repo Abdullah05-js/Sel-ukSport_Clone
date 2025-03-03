@@ -4,9 +4,8 @@ const nextConfig = {
       domains: ['thodex.live'],
         remotePatterns: [{
           protocol: 'https',
-          hostname: 'www.goal.com',
+          hostname: 'semedia.filgoal.com',
           port: '',
-          pathname: '/api/image/**'
         },
         {
           protocol: 'https',
