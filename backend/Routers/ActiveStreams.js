@@ -240,7 +240,7 @@ router.post("/start", async (req, res) => {
                 } catch (error) {
                     console.log("from interval: ",error);
                 }
-            }, 1000 * 60 * 10);
+            }, 1000 * 60);
 
             ffmpegProcess.on("error", (err) => {
                 console.error("FFmpeg error:", err);
