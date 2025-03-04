@@ -223,8 +223,8 @@ router.post("/start", async (req, res) => {
                 const kick = await useKick(name)
                 const response = await fetch(kick.data.playback_url)
                 const streamLink = await response.text();
-                const link = streamLink.split("\n").find((e) => e.includes("https"))
-                await Stream.findOneAndUpdate({ id }, { status: true, pid: ffmpegProcess.pid, name, hls: link, veiwers: kick.data.viewers * 12 })
+                // const link = streamLink.split("\n").find((e) => e.includes("https"))
+                await Stream.findOneAndUpdate({ id }, { status: true, pid: ffmpegProcess.pid, name, hls: streamLink, veiwers: kick.data.viewers * 12 })
               } catch (error) {
                 console.log("from setTimeOut :",error);
               }
@@ -235,8 +235,8 @@ router.post("/start", async (req, res) => {
                     const kick = await useKick(name);
                     const response = await fetch(kick.data.playback_url)
                     const streamLink = await response.text();
-                    const link = streamLink.split("\n").find((e) => e.includes("https"))
-                    await Stream.findOneAndUpdate({ id }, { status: true, pid: ffmpegProcess.pid, name, hls: link, veiwers: kick.data.viewers * 12 })
+                    // const link = streamLink.split("\n").find((e) => e.includes("https"))
+                    await Stream.findOneAndUpdate({ id }, { status: true, pid: ffmpegProcess.pid, name, hls: streamLink, veiwers: kick.data.viewers * 12 })
                 } catch (error) {
                     console.log("from interval: ",error);
                 }
