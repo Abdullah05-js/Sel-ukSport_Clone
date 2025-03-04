@@ -218,33 +218,33 @@ router.post("/start", async (req, res) => {
 
             let responded = false;
 
-            const time = setTimeout(async () => {
-              try {
-                const kick = await useKick(name)
-                const response = await fetch(kick.data.playback_url)
-                const streamLink = await response.text();
-                // const link = streamLink.split("\n").find((e) => e.includes("https"))
-                await Stream.findOneAndUpdate({ id }, { status: true, pid: ffmpegProcess.pid, name, hls: streamLink, veiwers: kick.data.viewers * 12 })
-              } catch (error) {
-                console.log("from setTimeOut :",error);
-              }
-            }, 40000);
+            // const time = setTimeout(async () => {
+            //   try {
+            //     const kick = await useKick(name)
+            //     const response = await fetch(kick.data.playback_url)
+            //     const streamLink = await response.text();
+            //     // const link = streamLink.split("\n").find((e) => e.includes("https"))
+            //     await Stream.findOneAndUpdate({ id }, { status: true, pid: ffmpegProcess.pid, name, hls: streamLink, veiwers: kick.data.viewers * 12 })
+            //   } catch (error) {
+            //     console.log("from setTimeOut :",error);
+            //   }
+            // }, 40000);
 
             const loop = setInterval(async () => {
                 try {
                     const kick = await useKick(name);
                     const response = await fetch(kick.data.playback_url)
                     const streamLink = await response.text();
-                    // const link = streamLink.split("\n").find((e) => e.includes("https"))
+                    const link = streamLink.split("\n").find((e) => e.includes("https"))
                     await Stream.findOneAndUpdate({ id }, { status: true, pid: ffmpegProcess.pid, name, hls: streamLink, veiwers: kick.data.viewers * 12 })
                 } catch (error) {
                     console.log("from interval: ",error);
                 }
-            }, 1000 * 60);
+            }, 1000 * 15);
 
             ffmpegProcess.on("error", (err) => {
                 console.error("FFmpeg error:", err);
-                clearTimeout(time)
+                // clearTimeout(time)
                 clearInterval(loop)
                 if (!responded) {
                     responded = true
