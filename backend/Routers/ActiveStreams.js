@@ -254,7 +254,7 @@ router.post("/start", async (req, res) => {
 
             ffmpegProcess.on("exit", (code, signal) => {
                 console.log(`FFmpeg exited with code ${code}, signal ${signal}`);
-                clearTimeout(time)
+                // clearTimeout(time)
                 clearInterval(loop)
                 if (signal === "SIGTERM" || code === 0 || code === 255) {
                     console.log("FFmpeg stopped normally, not restarting.");
@@ -291,7 +291,7 @@ router.post("/stop", async (req, res) => {
         }
         jwt.verify(token, process.env.JWT_KEY)
         if (id) {
-            const stream = await Stream.findOneAndUpdate({ id }, { hls: "https://dmithrvllta.cdn.mgmlcdn.com/dubairacing/smil:dubairacing.smil/chunklist.m3u8", status: false,name:"",pid:""})
+            const stream = await Stream.findOneAndUpdate({ id }, { hls: "https://stream.kick.com/ivs/v1/196233775518/bDfZeCzseLiI/2025/3/6/20/0/0yDirs5d1yf6/media/hls/720p30/playlist.m3u8", status: false,name:"",pid:""})
             process.kill(stream.pid, "SIGTERM")
             return res.status(200).json({ message: "Stream stopped" });
         }
