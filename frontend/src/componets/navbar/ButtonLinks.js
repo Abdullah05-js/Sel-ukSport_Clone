@@ -12,9 +12,9 @@ function ButtonLinks() {
                     colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
                     animationSpeed={3}
                     showBorder={true}
-                    className="text-xl font-bold p-2  text-center"
+                    className="text-xl font-extrabold p-2  text-center"
                 >
-                    {PathName === "/matches" ? "Live" : "قائمة المباريات"}
+                    {PathName === "/matches" ? "بث المباشر" : "قائمة المباريات"}
                 </GradientText>
             </Link>
             <Link href="mailto:thodex.live@proton.me" >
