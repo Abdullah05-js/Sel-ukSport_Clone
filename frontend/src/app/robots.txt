@@ -1,0 +1,3 @@
+User-agent: ia_archiver
+
+Sitemap: https://thodex.live/sitemap.xml OR https://thodex.live/sitemap_index.xml

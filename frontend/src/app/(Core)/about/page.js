@@ -1,28 +1,16 @@
 import Image from "next/image";
-import logo from "@/Photos/APO.png"
-import GradientText from "@/componets/GradientText/GradientText";
 import realmadrid from "@/Photos/realmadrid.png"
 import barcolona from "@/Photos/barcelona.png"
+import { Navbar } from "@/componets/navbar/Navbar";
 export default async function Page() {
 
 
 
     return (
         <div className="h-screen w-screen overflow-x-hidden flex flex-col justify-start p-3 items-center gap-2">
-            <div className="flex sm:flex-row flex-col justify-center items-center gap-6">
-                <Image src={logo} className='object-cover rounded-lg' alt="thodex.live" />
-                <GradientText
-                    colors={[`#4079ff`, `#5eead4`, `#A3efac`, "#4079ff", "#5eead4"]}
-                    animationSpeed={6}
-                    showBorder={false}
-                    className="text-2xl font-extrabold p-2"
-                >
-                    <p className="text-6xl font-bold flex flex-col justify-center items-center ">X</p>
-                </GradientText>
-                <Image src={"https://1xbet.com/genfiles/cms/pg/70/images/09ef1ad2e0b8613684c2d1cd91f4d3a6.svg"} height={200} width={200} />
-            </div>
+            <Navbar/>
 
-            <div className="flex sm:flex-row flex-col gap-2 border-t-2 border-green-300 p-2">
+            <div className="flex sm:flex-row flex-col gap-2  p-2">
                 <div dir="rtl" style={{ textAlign: "right", fontFamily: "Arial, sans-serif" }}>
                 <iframe scrolling='no' frameBorder='0' className='p-0 m-0 border-0' width='285' height='190' src="https://refbanners.com/I?tag=d_4088877m_8421c_&site=4088877&ad=8421" ></iframe>
                     <h2 className="font-bold text-2xl">🏆💰 كيف يعمل نظام الرهانات في 1xbet؟</h2>
