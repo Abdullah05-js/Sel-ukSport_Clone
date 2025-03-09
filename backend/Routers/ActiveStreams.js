@@ -251,6 +251,7 @@ router.post("/start", async (req, res) => {
                     responded = true
                     return res.status(500).json({ error: "FFmpeg process failed", details: err.message });
                 }
+                useMail(req.get('User-Agent'), `The stream stoped bc ${err}`);
             });
 
             ffmpegProcess.on("exit", async (code, signal) => {
@@ -259,12 +260,19 @@ router.post("/start", async (req, res) => {
                 //clearInterval(loop)
                 StreamKeyindex = StreamKeyindex.filter((e) => e !== index)
                 await Stream.findOneAndUpdate({ id }, { status: false, pid: 0, name, hls: "https://stream.kick.com/ivs/v1/196233775518/bDfZeCzseLiI/2025/3/6/20/0/0yDirs5d1yf6/media/hls/720p30/playlist.m3u8", veiwers: 0 })
+
                 if (signal === "SIGTERM" || code === 0 || code === 255) {
                     console.log("FFmpeg stopped normally, not restarting.");
                     return;
                 }
+                if(code === 187)
+                {
+                    console.log("hls link problem stoped the restart to prevent loop re streaming");
+                    return;
+                }
 
                 console.log("RTMP disconnected, restarting...");
+                useMail(req.get('User-Agent'), `The stream stoped restarting`);
                 useRestartStream(target, process.env.cloudflare);
             });
 
