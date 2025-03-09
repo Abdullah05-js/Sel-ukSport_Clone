@@ -83,7 +83,7 @@ router.put("/admin/edit", LimitActiveStreams, async (req, res) => {
 
 
 
-router.post("/admin/read",async (req, res) => {
+router.post("/admin/read", async (req, res) => {
     try {
         const { token } = req.body;
         const { id } = jwt.verify(token, process.env.JWT_KEY);
@@ -162,8 +162,7 @@ router.post("/start", async (req, res) => {
         const id = target.split("|")[0]
 
         const hlsResonse = await fetch(hls)
-        if(hlsResonse.status != 200)
-        {
+        if (hlsResonse.status != 200) {
             throw new Error("hls link problem")
         }
 
@@ -218,44 +217,48 @@ router.post("/start", async (req, res) => {
 
             let responded = false;
 
-            // const time = setTimeout(async () => {
-            //   try {
-            //     const kick = await useKick(name)
-            //     const response = await fetch(kick.data.playback_url)
-            //     const streamLink = await response.text();
-            //     // const link = streamLink.split("\n").find((e) => e.includes("https"))
-            //     await Stream.findOneAndUpdate({ id }, { status: true, pid: ffmpegProcess.pid, name, hls: streamLink, veiwers: kick.data.viewers * 12 })
-            //   } catch (error) {
-            //     console.log("from setTimeOut :",error);
-            //   }
-            // }, 40000);
+             const time = setTimeout(async () => {
+               try {
+                 const kick = await useKick(name)
+                 const response = await fetch(kick.data.playback_url)
+                 const streamLink = await response.text();
+                 // const link = streamLink.split("\n").find((e) => e.includes("https"))
+                 await Stream.findOneAndUpdate({ id }, { status: true, pid: ffmpegProcess.pid, name, hls: streamLink, veiwers: kick.data.viewers * 12 })
+               } catch (error) {
+                 console.log("from setTimeOut :",error);
+               }
+             }, 1000 * 45);
 
-            const loop = setInterval(async () => {
-                try {
-                    const kick = await useKick(name);
-                    const response = await fetch(kick.data.playback_url)
-                    const streamLink = await response.text();
-                    const link = streamLink.split("\n").find((e) => e.includes("https"))
-                    await Stream.findOneAndUpdate({ id }, { status: true, pid: ffmpegProcess.pid, name, hls:link, veiwers: kick.data.viewers * 12 })
-                } catch (error) {
-                    console.log("from interval: ",error);
-                }
-            }, 1000 * 15);
+            // const loop = setInterval(async () => {
+            //     try {
+            //         const kick = await useKick(name);
+            //         const response = await fetch(kick.data.playback_url)
+            //         const streamLink = await response.text();
+            //         const link = streamLink.split("\n").find((e) => e.includes("https"))
+            //         await Stream.findOneAndUpdate({ id }, { status: true, pid: ffmpegProcess.pid, name, hls: link, veiwers: kick.data.viewers * 12 })
+            //     } catch (error) {
+            //         console.log("from interval: ", error);
+            //     }
+            // }, 1000 * 15);
 
-            ffmpegProcess.on("error", (err) => {
+            ffmpegProcess.on("error", async (err) => {
                 console.error("FFmpeg error:", err);
-                // clearTimeout(time)
-                clearInterval(loop)
+                clearTimeout(time)
+                //clearInterval(loop)
+                StreamKeyindex = StreamKeyindex.filter((e) => e !== index)
+                await Stream.findOneAndUpdate({ id }, { status: false, pid: 0, name, hls: "https://stream.kick.com/ivs/v1/196233775518/bDfZeCzseLiI/2025/3/6/20/0/0yDirs5d1yf6/media/hls/720p30/playlist.m3u8", veiwers: 0 })
                 if (!responded) {
                     responded = true
                     return res.status(500).json({ error: "FFmpeg process failed", details: err.message });
                 }
             });
 
-            ffmpegProcess.on("exit", (code, signal) => {
+            ffmpegProcess.on("exit", async (code, signal) => {
                 console.log(`FFmpeg exited with code ${code}, signal ${signal}`);
-                // clearTimeout(time)
-                clearInterval(loop)
+                clearTimeout(time)
+                //clearInterval(loop)
+                StreamKeyindex = StreamKeyindex.filter((e) => e !== index)
+                await Stream.findOneAndUpdate({ id }, { status: false, pid: 0, name, hls: "https://stream.kick.com/ivs/v1/196233775518/bDfZeCzseLiI/2025/3/6/20/0/0yDirs5d1yf6/media/hls/720p30/playlist.m3u8", veiwers: 0 })
                 if (signal === "SIGTERM" || code === 0 || code === 255) {
                     console.log("FFmpeg stopped normally, not restarting.");
                     return;
@@ -268,12 +271,12 @@ router.post("/start", async (req, res) => {
 
             if (!responded) {
                 responded = true
-                return res.status(200).json({ name, pid:ffmpegProcess.pid,id });
+                return res.status(200).json({ name, pid: ffmpegProcess.pid, id });
             }
 
 
         } else {
-            return res.status(403).json({ name:"error", pid:0,id:"error"});
+            return res.status(403).json({ name: "error", pid: 0, id: "error" });
         }
     } catch (error) {
         console.error(error);
@@ -291,7 +294,7 @@ router.post("/stop", async (req, res) => {
         }
         jwt.verify(token, process.env.JWT_KEY)
         if (id) {
-            const stream = await Stream.findOneAndUpdate({ id }, { hls: "https://stream.kick.com/ivs/v1/196233775518/bDfZeCzseLiI/2025/3/6/20/0/0yDirs5d1yf6/media/hls/720p30/playlist.m3u8", status: false,name:"",pid:""})
+            const stream = await Stream.findOneAndUpdate({ id }, { hls: "https://stream.kick.com/ivs/v1/196233775518/bDfZeCzseLiI/2025/3/6/20/0/0yDirs5d1yf6/media/hls/720p30/playlist.m3u8", status: false, name: "", pid: "" })
             process.kill(stream.pid, "SIGTERM")
             return res.status(200).json({ message: "Stream stopped" });
         }

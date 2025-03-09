@@ -5,7 +5,7 @@ const UseFetchMatches = async () => {
     try {
         console.log(TargetDate);
         const response = await fetch(`https://www.filgoal.com/matches/ajaxlist?date=${TargetDate}`);
-        const result = await response.json();
+        let result = await response.json();
 
         await Matches.deleteMany();
 
@@ -17,6 +17,9 @@ const UseFetchMatches = async () => {
 
             return 0
         })
+
+
+        result = result.filter((e) => e.ChampionshipId === 1362 || e.ChampionshipId === 1367 || e.ChampionshipId === 1373 || e.ChampionshipId === 1574 || e.ChampionshipId === 1379 || e.ChampionshipId === 1380 || e.ChampionshipId === 1453 || e.ChampionshipId === 1384 || e.ChampionshipId === 1390 || e.ChampionshipId === 1391 || e.ChampionshipId === 1284 || e.ChampionshipId === 1223)
 
         const newMatchesList = new Matches({
             liveScores: result,
