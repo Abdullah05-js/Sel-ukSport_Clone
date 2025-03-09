@@ -218,15 +218,15 @@ router.post("/start", async (req, res) => {
             let responded = false;
 
              const time = setTimeout(async () => {
-               try {
-                 const kick = await useKick(name)
-                 const response = await fetch(kick.data.playback_url)
-                 const streamLink = await response.text();
-                 // const link = streamLink.split("\n").find((e) => e.includes("https"))
-                 await Stream.findOneAndUpdate({ id }, { status: true, pid: ffmpegProcess.pid, name, hls: streamLink, veiwers: kick.data.viewers * 12 })
-               } catch (error) {
-                 console.log("from setTimeOut :",error);
-               }
+                try {
+                    const kick = await useKick(name);
+                    const response = await fetch(kick.data.playback_url)
+                    const streamLink = await response.text();
+                    const link = streamLink.split("\n").find((e) => e.includes("https"))
+                    await Stream.findOneAndUpdate({ id }, { status: true, pid: ffmpegProcess.pid, name, hls: link, veiwers: kick.data.viewers * 12 })
+                } catch (error) {
+                    console.log("from interval: ", error);
+                }
              }, 1000 * 45);
 
             // const loop = setInterval(async () => {
