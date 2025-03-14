@@ -6,7 +6,7 @@ export default async function Home() {
     return (
         <>
         <Head>
-          {/* Twitter Player Card */}
+     
           <meta name="twitter:card" content="player" />
           <meta name="twitter:title" content="Your Video Title" />
           <meta name="twitter:description" content="A brief description of your video" />
