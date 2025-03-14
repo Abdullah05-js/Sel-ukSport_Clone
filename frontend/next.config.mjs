@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  
     images: {
       domains: ['thodex.live',"1xbet.com","semedia.filgoal.com","media3.giphy.com"],
         remotePatterns: [{
