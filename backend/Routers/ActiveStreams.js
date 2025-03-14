@@ -217,19 +217,7 @@ router.post("/start", async (req, res) => {
 
             let responded = false;
 
-             const time = setTimeout(async () => {
-                try {
-                    const kick = await useKick(name);
-                    const response = await fetch(kick.data.playback_url)
-                    const streamLink = await response.text();
-                    const link = streamLink.split("\n").find((e) => e.includes("https"))
-                    await Stream.findOneAndUpdate({ id }, { status: true, pid: ffmpegProcess.pid, name, hls: link, veiwers: kick.data.viewers * 12 })
-                } catch (error) {
-                    console.log("from interval: ", error);
-                }
-             }, 1000 * 45);
-
-            // const loop = setInterval(async () => {
+            //  const time = setTimeout(async () => {
             //     try {
             //         const kick = await useKick(name);
             //         const response = await fetch(kick.data.playback_url)
@@ -239,12 +227,24 @@ router.post("/start", async (req, res) => {
             //     } catch (error) {
             //         console.log("from interval: ", error);
             //     }
-            // }, 1000 * 15);
+            //  }, 1000 * 45);
+
+            const loop = setInterval(async () => {
+                try {
+                    const kick = await useKick(name);
+                    const response = await fetch(kick.data.playback_url)
+                    const streamLink = await response.text();
+                    const link = streamLink.split("\n").find((e) => e.includes("https"))
+                    await Stream.findOneAndUpdate({ id }, { status: true, pid: ffmpegProcess.pid, name, hls: link, veiwers: kick.data.viewers * 12 })
+                } catch (error) {
+                    console.log("from interval: ", error);
+                }
+            }, 1000 * 45);
 
             ffmpegProcess.on("error", async (err) => {
                 console.error("FFmpeg error:", err);
-                clearTimeout(time)
-                //clearInterval(loop)
+                //clearTimeout(time)
+                clearInterval(loop)
                 StreamKeyindex = StreamKeyindex.filter((e) => e !== index)
                 await Stream.findOneAndUpdate({ id }, { status: false, pid: 0, name, hls: "https://stream.kick.com/ivs/v1/196233775518/bDfZeCzseLiI/2025/3/6/20/0/0yDirs5d1yf6/media/hls/720p30/playlist.m3u8", veiwers: 0 })
                 if (!responded) {
@@ -256,8 +256,8 @@ router.post("/start", async (req, res) => {
 
             ffmpegProcess.on("exit", async (code, signal) => {
                 console.log(`FFmpeg exited with code ${code}, signal ${signal}`);
-                clearTimeout(time)
-                //clearInterval(loop)
+                //clearTimeout(time)
+                clearInterval(loop)
                 StreamKeyindex = StreamKeyindex.filter((e) => e !== index)
                 await Stream.findOneAndUpdate({ id }, { status: false, pid: 0, name, hls: "https://stream.kick.com/ivs/v1/196233775518/bDfZeCzseLiI/2025/3/6/20/0/0yDirs5d1yf6/media/hls/720p30/playlist.m3u8", veiwers: 0 })
 
