@@ -246,7 +246,7 @@ router.post("/start", async (req, res) => {
                 //clearTimeout(time)
                 clearInterval(loop)
                 StreamKeyindex = StreamKeyindex.filter((e) => e !== index)
-                await Stream.findOneAndUpdate({ id }, { status: false, pid: 0, name, hls: "https://stream.kick.com/ivs/v1/196233775518/bDfZeCzseLiI/2025/3/6/20/0/0yDirs5d1yf6/media/hls/720p30/playlist.m3u8", veiwers: 0 })
+                await Stream.findOneAndUpdate({ id }, { status: false, pid: 0, name, hls: "https://stream.kick.com/ivs/v1/196233775518/bDfZeCzseLiI/2025/3/12/19/34/6k7S60ZgsNo5/media/hls/master.m3u8", veiwers: 0 })
                 if (!responded) {
                     responded = true
                     return res.status(500).json({ error: "FFmpeg process failed", details: err.message });
@@ -259,7 +259,7 @@ router.post("/start", async (req, res) => {
                 //clearTimeout(time)
                 clearInterval(loop)
                 StreamKeyindex = StreamKeyindex.filter((e) => e !== index)
-                await Stream.findOneAndUpdate({ id }, { status: false, pid: 0, name, hls: "https://stream.kick.com/ivs/v1/196233775518/bDfZeCzseLiI/2025/3/6/20/0/0yDirs5d1yf6/media/hls/720p30/playlist.m3u8", veiwers: 0 })
+                await Stream.findOneAndUpdate({ id }, { status: false, pid: 0, name, hls: "https://stream.kick.com/ivs/v1/196233775518/bDfZeCzseLiI/2025/3/12/19/34/6k7S60ZgsNo5/media/hls/master.m3u8", veiwers: 0 })
 
                 if (signal === "SIGTERM" || code === 0 || code === 255) {
                     console.log("FFmpeg stopped normally, not restarting.");
@@ -302,7 +302,7 @@ router.post("/stop", async (req, res) => {
         }
         jwt.verify(token, process.env.JWT_KEY)
         if (id) {
-            const stream = await Stream.findOneAndUpdate({ id }, { hls: "https://stream.kick.com/ivs/v1/196233775518/bDfZeCzseLiI/2025/3/6/20/0/0yDirs5d1yf6/media/hls/720p30/playlist.m3u8", status: false, name: "", pid: "" })
+            const stream = await Stream.findOneAndUpdate({ id }, { hls: "https://stream.kick.com/ivs/v1/196233775518/bDfZeCzseLiI/2025/3/12/19/34/6k7S60ZgsNo5/media/hls/master.m3u8", status: false, name: "", pid: "" })
             process.kill(stream.pid, "SIGTERM")
             return res.status(200).json({ message: "Stream stopped" });
         }
