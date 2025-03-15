@@ -6,7 +6,6 @@ const UseFetchMatches = async () => {
         console.log(TargetDate);
         const response = await fetch(`https://www.filgoal.com/matches/ajaxlist?date=${TargetDate}`);
         let result = await response.json();
-
         await Matches.deleteMany();
 
         result.sort((a, b) => {
