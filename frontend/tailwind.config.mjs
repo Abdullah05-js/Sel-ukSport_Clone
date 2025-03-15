@@ -28,6 +28,7 @@ export default {
         secondary: "#2dd4bf", 
         dimWhite: "rgba(255, 255, 255, 0.7)", 
         dimBlue: "rgba(9, 151, 124, 0.1)", 
+        greenStar:"#00A770"
       },
 
     
