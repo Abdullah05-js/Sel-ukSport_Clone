@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import logo from "@/Photos/600x300_THODEXLIVE_ar.gif";
 const Video = ({link}) => {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
 
     return (
        <article className="bg-black border-1 bg-opacity-50  border-green-300 flex justify-center items-center flex-1 w-screen rounded-lg p-2  sm:w-full ">
