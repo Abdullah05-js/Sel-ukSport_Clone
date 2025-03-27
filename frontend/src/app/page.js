@@ -6,7 +6,7 @@ export const metadata = {
     default: "Yalla Shoot | يلا شوت | أهم مباريات اليوم بث مباشر | yallashoot live tv",
     template: "%s - THODEX.live"
   },
-  description:"يلا شوت _ yalla shoot أهم مباريات اليوم بث مباشر بدون تقطيع يلا شووت _ يلا شوت لايف _ yalla shoot tv _ يلا شووت مباشر _ yalla shoot live tv",
+  description: "يلا شوت _ yalla shoot أهم مباريات اليوم بث مباشر بدون تقطيع يلا شووت _ يلا شوت لايف _ yalla shoot tv _ يلا شووت مباشر _ yalla shoot live tv",
   twitter: {
     card: "summary_large_image"
   },
@@ -18,7 +18,7 @@ export const metadata = {
     siteName: "THODEX.live",
     images: [
       {
-        url: "https://thodex.live/opengraph-image.png", 
+        url: "https://thodex.live/opengraph-image.png",
         width: 1200,
         height: 630,
         alt: "THODEX.live - بث مباشر"
@@ -26,7 +26,11 @@ export const metadata = {
     ],
     locale: "ar",
     type: "website"
-  }
+  },
+  other: {
+    clckd:"3dcf6449af0621f1dd3c24e85d392355"
+}
+ 
 };
 
 export default async function Home() {
@@ -34,7 +38,9 @@ export default async function Home() {
   redirect("/matches")
 
 
-  return(
-    <h1 className="text-2xl">WELCOME TO THODEX.LİVE</h1>
+  return (
+    <>
+      <h1 className="text-2xl">WELCOME TO THODEX.LİVE</h1>
+    </>
   )
 }

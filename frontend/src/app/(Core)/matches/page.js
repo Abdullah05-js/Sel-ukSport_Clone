@@ -36,6 +36,9 @@ export const metadata = {
         ],
         locale: "ar",
         type: "website"
+    },
+    other: {
+        clckd:"3dcf6449af0621f1dd3c24e85d392355"
     }
 };
 
