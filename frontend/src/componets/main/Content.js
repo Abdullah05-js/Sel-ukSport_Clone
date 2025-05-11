@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import MachesList from './MachesList';
-import Video from './Video';
+import Video from '../Video-Player/Custom-Video-Player/Video';
 import { redirect } from 'next/navigation';
 import tiktok from "@/Photos/tiktok.png"
 import Xicon from "@/Photos/xicon.png"
@@ -33,7 +33,7 @@ export default async function Content({ param }) {
             <section className="flex flex-col justify-center items-center gap-6 flex-1 h-full">
 
                 <Suspense fallback={<Spinner size='md' color='success' />}>
-                    <Video link={param === undefined ? Data.list[0].url : Data.list[index - 1].url} />
+                    <Video SRC={"http://localhost:5000/hls/stream.m3u8"} />
                 </Suspense>
 
                 <div className="font-extrabold flex flex-row gap-4 justify-center items-center w-full">

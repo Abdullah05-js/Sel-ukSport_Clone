@@ -20,6 +20,7 @@
     "@heroui/theme": "^2.4.6",
     "axios": "^1.7.9",
     "framer-motion": "^11.18.1",
+    "hls.js": "^1.0.3-0.canary.7275",
     "next": "15.1.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
