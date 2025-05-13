@@ -1,5 +1,3 @@
-import express from "express"
-const router = express.Router();
 import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import { spawn } from "child_process"
 import mime from "mime"
@@ -7,7 +5,6 @@ import fs from "fs"
 import chokidar from "chokidar"
 import ffmpegPath from "ffmpeg-static";
 import path from "path";
-import { randomUUID } from "crypto";
 import useMail from "./useMail";
 
 
@@ -56,7 +53,7 @@ const uploadToS3 = async (filePath, id) => {
 
 const useLive = async (url, id) => {
     try {
-        const OUTPUT_DIR = `backend/Outputs/stream-${id}`
+        const OUTPUT_DIR = `./Outputs/stream-${id}`
         if (!fs.existsSync(OUTPUT_DIR)) {
             fs.mkdirSync(OUTPUT_DIR, { recursive: true });
         }
@@ -101,11 +98,7 @@ const useLive = async (url, id) => {
 
         });
 
-
-
         chokidar.watch(OUTPUT_DIR).on('add', async (filePath) => await uploadToS3(filePath, id)).on('change', async (filePath) => await uploadToS3(filePath, id)); // watches a dir 
-
-
 
         return {
             isSuccess: true,

@@ -6,7 +6,6 @@ import bodyParser from "body-parser";
 import { LimitUserLogin, LimitCreateLiveStream, LimitActiveStreams, LimitPublicStream, LimitBan } from "./RateLimit.js";
 import mainRoute from "./Routers/index.js"
 import helmet from "helmet";
-import path from "path"
 
 import UseFetchMatches from "./Hooks/useFetchMatches.js";
 dotenv.config();
@@ -34,7 +33,7 @@ setInterval(UseFetchMatches, 6 * 60 * 60 * 1000);
 app.listen(process.env.PORT, async () => {
   console.clear()
   await connect();
-  // UseFetchMatches(); //trun this in production
+  UseFetchMatches(); //trun this in production
   console.log(`               
            |__   __| |         
               | |  | |__   ___ 

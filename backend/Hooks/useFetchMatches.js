@@ -1,4 +1,7 @@
 import Matches from "../db/Schemas/Matches.js";
+import { randomUUID } from "crypto";
+import useScheduleStream from "./useScheduleStream.js";
+
 const UseFetchMatches = async () => {
     const date = new Date();
     const TargetDate = date.toISOString().split("T")[0];
@@ -19,6 +22,13 @@ const UseFetchMatches = async () => {
 
 
         result = result.filter((e) => e.ChampionshipId === 1362 || e.ChampionshipId === 1367 || e.ChampionshipId === 1373 || e.ChampionshipId === 1574 || e.ChampionshipId === 1379 || e.ChampionshipId === 1380 || e.ChampionshipId === 1453 || e.ChampionshipId === 1384 || e.ChampionshipId === 1390 || e.ChampionshipId === 1391 || e.ChampionshipId === 1284 || e.ChampionshipId === 1223)
+
+
+        result.map((Match) => {
+            const id = randomUUID()
+            Match.Id = id
+            useScheduleStream(id, Match)
+        })
 
         const newMatchesList = new Matches({
             liveScores: result,

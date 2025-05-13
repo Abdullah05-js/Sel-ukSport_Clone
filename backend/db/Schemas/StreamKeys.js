@@ -2,11 +2,18 @@ import mongoose from "mongoose";
 
 
 const StreamsSchema = mongoose.Schema({
-   keys:Object
+   name: {
+      required: true,
+      type: String
+   },
+   links: {
+      required: true,
+      type: [String]
+   }
 })
 
 
 
-const StreamKeys = mongoose.model("StreamKeys", StreamsSchema)
+const StreamLinks = mongoose.model("StreamLinks", StreamsSchema)
 
-export default StreamKeys;
+export default StreamLinks;
