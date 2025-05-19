@@ -8,24 +8,37 @@ import Image from 'next/image';
 import { Spinner } from '@heroui/spinner';
 import Ads from '../Ads/Ads';
 
+
 export const dynamic = "force-dynamic";
 
 export default async function Content({ param }) {
-  
-    const Filtredindex = typeof Number(param) !== "number" ? redirect("/") : param > 0 ? param : 1;
 
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/ActiveStreams/public`);
     const Data = await response.json();
-    console.log(Data);
-    const index = Filtredindex <= Data.list.length ? Filtredindex : 1;
 
+    let target = Data.find((match) => match.id === param)
+    if (param === "1") {
+
+        if (!target && Data[0]) {
+            target = Data[0]
+        }
+        else if (!Data[0]) {
+            target = {
+                id: "0",
+                title: "Powered By thodex.live",
+                teamA: "thodex",
+                teamB: "live"
+            }
+        }
+
+    }
 
     return (
         <div className="flex z-50 sm:flex-row flex-col-reverse items-center gap-1 p-2 w-full sm:h-screen">
 
             <aside className="flex flex-col justify-center items-center gap-1 sm:w-[380px] w-full m-auto">
-                <Ads/>
-                <MachesList Data={Data.list} />
+                <Ads />
+                <MachesList Data={Data} />
             </aside>
 
 
@@ -33,7 +46,8 @@ export default async function Content({ param }) {
             <section className="flex flex-col justify-center items-center gap-6 flex-1 h-full">
 
                 <Suspense fallback={<Spinner size='md' color='success' />}>
-                    <Video SRC={"http://localhost:5000/hls/stream.m3u8"} />
+                    <Video title={target.title} SRC={target.id === "0" ? "https://trt.daioncdn.net/trt-1/master_480p.m3u8?&sid=76nvawanfgqq&app=ed3904e8-737b-4a5e-856a-1b0d7a0a94e2&ce=2"
+                        : `process.env.NEXT_PUBLIC_LIVE_STREAM_LINK}live-stream/${target.id}/stream.m3u8`} />
                 </Suspense>
 
                 <div className="font-extrabold flex flex-row gap-4 justify-center items-center w-full">
@@ -41,10 +55,7 @@ export default async function Content({ param }) {
                         <Image className='bg-white rounded-lg border-green-300 border-2 w-16' alt='1xbet' src={tiktok} />
                     </a>
                     <span className="font-bold text-xl">
-                        {`${param === undefined ? Data.list[0].teamA : Data.list[index - 1].teamA}`} <br className='sm:hidden block' />VS <br className='sm:hidden block' />{`${param === undefined ? Data.list[0].teamA : Data.list[index - 1]?.teamB}`}
-                    </span>
-                    <span className="font-bold  text-white text-xl shadow-md bg-red-600 shadow-red-700 animate-pulse rounded-2xl p-3">
-                        {Data.list[index - 1].date}
+                        {target.teamA} <br className='sm:hidden block' />VS <br className='sm:hidden block' />{target.teamB}
                     </span>
                     <a target='_blank' href={"https://x.com/Thodex_Live"} className='font-bold text-xl'>
                         <Image className='rounded-lg border-green-300 border-2 w-16' alt='1xbet' src={Xicon} />

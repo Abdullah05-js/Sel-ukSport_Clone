@@ -22,7 +22,6 @@ const VoteButton = ({ A, Dir, Vote, setVotes, index, id }) => {
             const response = await axios.put(`${process.env.NEXT_PUBLIC_API_URL}api/Matchs/vote`, {
                 select: Dir,
                 index,
-                id
             })
             if (response.status == 200)
                 alert("Vote saved successfully")

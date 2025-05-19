@@ -9,10 +9,11 @@ export async function TodayList() {
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}api/Matchs/get`);
         let data = await response.json();
-        Data = data.array || []
-        id = data.id || 0
+        Data = data.Matches
+        id = data._id
     } catch (error) {
         Data = []
+        id = 0
     }
 
     return (
@@ -36,11 +37,11 @@ export async function TodayList() {
 
             </article>
 
-            {Data.length === 0 ? "No matches Found" : (
-                Data.map((Matche, index) => {
-                    return <Link href={"/Watch/1"} key={index} className="flex flex-col justify-center sm:w-8/12 w-full items-center sm:min-h-60  min-h-72  border-2 rounded-xl border-sky-200">
+            {Data?.length === 0 ? "No matches Found" : (
+                Data.map((Match, index) => {
+                    return <Link href={`/Watch/${id}`} key={index} className="flex flex-col justify-center sm:w-8/12 w-full items-center sm:min-h-60  min-h-72  border-2 rounded-xl border-sky-200">
                         <Suspense fallback={<Spinner size="md" color="success" />}>
-                            <MatchCard Matche={Matche} index={index} A={Matche.HomeTeamId} B={Matche.AwayTeamId} id={id} />
+                            <MatchCard Match={Match} index={index} A={Match.voteA} B={Match.voteB} id={id} />
                         </Suspense>
                     </Link>
                 })

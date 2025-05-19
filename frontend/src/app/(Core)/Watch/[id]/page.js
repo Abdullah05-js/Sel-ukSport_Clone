@@ -42,7 +42,7 @@ export const metadata = {
 
 
 export default async function Home({ params }) {
-  const { id } = await params;
+  const { id } = params;
   return (
     <div className="flex flex-col items-center min-h-screen overflow-y-auto overflow-x-hidden relative">
       <div className="absolute left-0 top-0 z-0 w-full h-full sm:block hidden">
