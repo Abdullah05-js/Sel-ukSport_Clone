@@ -121,12 +121,10 @@ router.get("/public", async (req, res) => {
     try {
         const data = await playlists.find()
         res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
-        return res.status(200).json({
-            list: data,
-        })
+        return res.status(200).json(data)
     } catch (error) {
         console.log(error);
-        return res.status(403).json({ list: [] })
+        return res.status(403).json([])
     }
 });
 

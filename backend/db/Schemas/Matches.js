@@ -1,9 +1,13 @@
 import mongoose from "mongoose";
 
 const MachesSchema = mongoose.Schema({
-    liveScores: {
-        type: Array,
+    rows: {
         required: true,
+        type: Number
+    },
+    Matches: {
+        required: true,
+        type: [Object]
     }
 })
 

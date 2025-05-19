@@ -33,7 +33,7 @@ setInterval(UseFetchMatches, 6 * 60 * 60 * 1000);
 app.listen(process.env.PORT, async () => {
   console.clear()
   await connect();
-  UseFetchMatches(); //trun this in production
+ await UseFetchMatches(); //un commant this in production
   console.log(`               
            |__   __| |         
               | |  | |__   ___ 

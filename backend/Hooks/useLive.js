@@ -1,22 +1,19 @@
-import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { spawn } from "child_process"
 import mime from "mime"
 import fs from "fs"
 import chokidar from "chokidar"
 import ffmpegPath from "ffmpeg-static";
 import path from "path";
-import useMail from "./useMail";
+import useMail from "./useMail.js";
+import useEndLive from "./useEndLive.js"
 
-
-
-const bucket_Name = process.env.BUCKET_NAME
+export const bucket_Name = process.env.BUCKET_NAME
 const bucket_Region = process.env.BUCKET_REGION
 const bucket_AccessKey = process.env.BUCKET_ACCESS_KEY
 const bucket_SecretKey = process.env.BUCKET_SECRET_KEY
 
-
-
-const s3 = new S3Client({
+export const s3 = new S3Client({
     endpoint: 'https://s3.eu-south-1.wasabisys.com',
     credentials: {
         accessKeyId: bucket_AccessKey,
@@ -30,15 +27,16 @@ const s3 = new S3Client({
 const uploadToS3 = async (filePath, id) => {
     try {
         const S3_PREFIX = `live-stream/${id}/`
-        const fileContent = fs.readFileSync(filePath);
+        const fileStream = fs.createReadStream(filePath);
         const key = S3_PREFIX + path.basename(filePath);
 
         const params = {
             Bucket: bucket_Name,
             Key: key,
-            Body: fileContent,
+            Body: fileStream,
             ACL: 'public-read',
-            ContentType: mime.getType(filePath)
+            ContentType: mime.getType(filePath),
+            CacheControl: filePath.endsWith(".m3u8") ? 'no-store' : "max-age=86400",
         }
 
         const commnad = new PutObjectCommand(params)
@@ -51,9 +49,29 @@ const uploadToS3 = async (filePath, id) => {
 }
 
 
-const useLive = async (url, id) => {
+export const deleteFromS3 = async (filePath, dir) => {
     try {
-        const OUTPUT_DIR = `./Outputs/stream-${id}`
+        const key = dir + path.basename(filePath);
+        const params = {
+            Bucket: bucket_Name,
+            Key: key
+        }
+
+        const command = new DeleteObjectCommand(params);
+
+        const response = await s3.send(command)
+
+        console.log("Deleted from s3: ", response);
+
+    } catch (error) {
+        console.log("error from deleteFromS3: ", error);
+    }
+}
+
+
+const useLive = async (url, id, StreamEndDate) => {
+    try {
+        const OUTPUT_DIR = `./Outputs/${id}`
         if (!fs.existsSync(OUTPUT_DIR)) {
             fs.mkdirSync(OUTPUT_DIR, { recursive: true });
         }
@@ -73,7 +91,7 @@ const useLive = async (url, id) => {
             '-hls_time', '5',
             '-hls_list_size', '5',
             '-hls_flags', 'delete_segments',
-            '-hls_segment_filename', `${OUTPUT_DIR}/segment_%03d.ts`,
+            '-hls_segment_filename', `${OUTPUT_DIR}/segment_%04d.ts`,
             `${OUTPUT_DIR}/stream.m3u8`
         ]);
 
@@ -90,6 +108,8 @@ const useLive = async (url, id) => {
                 if (retries >= MAX_RETRIES || out.isSuccess) {
                     clearInterval(RetriesService)
                     console.log(out.isSuccess ? "Recovered successfully." : "Max retries reached. Giving up.");
+                    fs.rmSync(OUTPUT_DIR, { recursive: true, force: true });
+                    useEndLive(OUTPUT_DIR, `live-stream/${id}/`)
                     useMail("Max retries reached. Giving up.\n " + id, url)
                 }
 
@@ -98,7 +118,14 @@ const useLive = async (url, id) => {
 
         });
 
-        chokidar.watch(OUTPUT_DIR).on('add', async (filePath) => await uploadToS3(filePath, id)).on('change', async (filePath) => await uploadToS3(filePath, id)); // watches a dir 
+        chokidar.watch(OUTPUT_DIR).on('add', async (filePath) => await uploadToS3(filePath, id)).on('change', async (filePath) => await uploadToS3(filePath, id)).on("unlink", async (filePath) => await deleteFromS3(filePath, `live-stream/${id}/`)); // watches a dir 
+
+
+        schedule.scheduleJob(StreamEndDate, () => {
+            fs.rmSync(OUTPUT_DIR, { recursive: true, force: true });
+            useEndLive(OUTPUT_DIR, `live-stream/${id}/`)
+        })
+
 
         return {
             isSuccess: true,
