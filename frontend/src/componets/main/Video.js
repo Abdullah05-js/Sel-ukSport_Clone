@@ -19,7 +19,7 @@ const Video = ({link}) => {
         ) : (
             <a onClick={() => setIsOpen((e) => !e)} href='https://www.effectiveratecpm.com/gv7n4nr0?key=08b8b34905cafd15f840d3b7a021f0b5' target='_blank' className="flex flex-col p-2 rounded-xl  justify-center items-center h-96 gap-4">
                 <Image src={logo} alt="logo" className='rounded-lg'  />
-                <p className="text-red-400 text-3xl font-extrabold bg-white p-2 rounded-xl">انقر على الشعار لبدء المشاهدة</p>
+                <p className="text-red-400 text-3xl font-extrabold bg-white p-2 rounded-xl">Click to start stream</p>
             </a>
         )}
        </article>

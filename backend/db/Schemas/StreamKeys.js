@@ -9,7 +9,7 @@ const StreamsSchema = mongoose.Schema({
    links: {
       required: true,
       type: [String]
-   }
+   },
 })
 
 

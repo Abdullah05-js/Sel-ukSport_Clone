@@ -7,12 +7,6 @@ export default function sitemap() {
         priority: 1,
       },
       {
-        url: 'https://thodex.live/yallashoot',
-        lastModified: new Date(),
-        changeFrequency: 'yearly',
-        priority: 1,
-      },
-      {
         url: 'https://thodex.live/Watch/1',
         lastModified: new Date(),
         changeFrequency: 'monthly',

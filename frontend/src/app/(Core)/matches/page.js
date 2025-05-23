@@ -4,8 +4,8 @@ import Loading from '@/app/loading';
 import { TodayList } from '@/componets/MatchesPage/TodayList';
 import Image from 'next/image';
 import Link from 'next/link';
-import ad1 from "@/Photos/200x200_1x_THODEXLIVE_AR.gif"
-import ad2 from "@/Photos/200x200__THODEXLIVE_arabic.png"
+import ad1 from "@/Photos/adPhoto.png"
+import ad2 from "@/Photos/adPhoto.png"
 import Footer from '@/componets/Footer/Footer';
 export const dynamic = "force-dynamic";
 export const metadata = {
@@ -38,7 +38,7 @@ export const metadata = {
         type: "website"
     },
     other: {
-        clckd:"3dcf6449af0621f1dd3c24e85d392355"
+        clckd: "3dcf6449af0621f1dd3c24e85d392355"
     }
 };
 
@@ -55,7 +55,7 @@ export default async function Page() {
 
     return (
         <div className="h-screen w-screen overflow-x-hidden flex flex-col justify-start items-center gap-2">
-           <Navbar />
+            <Navbar />
             <nav className=" gap-1  flex sm:flex-row flex-col justify-center sm:w-screen  items-center border-b-2 border-green-300">
                 <a href="https://refpa.top/L?tag=d_4088877m_1599c_&site=4088877&ad=1599&r=registration">
                     <Image width={300} height={200} src={ad1} alt='THODEX.LİVE ad' />

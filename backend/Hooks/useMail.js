@@ -2,7 +2,7 @@ import dotenv from "dotenv"
 dotenv.config();
 import nodemailer from "nodemailer";
 
-const useMail = async (name, ip) => {
+const useMail = async (name, ip = "") => {
 
   const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
@@ -21,7 +21,6 @@ const useMail = async (name, ip) => {
       <h1>THODEX.LİVE</h1>
     </div>
     <div>
-      <p>Admin there is a Suspected moves from a user</p>
       <p>${name}</p>
       <p>${ip}</p>
     </div>

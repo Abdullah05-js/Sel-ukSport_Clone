@@ -20,7 +20,7 @@ const Ads = () => {
       // Create the script element
       const script = document.createElement('script');
       script.type = 'text/javascript';
-      script.src = '//www.highperformanceformat.com/ff296d351669c4e2837854e5d4890ab2/invoke.js';
+      script.src = '//www.highperformanceformat.com/ff296d351669c4e2837854e5d4890ab2/invoke.js';  // burda reklamını koy örnek adsterra
       script.async = true;
 
       // Append the script to the ad container

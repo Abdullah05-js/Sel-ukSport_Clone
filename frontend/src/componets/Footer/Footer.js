@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 const Footer = () => {
     return (
-        <footer  className='w-screen border-t-2 border-green-300 flex flex-col justify-center gap-3 p-5 z-50 items-center mt-4'>
+        <footer className='w-screen border-t-2 border-green-300 flex flex-col justify-center gap-3 p-5 z-50 items-center mt-4'>
 
 
             <GradientText
@@ -21,7 +21,7 @@ const Footer = () => {
                     showBorder={true}
                     className="text-xl font-bold p-2  text-center"
                 >
-                    DMCA - حقوق الطبع والنشر
+                    DMCA - Copyrights
                 </GradientText>
             </Link>
 

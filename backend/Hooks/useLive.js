@@ -6,7 +6,9 @@ import chokidar from "chokidar"
 import ffmpegPath from "ffmpeg-static";
 import path from "path";
 import useMail from "./useMail.js";
-import useEndLive from "./useEndLive.js"
+import useClean from "./useClean.js";
+import schedule from 'node-schedule';
+
 
 export const bucket_Name = process.env.BUCKET_NAME
 const bucket_Region = process.env.BUCKET_REGION
@@ -14,18 +16,24 @@ const bucket_AccessKey = process.env.BUCKET_ACCESS_KEY
 const bucket_SecretKey = process.env.BUCKET_SECRET_KEY
 
 export const s3 = new S3Client({
-    endpoint: 'https://s3.eu-south-1.wasabisys.com',
+    endpoint: 'https://04be21e3f71094a3ae97abb5cd8fb86c.r2.cloudflarestorage.com',
     credentials: {
         accessKeyId: bucket_AccessKey,
         secretAccessKey: bucket_SecretKey
     },
-    region: bucket_Region,
+    region: "auto",
     forcePathStyle: true
 })
 
 
+export const processMap = {
+
+}
+
+
 const uploadToS3 = async (filePath, id) => {
     try {
+        console.log("uploading to s3 ", filePath, id);
         const S3_PREFIX = `live-stream/${id}/`
         const fileStream = fs.createReadStream(filePath);
         const key = S3_PREFIX + path.basename(filePath);
@@ -34,9 +42,8 @@ const uploadToS3 = async (filePath, id) => {
             Bucket: bucket_Name,
             Key: key,
             Body: fileStream,
-            ACL: 'public-read',
             ContentType: mime.getType(filePath),
-            CacheControl: filePath.endsWith(".m3u8") ? 'no-store' : "max-age=86400",
+            CacheControl: 'no-store' // 2. tip  filePath.endsWith(".m3u8") ? 'no-store' : "max-age=60",
         }
 
         const commnad = new PutObjectCommand(params)
@@ -68,18 +75,21 @@ export const deleteFromS3 = async (filePath, dir) => {
     }
 }
 
-
 const useLive = async (url, id, StreamEndDate) => {
     try {
+
+        if (!url || !id || !StreamEndDate) throw new Error("Invalid input");
+
+
         const OUTPUT_DIR = `./Outputs/${id}`
         if (!fs.existsSync(OUTPUT_DIR)) {
             fs.mkdirSync(OUTPUT_DIR, { recursive: true });
         }
 
 
-        fs.readdirSync(OUTPUT_DIR).forEach(file => {
+        fs.readdirSync(OUTPUT_DIR).forEach(file => { // read dir sync çünkü ilk önce sil sonra streaminge başla 
             if (file.endsWith('.ts') || file.endsWith('.m3u8')) {
-                fs.rmSync(path.join(OUTPUT_DIR, file));
+                fs.unlinkSync(path.join(OUTPUT_DIR, file));
             }
         });
 
@@ -88,44 +98,78 @@ const useLive = async (url, id, StreamEndDate) => {
             '-c:v', 'libx264',
             '-c:a', 'aac',
             '-f', 'hls',
-            '-hls_time', '5',
-            '-hls_list_size', '5',
+            '-hls_time', 6,
+            '-hls_list_size', 5,
             '-hls_flags', 'delete_segments',
-            '-hls_segment_filename', `${OUTPUT_DIR}/segment_%04d.ts`,
+            '-hls_segment_filename', `${OUTPUT_DIR}/segment_%05d.ts`,
             `${OUTPUT_DIR}/stream.m3u8`
         ]);
 
-        ffmpeg.stderr.on('data', data => console.log(data));
-        ffmpeg.on('close', async (code) => {
-            console.log(`FFmpeg exited with code ${code}`)
+        //ffmpeg.stderr.on('data', data => console.log(data.toString()));
+        ffmpeg.on('close', async (code, signal) => {
+            console.log(`FFmpeg exited with code ${code},---,${signal}`)
 
-            const MAX_RETRIES = 2
-            let retries = 0
+            if (signal === 'SIGTERM') {
+                const MAX_RETRIES = 2
+                let retries = 0
 
-            const RetriesService = setInterval(async () => {
-                const out = await useLive(url, id)
+                const RetriesService = setInterval(async () => {
+                    const out = await useLive(url, id, StreamEndDate)
 
-                if (retries >= MAX_RETRIES || out.isSuccess) {
-                    clearInterval(RetriesService)
-                    console.log(out.isSuccess ? "Recovered successfully." : "Max retries reached. Giving up.");
-                    fs.rmSync(OUTPUT_DIR, { recursive: true, force: true });
-                    useEndLive(OUTPUT_DIR, `live-stream/${id}/`)
-                    useMail("Max retries reached. Giving up.\n " + id, url)
-                }
+                    if (retries > MAX_RETRIES) {
+                        clearInterval(RetriesService)
+                        useClean(OUTPUT_DIR, processMap, `live-stream/${id}/`, id)
+                        console.log(out.isSuccess ? "Recovered successfully." : "Max retries reached. Giving up.");
+                        useMail("Max retries reached. Giving up.\n " + id + "\n", url)
+                    } else if (out.isSuccess) {
+                        clearInterval(RetriesService)
+                        console.log(out.isSuccess ? "Recovered successfully." : "Max retries reached. Giving up.");
+                        useMail("Re streaming successfully.\n " + id + "\n", url)
+                    }
 
-                retries++
-            }, 1000 * 10)
+                    retries++
+                }, 1000 * 10)
+            }
 
         });
 
-        chokidar.watch(OUTPUT_DIR).on('add', async (filePath) => await uploadToS3(filePath, id)).on('change', async (filePath) => await uploadToS3(filePath, id)).on("unlink", async (filePath) => await deleteFromS3(filePath, `live-stream/${id}/`)); // watches a dir 
 
+        ffmpeg.on('error', (err) => {
+            console.error("FFmpeg failed to start:", err);
+            useClean(OUTPUT_DIR, processMap, `live-stream/${id}/`, id)
+        });
+
+
+        const watcher = chokidar.watch(OUTPUT_DIR)
+            .on('add', async (filePath) => {
+                try {
+                    await uploadToS3(filePath, id);
+                } catch (err) {
+                    console.error('Upload failed for:', filePath, err);
+                }
+            })
+            .on('change', async (filePath) => {
+                try {
+                    await uploadToS3(filePath, id);
+                } catch (err) {
+                    console.error('Upload failed for:', filePath, err);
+                }
+            })
+        // .on("unlink", async (filePath) => {
+        //     try {
+        //         await deleteFromS3(filePath, `live-stream/${id}/`);
+        //     } catch (err) {
+        //         console.error('Delete failed for:', filePath, err);
+        //     }
+        // });
+
+
+        processMap[id] = { ffmpeg, watcher }
 
         schedule.scheduleJob(StreamEndDate, () => {
-            fs.rmSync(OUTPUT_DIR, { recursive: true, force: true });
-            useEndLive(OUTPUT_DIR, `live-stream/${id}/`)
+            console.log("\ncleaning and ending the live stream\n");
+            useClean(OUTPUT_DIR, processMap, `live-stream/${id}/`)
         })
-
 
         return {
             isSuccess: true,
@@ -133,15 +177,13 @@ const useLive = async (url, id, StreamEndDate) => {
         }
 
     } catch (error) {
-
-        fs.readdirSync(OUTPUT_DIR).forEach(file => {
-            if (file.endsWith('.ts') || file.endsWith('.m3u8')) {
-                fs.unlinkSync(path.join(OUTPUT_DIR, file));
-            }
-        });
-
-
         console.log("error from useLive: ", error);
+
+        if (error.message !== "Invalid input")
+            useClean(OUTPUT_DIR, processMap, `live-stream/${id}/`, id)
+
+
+        useMail(error.message)
 
         return {
             isSuccess: false,

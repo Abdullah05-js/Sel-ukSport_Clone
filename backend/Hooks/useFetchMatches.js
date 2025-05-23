@@ -5,17 +5,14 @@ import playlists from "../db/Schemas/playlists.js";
 
 const UseFetchMatches = async () => {
     try {
-
         const date = new Date();
         const TargetDate = date.toISOString().split("T")[0]
         date.setDate(date.getDate() + 1)
         const startBefore = date.toISOString().split("T")[0]
 
-        //Todo  re Build this hook with bein sport api https://www.beinsports.com/api/opta/tv-event?searchKey=&startBefore=2025-05-18T00:59:59.999Z&endAfter=2025-05-17T00:00:00.000Z&limit=3000&channelIds=7836FEA9-6B39-4A1A-8352-DC5FCB97A16C&channelIds=FD1DD7DD-1E7B-4AA2-8682-BFA17338E653&channelIds=8AEA2426-D451-4BA5-BF48-114A1F04B1A8&channelIds=DB9361E8-B3EB-4D6F-9A82-75B5F09E2F92&channelIds=964E6246-CA95-410B-82C4-EA75DD979435&channelIds=E24D9C11-A8B4-4C7F-AD3E-B3364FB6D5A2&channelIds=A892063B-A5D9-4199-95AC-6A214515FA6B
-
         console.log(TargetDate, startBefore);
 
-        const filgoalResponse = await fetch(`https://www.filgoal.com/matches/ajaxlist?date=${TargetDate}`);
+        const filgoalResponse = await fetch(`https://www.filgoal.com/matches/ajaxlist?date=${TargetDate}`); // arabic free daily matchs list 
         let filgoalResult = await filgoalResponse.json();
 
         await Matches.deleteMany();
@@ -62,27 +59,51 @@ const UseFetchMatches = async () => {
 
         console.log("----------------------------------------------------------\nFetched the latest matches successfuly\n----------------------------------------------------------");
 
-        filgoalResult.forEach(async ({ id,
-            title,
-            StartTime,
-            teamA,
-            teamB,
-            channel
-        }) => {
-            if (channel.includes("bein")) {
+        filgoalResult.forEach(async (match) => {
+            if (match.channel.includes("bein")) {
                 const newMatch = new playlists({
-                    id,
-                    title,
-                    StartTime,
-                    teamA,
-                    teamB,
+                    id: match.id,
+                    title: match.title,
+                    StartTime: match.StartTime,
+                    teamA: match.teamA,
+                    teamB: match.teamB,
                 })
                 await newMatch.save()
-                // useScheduleStream(match.id, match)
+                // useScheduleStream(match.id, match) //commanding this will make the system dont schedule stream
             }
         });
 
+        // for test 
 
+        // [{
+        //         id: "13asc-1wqq3dsad-12sd",
+        //         channel: "trt1",
+        //         title: "trt 1 yayin testi",
+        //         StartTime: (new Date()).getTime() + 3 * 60 * 1000,
+        //         EndTime: (new Date()).getTime() + 40 * 60 * 1000,
+        //         teamA: "galatasaray",
+        //         teamA_logo: "",
+        //         teamB: "liverpool",
+        //         teamB_logo: "",
+        //         voteA: 0,
+        //         voteB: 0,
+        //         competition_name: "champions league",
+        //         stadium: "kou",
+        //         week: 39
+        //     }].forEach(async (match) => {
+        //         if (match.channel) {
+        //             console.log("useScheduleStream in the loop");
+        //             const newMatch = new playlists({
+        //                 id: match.id,
+        //                 title: match.title,
+        //                 StartTime: match.StartTime,
+        //                 teamA: match.teamA,
+        //                 teamB: match.teamB,
+        //             })
+        //             await newMatch.save()
+        //             useScheduleStream(match.id, match)
+        //         }
+        //     });
 
     } catch (error) {
         console.log("error from UseFetchMatches: ", error);

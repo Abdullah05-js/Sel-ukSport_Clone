@@ -5,6 +5,7 @@ import { middleware1 } from "./middleware/BanMiddleware";
 
 export async function middleware(NextRequest) {
     try {
+        //örnek middleware gelen kişi banlı mı diye kontrol eder 
         return NextResponse.next();
         // const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}api/CheckBan`);
         // const isBan = response.data.status

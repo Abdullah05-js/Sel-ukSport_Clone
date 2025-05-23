@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import ad1 from "@/Photos/600x300__THODEXLIVE_arabic.png"
+import ad1 from "@/Photos/adPhoto.png"
 const TopAds = () => {
     return (
         <footer className='flex z-50 sm:flex-row flex-col justify-center sm:items-center items-start  sm:m-auto flex-wrap p-2 w-screen  '>

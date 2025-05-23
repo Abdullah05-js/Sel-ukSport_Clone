@@ -50,7 +50,7 @@ router.post("/login", async (req, res) => {
 })
 
 
-
+// here you create you google authenticator code 
 // router.post("/createToken",async (req,res) => {
 
 //    const key =  speakeasy.generateSecret()

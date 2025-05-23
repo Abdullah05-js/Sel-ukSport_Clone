@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
 import MachesList from './MachesList';
 import Video from '../Video-Player/Custom-Video-Player/Video';
-import { redirect } from 'next/navigation';
 import tiktok from "@/Photos/tiktok.png"
 import Xicon from "@/Photos/xicon.png"
 import Image from 'next/image';
@@ -46,8 +45,7 @@ export default async function Content({ param }) {
             <section className="flex flex-col justify-center items-center gap-6 flex-1 h-full">
 
                 <Suspense fallback={<Spinner size='md' color='success' />}>
-                    <Video title={target.title} SRC={target.id === "0" ? "https://trt.daioncdn.net/trt-1/master_480p.m3u8?&sid=76nvawanfgqq&app=ed3904e8-737b-4a5e-856a-1b0d7a0a94e2&ce=2"
-                        : `process.env.NEXT_PUBLIC_LIVE_STREAM_LINK}live-stream/${target.id}/stream.m3u8`} />
+                    <Video title={target.title} SRC={`${process.env.NEXT_PUBLIC_LIVE_STREAM_LINK}live-stream/${target.id}/stream.m3u8`} />
                 </Suspense>
 
                 <div className="font-extrabold flex flex-row gap-4 justify-center items-center w-full">
