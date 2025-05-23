@@ -26,4 +26,4 @@ A reverse-engineered implementation of the SelçukSport-like live streaming serv
 - Domains are rotated constantly, while servers are typically located in **Germany or the Netherlands**, based on latency and legal landscape.
 - Domain updates are managed automatically via **Cloudflare API + custom DNS switching script**.
 
-## 📂 Project Structure
+
