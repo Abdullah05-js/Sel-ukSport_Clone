@@ -38,24 +38,7 @@ const uploadToS3 = async (filePath, id) => {
         const fileStream = fs.createReadStream(filePath);
         const key = S3_PREFIX + path.basename(filePath);
 
-//         Stream bir Veri Kaynağıdır, Verinin Kendisi Değil
-// Sizin de belirttiğiniz gibi, fs.createReadStream(filePath) asenkron bir işlem başlatır. Ancak bu satır çalıştığında, fileStream değişkeninin içine dosyanın içeriği konulmaz.
 
-// fileStream değişkeni, dosyanın verisinin kendisi değil, o veriye nasıl ulaşılacağını ve onu parça parça nasıl okunacağını bilen bir nesnedir (object). Bunu bir musluğa benzetebilirsiniz. fs.createReadStream dediğinizde musluğu takmış olursunuz, ama henüz suyu açmamışsınızdır. fileStream nesnesi, bu musluğun kendisidir.
-
-// AWS SDK (v3) Stream'lerle Çalışmak İçin Tasarlanmıştır
-// İşin kilit noktası burasıdır. PutObjectCommand'ın Body parametresine fileStream nesnesini (yani musluğu) verdiğinizde, AWS SDK'sı bunun bir "Stream" (Akış) olduğunu anlar.
-
-// SDK şunu yapmaz: "Dur bakalım, bu stream'in içindeki bütün veriyi okuyup bitireyim, sonra S3'e göndereyim."
-
-// Bunun yerine şunu yapar:
-
-// S3'e bir bağlantı açar (yüklemeyi başlatır).
-// fileStream'den bir parça veri (chunk) okunmasını ister.
-// Dosyadan ilk veri parçası okunur okunmaz, bu parçayı S3'e gönderir.
-// Bu parça gönderilirken, fileStream'den bir sonraki parçayı okumaya başlar.
-// Dosyadan okunan her yeni parçayı anında S3'e akıtır.
-// Bu süreç, dosyanın sonuna gelinene ve fileStream "benden bu kadar, veri bitti" (end olayı) diyene kadar devam eder.
 
         const params = {
             Bucket: bucket_Name,
